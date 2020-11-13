@@ -66,11 +66,6 @@ const Statistics = (props) => {
             </div>
         </div>
     )
-}
+} 
 
-const mstp = (state) => ({
-    transactions: state.transactionsReducer.transactions,
-    transactionsFetching: state.transactionsReducer.transactionsFetching,
-})
-
-export default connect(mstp, {})(Statistics)
+export default Statistics

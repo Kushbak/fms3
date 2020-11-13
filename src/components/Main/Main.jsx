@@ -24,13 +24,13 @@ const Main = (props) => {
         dispatch(getAllTransactions())
         dispatch(getProjects())
         dispatch(getBankAccounts())
+        setTimeout(() => {
+            dispatch(getAllCategories())
+        }, 200);
+        setTimeout(() => {
+            dispatch(getContragents())
+        }, 300);
     }, [])
-    setTimeout(() => {
-        dispatch(getAllCategories())
-    }, 200);
-    setTimeout(() => {
-        dispatch(getContragents())
-    }, 300);
     if (!props.isAuth) {
         return <Redirect to='/authorization' />
     }  

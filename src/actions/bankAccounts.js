@@ -11,6 +11,11 @@ export const addBankAccount = (bankAccount) => ({
     bankAccount
 })
 
+export const editBankAccountSuccess = (bankAccount) => ({
+    type: 'EDIT_BANK_ACCOUNT',
+    bankAccount
+})
+
 export const removeBankAccount = (bankAccount) => ({
     type: 'REMOVE_BANK_ACCOUNT',
     bankAccount

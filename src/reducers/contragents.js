@@ -14,6 +14,11 @@ const contragentsReducer = (state = initialState, action) => {
                 ...state,
                 contragents: [...state.contragents, action.contragent]
             }
+        case 'EDIT_CONTRAGENT':
+            return {
+                ...state,
+                contragents: [...state.contragents.map(item => item.id === action.contragent.id ? action.contragent : item)]
+            }
         case 'REMOVE_CONTRAGENT':
             return {
                 ...state,

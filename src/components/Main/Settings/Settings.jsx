@@ -4,7 +4,9 @@ import { useState } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { maxLengthCreator } from '../../../utils/validators/validators'
 import { Input } from '../../common/FormsControl/FormControls'
-import Preloader from '../../common/Preloader/Preloader'
+import Preloader from '../../common/Preloader/Preloader' 
+import deleteBtn from '../../../assets/img/icons/delete.svg'
+import editBtn from '../../../assets/img/icons/edit.svg'
 
 const NewCategoryForm = reduxForm({ form: 'newCategory' })
     ((props) => {
@@ -28,6 +30,7 @@ const NewCategoryForm = reduxForm({ form: 'newCategory' })
 const Settings = (props) => {
     const [numOfSection, setNum] = useState(0)
     const [idOfElement, setIdofElement] = useState()
+    const [dValue, setValue] = useState()
     const addNewCategory = (formData, type) => { 
         switch (type) {
             case 'bankAccount': { 
@@ -72,24 +75,38 @@ const Settings = (props) => {
         formData.newCategory = ''
         setNum(0)
     }
-
-    const maxLength20 = maxLengthCreator(20)
-    if (props.categoriesFetching) return <Preloader />
+    const maxLength20 = maxLengthCreator(20) 
+    if (props.categoriesFetching) return <Preloader /> 
     return (
         <div className={styles.settings}>
 
             <div className={styles.settingsSection}>
                 <p className={styles.settingsTitle}>Счета</p>
                 {props.bankAccounts.map(item => (
-                    <p className={styles.settingsItem} key={item.id}>
-                        {item.name}
+                    <p className={styles.settingsItem} key={item.id}> 
+                        {!(idOfElement === item.id) && item.name}
                         <span>
-                            {idOfElement === item.id
-                                ? <input type="text" onBlur={() => setIdofElement(0)} />
-                                : <button onDoubleClick={() => setIdofElement(item.id)}>c</button>
+                            { idOfElement === item.id
+                                ? <input
+                                    className={styles.editInput} 
+                                    type="text" 
+                                    onBlur={() => {
+                                        props.editBankAccountSuccess({...item, name: dValue}) 
+                                        setIdofElement(0) 
+                                        setValue()
+                                    }} 
+                                    value={dValue} 
+                                    autoFocus={true}
+                                    onChange={(e) => setValue(e.target.value)} />
+                                : <img
+                                    src={editBtn}
+                                    alt='edit'
+                                    onClick={() => {
+                                        setIdofElement(item.id)
+                                        setValue(item.name)
+                                    }} />
                             }
-                            <button onClick={() => props.removeBankAccount(item.name)}>x</button>
-
+                            <img src={deleteBtn} onClick={() => props.removeBankAccount(item.name)} alt='delete' />
                         </span>
                     </p>
                 ))}
@@ -105,10 +122,29 @@ const Settings = (props) => {
                 <p className={styles.settingsTitle}>Категория дохода</p>
                 {props.incomeCategories.map(item => (
                     <p className={styles.settingsItem} key={item.id}>
-                        {item.name}
-                        <span>
-                            <button onClick={() => props.deleteCategory(item)}>x</button>
-                            {/* <button>c</button> */}
+                        {!(idOfElement === item.id) && item.name}
+                        <span> 
+                            {idOfElement === item.id
+                                ? <input
+                                    className={styles.editInput} 
+                                    type="text"
+                                    onBlur={() => {
+                                        props.editIncomeCategorySuccess({ ...item, name: dValue })
+                                        setIdofElement(0)
+                                        setValue()
+                                    }}
+                                    value={dValue}
+                                    autoFocus={true}
+                                    onChange={(e) => setValue(e.target.value)} />
+                                : <img
+                                    src={editBtn}
+                                    alt='edit'
+                                    onClick={() => {
+                                        setIdofElement(item.id)
+                                        setValue(item.name)
+                                    }} />
+                            }
+                            <img src={deleteBtn} onClick={() => props.deleteCategory(item)} alt='delete' /> 
                         </span>
                     </p>
                 ))}
@@ -124,10 +160,29 @@ const Settings = (props) => {
                 <p className={styles.settingsTitle}>Категория расхода</p>
                 {props.expenseCategories.map(item => (
                     <p className={styles.settingsItem} key={item.id}>
-                        {item.name}
+                        {!(idOfElement === item.id) && item.name}
                         <span>
-                            <button onClick={() => props.deleteCategory(item)}>x</button>
-                            {/* <button>c</button> */}
+                            {idOfElement === item.id
+                                ? <input
+                                    className={styles.editInput} 
+                                    type="text"
+                                    onBlur={() => {
+                                        props.editExpenseCategorySuccess({ ...item, name: dValue })
+                                        setIdofElement(0)
+                                        setValue()
+                                    }}
+                                    value={dValue}
+                                    autoFocus={true}
+                                    onChange={(e) => setValue(e.target.value)} />
+                                : <img
+                                    src={editBtn}
+                                    alt='edit'
+                                    onClick={() => {
+                                        setIdofElement(item.id)
+                                        setValue(item.name)
+                                    }} />
+                            }
+                            <img src={deleteBtn} onClick={() => props.deleteCategory(item)} alt='delete'/> 
                         </span>
                     </p>
                 ))}
@@ -143,10 +198,29 @@ const Settings = (props) => {
                 <p className={styles.settingsTitle}>Контрагент</p>
                 {props.contragents.map(item => (
                     <p className={styles.settingsItem} key={item.id}>
-                        {item.name}
+                        {!(idOfElement === item.id) && item.name}
                         <span>
-                            <button onClick={() => props.removeContragent(item.name)}>x</button>
-                            {/* <button>c</button> */}
+                            {idOfElement === item.id
+                                ? <input
+                                    className={styles.editInput} 
+                                    type="text"
+                                    onBlur={() => {
+                                        props.editContragentSuccess({ ...item, name: dValue })
+                                        setIdofElement(0)
+                                        setValue()
+                                    }}
+                                    value={dValue}
+                                    autoFocus={true}
+                                    onChange={(e) => setValue(e.target.value)} />
+                                : <img
+                                    src={editBtn}
+                                    alt='edit'
+                                    onClick={() => {
+                                        setIdofElement(item.id)
+                                        setValue(item.name)
+                                    }} />
+                            }
+                            <img src={deleteBtn} onClick={() => props.removeContragent(item.name)} alt='delete' /> 
                         </span>
                     </p>
                 ))}

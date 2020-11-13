@@ -13,22 +13,50 @@
 } 
 
 .headerBlock > * {
-    text-align: center; 
-}
+    text-align: center;  
+    flex: 1;
+} 
 
 .logo img{
     max-width: 50px;
     width: 100%;
-} 
+}  
 
-.newOperationButton{
-    font-size: 2.5rem;
-    border-radius: 100%;
-    background: #32b482;
-    color: #fff;
+.authorization{ 
+    text-align: right;  
+}
+
+.newOperationBlock{
     width: 50px;
+    height: 50px; 
+    position: fixed;
+    bottom: 70px;
+    left: 70px;
+    display: flex;
     place-content: center;
     place-items: center;
+    cursor: pointer;  
+}
+.newOperationIcon{
+    width: 100%;
+}
+.newOperationButton{
+    display: none; 
+    height: 80%;
+    width: 100%;  
+    white-space: nowrap;    
+    border-radius: 16px;  
+}
+.newOperationBlock:hover {
+    width: 180px;
+    height: 50px; 
+    transition: all 0.12s ease-in;
+}
+.newOperationBlock:hover > .newOperationIcon{
+    display: none;
+}
+.newOperationBlock:hover > .newOperationButton{
+    display: block;
 }
 
 /* Modal window styles */

@@ -28,8 +28,8 @@ export const authApi = {
 }
 
 export const transactionsApi = {
-    getTransactions() { 
-        return instance.get(`transaction/index`)
+    getTransactions(pageNumber = 1, pageSize = 10) { 
+        return instance.get(`transaction/index?PageNumber=${pageNumber}&PageSize=${pageSize}`)
     },
     createTransactions(formData) { 
         return instance.post(`transaction/create`, formData)

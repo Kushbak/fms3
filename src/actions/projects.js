@@ -9,7 +9,7 @@ export const addProject = (project) => ({
     type: 'ADD_PROJECTS',
     project
 }) 
-export const editProject = (project) => ({ 
+export const editProjectSuccess = (project) => ({ 
     type: 'EDIT_PROJECT',
     project
 })
@@ -35,9 +35,9 @@ export const createProject = (formData) => (dispatch) => {
     })
 }
 
-export const editContragent = (formData) => (dispatch) => {
+export const editProject = (formData) => (dispatch) => {
     projectsApi.editProject(formData).then(res => {
-        dispatch(editProject(res.data))
+        dispatch(editProjectSuccess(res.data))
     })
 }  
 

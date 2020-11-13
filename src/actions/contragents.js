@@ -22,7 +22,7 @@ export const removeContragent = (contragent) => ({
 // ----------- THUNKS ------------
 
 export const getContragents = () => (dispatch) => { 
-    dispatch(categoriesFetching(true))
+    dispatch(categoriesFetching(true)) 
     contragentsApi.getContragents()
         .then(res => { 
             dispatch(setContragents(res.data))

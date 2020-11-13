@@ -2,7 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addContragent, removeContragent } from '../../../actions/contragents'
 import { createCategory, deleteCategory } from '../../../actions/categories'
-import { addBankAccount, removeBankAccount } from '../../../actions/bankAccounts' 
+import { addBankAccount, removeBankAccount } from '../../../actions/bankAccounts'  
+import { editBankAccountSuccess } from '../../../actions/bankAccounts'
+import { editExpenseCategorySuccess, editIncomeCategorySuccess } from '../../../actions/categories'
+import { editContragentSuccess } from '../../../actions/contragents'
+import { editProjectSuccess } from '../../../actions/projects'
 
 import Settings from './Settings'
  
@@ -25,6 +29,11 @@ export default connect(mstp,
         addContragent,
         removeContragent,
         addBankAccount, 
-        removeBankAccount 
+        removeBankAccount,
+        editBankAccountSuccess,
+        editExpenseCategorySuccess,
+        editIncomeCategorySuccess,
+        editContragentSuccess,
+        editProjectSuccess
     }
 )(SettingsContainer)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react' 
 import styles from './Transactions.module.css'  
 import { connect } from 'react-redux'
-import { requestTransactions } from '../../../actions/transactions'
+import { getAllTransactions } from '../../../actions/transactions'
 import Preloader from '../../common/Preloader/Preloader'
 import Paginator from '../../common/Paginator/Paginator'
 
@@ -11,11 +11,11 @@ const Transactions = (props) => {
     const [categoryId, setCategoryId] = useState(0)  
 
     const onChangeCurrentPage = (pageNumber) => {
-        props.requestTransactions(pageNumber, props.pagesSize)
+        props.getAllTransactions(pageNumber, props.pagesSize)
     }
 
     useEffect(() => {
-        props.requestTransactions(props.currentPage, props.pagesSize)
+        props.getAllTransactions(props.pageNumber, props.pageSize)
     }, [])
     return (
         <div className={ styles.transactions }>
@@ -34,13 +34,12 @@ const Transactions = (props) => {
                 </div>
             </div>
 
-            <div className={styles.transactionsBlock}> 
-                { props.transactionsFetching && <Preloader />}
+            <div className={styles.transactionsBlock}>  
                 <Paginator 
-                    currentPage={2} 
+                    currentPage={props.pageNumber} 
                     onChangeCurrentPage={onChangeCurrentPage} 
-                    totalUsersCount={300} 
-                    pagesSize={5}  
+                    totalUsersCount={props.totalRecords} 
+                    pagesSize={props.pageSize}  
                 />
                 <div className={[styles.transactionItem, styles.transactionsTitle].join(' ')}>
                     <p className={styles.date}>Дата</p>
@@ -51,6 +50,7 @@ const Transactions = (props) => {
                     <p className={styles.category}>Категория</p>
                     <p className={styles.project}>Проект</p>
                 </div>
+                {props.transactionsFetching && <Preloader />}
                 { props.transactions
                     .filter(item => (categoryId === 0 && item) 
                         || (categoryId === 1 && item.projectName === 'Neobis club') 
@@ -80,10 +80,12 @@ const Transactions = (props) => {
 }
 
 const mstp = (state) => ({
-    transactions: state.transactionsReducer.transactions,
+    transactions: state.transactionsReducer.data,
     transactionsFetching: state.transactionsReducer.transactionsFetching,
-    pagesSize: state.transactionsReducer.pagesSize,
-    currentPage: state.transactionsReducer.currentPage,
+    pageSize: state.transactionsReducer.pageSize,
+    pageNumber: state.transactionsReducer.pageNumber,
+    totalRecords: state.transactionsReducer.totalRecords,
+    
 })
 
-export default connect(mstp, { requestTransactions })(Transactions) 
+export default connect(mstp, { getAllTransactions })(Transactions) 

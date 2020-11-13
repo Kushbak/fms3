@@ -7,8 +7,10 @@ import { connect } from 'react-redux'
 import { login, register } from '../../actions/authorization'
 import { Redirect } from 'react-router-dom'
 import Particles from 'react-particles-js'
+import svg from '../../assets/img/icons/plus.svg'
+import logo from '../../assets/img/logo.svg'
 
-const LoginForms = (props) => { 
+const Login = reduxForm({ form: 'login' })((props) => { 
     const goLogin = (formData) => props.login(formData)  
     return (
         <>
@@ -23,13 +25,11 @@ const LoginForms = (props) => {
             </form>
         </>
     )
-}
-const Login = reduxForm({ form: 'login' })(LoginForms)
+})
 
 
-const RegisterForms = (props) => {  
-    const minLength5 = minLengthCreator(5)
-
+const Register = reduxForm({ form: 'register' })((props) => {  
+    const minLength8 = minLengthCreator(8) 
     const goRegister = (formData) => props.register(formData) 
     return (
         <>
@@ -37,7 +37,7 @@ const RegisterForms = (props) => {
             <form onSubmit={ props.handleSubmit(goRegister) } className={styles.form} > 
                 <Field className={styles.input} component={ Input } name='email' type='email' placeholder='Введите ваш email*' validate={[required, emailValid] } />
                 <Field className={styles.input} component={Input} name='login' type='text' placeholder='Придумайте логин*' validate={[required, latinLetters] } />
-                <Field className={ styles.input } component={ Input } name='password' type='password' placeholder='Придумайте пароль*' validate={ [required, minLength5] } />
+                <Field className={ styles.input } component={ Input } name='password' type='password' placeholder='Придумайте пароль*' validate={ [required, minLength8] } />
                 <Field className={styles.input} component={ Input } name='matchPassword' type='password' placeholder='Подтвердите пароль*' validate={[required, regMatchInput] } />
                 <div className={ styles.btnBlock }>
                     <button className='button'>{props.isFetching ? 'Загрузка...' : 'Зарегистрироваться'}</button>
@@ -46,8 +46,7 @@ const RegisterForms = (props) => {
             </form>
         </>
     )
-}
-const Register = reduxForm({ form: 'register' })(RegisterForms)
+})
 
 
 const Authorization = (props) => {
@@ -59,13 +58,7 @@ const Authorization = (props) => {
         <section className="section">
             <div className={styles.authorizationPage + ' wrapper'}>
                 <div className={ styles.decoration }>
-                    <Particles width='100%' height='100%' params={{
-                        enable: false,
-                        type: 'inside',
-                        move: {
-                            radius: 10
-                        },
-                        color: '#32b482'}} />
+                    <Particles />
                 </div>
                 <div className={ styles.authorization }>
                     { isLogin ? <Login login={ props.login } isFetching={ props.isFetching }/> : <Register register={ props.register } isFetching={ props.isFetching }/> }
@@ -77,6 +70,7 @@ const Authorization = (props) => {
                     </p>
                 </div>
             </div>
+            
         </section>
         
     )

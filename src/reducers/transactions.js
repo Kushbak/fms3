@@ -1,102 +1,11 @@
 const initialState = {
-    transactions: [
-        // {
-        //     id: 9,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Расход',
-        //     amount: 200,
-        //     account: 'Наличные',
-        //     contragent: 'Айсалкын',
-        //     category: 'Коммерческие проекты',
-        //     project: 'Neobis Clubs',
-        // },
-        // {
-        //     id: 8,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Расход',
-        //     amount: 180,
-        //     account: 'Элсом',
-        //     contragent: 'Санира',
-        //     category: 'Оплаты за курсы',
-        //     project: 'Neolabs',
-        // },
-        // {
-        //     id: 7,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Расход',
-        //     amount: 180,
-        //     account: 'KICB',
-        //     contragent: 'Айсалкын',
-        //     category: 'Оплаты за курсы',
-        //     project: 'Neobis Clubs',
-        // },
-        // {
-        //     id: 6,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Расход',
-        //     amount: 200,
-        //     account: 'KICB',
-        //     contragent: 'Нодир',
-        //     category: 'Коммуналка',
-        //     project: 'Neobis Clubs',
-        // },
-        // {
-        //     id: 5,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Расход',
-        //     amount: 180,
-        //     account: 'Демир банк',
-        //     contragent: 'Санира',
-        //     category: 'Зарплата',
-        //     project: 'Neolabs',
-        // },
-        // {
-        //     id: 4,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Расход',
-        //     amount: 180,
-        //     account: 'Наличные',
-        //     contragent: 'Айсалкын',
-        //     category: 'Зарплата',
-        //     project: 'Neobis Clubs',
-        // },
-        // {
-        //     id: 3,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Расход',
-        //     amount: 180,
-        //     account: 'Элсом',
-        //     contragent: 'Нодир',
-        //     category: 'Аренда',
-        //     project: 'Neobis Studio',
-        // },
-        // {
-        //     id: 2,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Доход',
-        //     amount: 180,
-        //     account: 'Элсом',
-        //     contragent: 'Легенда',
-        //     category: 'Премия',
-        //     project: 'Neobis Studio',
-        // },
-        // {
-        //     id: 1,
-        //     date: new Date().toLocaleString().slice(0, -3),
-        //     type: 'Доход',
-        //     amount: 200,
-        //     account: 'Демир банк',
-        //     contragent: 'Легенда',
-        //     category: 'Аренда',
-        //     project: 'Neobis Clubs',
-        // },
-    ],
+    data: [],
     transactionsFetching: false,
     creatingTransaction: false,
     isPostMsgDisplayed: false,
-    totalTransactionsCount: 0,
-    currentPage: 1,
-    pagesSize: 10,
+    totalRecords: 0,
+    pageNumber: 1,
+    pageSize: 10,
 }
 
 const transactionsReducer = (state = initialState, action) => {
@@ -104,13 +13,13 @@ const transactionsReducer = (state = initialState, action) => {
         case 'GET_ALL_TRANSACTIONS': {
             return {
                 ...state,
-                transactions: [...action.transactions]
+                ...action.transactions
             }
         }
         case 'ADD_TRANSACTION': {
             return {
                 ...state,
-                transactions: [ { id: state.transactions.length + 1, ...action.transaction }, ...state.transactions ]
+                data: [ { id: state.transactions.length + 1, ...action.transaction }, ...state.transactions ]
             }
         }
         case 'TRANSACTIONS_FETCHING': {

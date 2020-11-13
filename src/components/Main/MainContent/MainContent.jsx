@@ -48,7 +48,7 @@ const MainContent = (props) => {
 } 
 
 const mstp = (state) => ({
-    transactions: state.transactionsReducer.transactions,
+    transactions: state.transactionsReducer.data,
     transactionsFetching: state.transactionsReducer.transactionsFetching,
     projects: state.projectsReducer.projects,
 })

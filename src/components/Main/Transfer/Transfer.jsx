@@ -10,31 +10,41 @@ import { getBankAccounts } from '../../../actions/bankAccounts'
 
 const Transfer = (props) => {
     const [currentAcc, setAcc] = useState(1)
+    const [isOwnAcc, setOwnAcc] = useState(false)
     
+    let now = new Date()
+    now.setHours(new Date().getHours() + 6)
+    const [date, setDate] = useState(now.toISOString().slice(0, 16)) 
+
     const onSubmit = (formData) => {
         console.log(formData)
-    }
-    
+    } 
+
     const dispatch = useDispatch() 
     useEffect(() => {
         dispatch(getBankAccounts())
     }, [])
+
     if (props.accountsFetching) return <Preloader />  
     return ( 
         <div className={styles.transferPage}>
             <form className={styles.transferForm} onSubmit={props.handleSubmit(onSubmit)}>
                 <div className={styles.transferInput}>
-                    <p>Дата</p>
+                    <p>Дата</p>            
                     <Field 
-                    component={DatetimeLocal}   
-                    name={"date"} 
+                        component={DatetimeLocal} 
+                        name='date' 
+                        type="datetime-local" 
+                        setValue={date} 
+                        onChange={(e) => 
+                        setDate(e.target.value)} 
                     />
                 </div>
                 <div className={styles.transferInput}>
                     <p>Сумма перевода</p>
                     <Field 
                         component={Input}
-                        name={"amount"} 
+                        name="amount"
                         validate={[required]} 
                     />
                 </div>
@@ -50,23 +60,37 @@ const Transfer = (props) => {
                     </Field>
                 </div>
                 <div className={styles.transferInput}>
-                    <p>На счет</p>
-                    <Field 
-                        component={Select} 
-                        name='toTheAccount' 
-                        validate={[required]}
-                    >
-                        { props.bankAccounts
-                            .filter(item => item.id !== currentAcc)
-                            .map(item => <option value={item.id}>{item.name}</option>)
-                        }
-                    </Field>
+                    <p>
+                        <label>
+                            <input type="checkbox" name='isOwn' value={isOwnAcc} onChange={() => setOwnAcc(!isOwnAcc)}/>
+                            На свой счет
+                        </label>
+                    </p>
+                    {isOwnAcc
+                        ? <Field
+                            component={Select}
+                            name='toTheAccount'
+                            validate={[required]}
+                        >
+                            {props.bankAccounts
+                                .filter(item => item.id !== currentAcc)
+                                .map(item => <option value={item.id}>{item.name}</option>)
+                            }
+                        </Field>
+                        : <Field
+                            component={Input}
+                            name='toTheAccount'
+                            validate={[required]}
+                            placeholder='Введите номер счета'
+                        /> 
+                    }
+                    
                 </div>
                 <div className={styles.transferInput}>
                     <p>Комментарий</p>
                     <Field 
                         component={Input}
-                        name={'comment'} 
+                        name='comment'
                         validate={[maxLengthCreator(30)]} 
                     />
                 </div>

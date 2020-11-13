@@ -8,7 +8,8 @@ const StatisticsContainer = (props) => {
 }
  
 const mstp = (state) => ({
-    transactions: state.transactionsReducer.transactions,
+    transactions: state.transactionsReducer.data,
+    transactionsFetching: state.transactionsReducer.transactionsFetching,
     categories: state.categoriesReducer,
     contragents: state.contragentsReducer,
     projects: state.projectsReducer,

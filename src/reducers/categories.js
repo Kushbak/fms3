@@ -40,6 +40,16 @@ const categoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 expenseCategories: state.expenseCategories.filter(item => item.name !== action.expenseCategory)
+            }
+        case 'EDIT_EXPENSE_CATEGORY':
+            return {
+                ...state,
+                expenseCategories: [...state.expenseCategories.map(item => item.id === action.expenseCategory.id ? action.expenseCategory : item)]
+            }
+        case 'EDIT_INCOME_CATEGORY':
+            return {
+                ...state,
+                incomeCategories: [...state.incomeCategories.map(item => item.id === action.incomeCategory.id ? action.incomeCategory : item)]
             } 
         default:
             return state

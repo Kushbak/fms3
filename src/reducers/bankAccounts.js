@@ -15,6 +15,11 @@ const bankAccountsReducer = (state = initialState, action) => {
                 ...state,
                 bankAccounts: [...state.bankAccounts, action.bankAccount]
             }
+        case 'EDIT_BANK_ACCOUNT': 
+            return {
+                ...state,
+                bankAccounts: [...state.bankAccounts.map(item => item.id === action.bankAccount.id ? action.bankAccount : item)]
+            }
         case 'REMOVE_BANK_ACCOUNT':
             return {
                 ...state,

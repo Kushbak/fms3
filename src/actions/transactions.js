@@ -37,9 +37,9 @@ export const setTotalUsersCount = (totalUsersCount) => ({
 });
 
 
-export const getAllTransactions = () => (dispatch) => {
+export const getAllTransactions = (page) => (dispatch) => {
     dispatch(transactionsFetching(true))
-    transactionsApi.getTransactions().then(res => { 
+    transactionsApi.getTransactions(page).then(res => {  
         dispatch(getAllTransactionsSuccess(res.data))
         dispatch(transactionsFetching(false))
     })
