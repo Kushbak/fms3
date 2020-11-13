@@ -1,0 +1,60 @@
+.profile{
+    display: flex;
+    justify-content: space-between;
+}
+.avatarBlock{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 20%; 
+    place-items: center;
+    place-content: center;
+}
+.avatarBlock img{
+    max-width: 100%; 
+}
+.avatarBlock button{
+    display: block;
+    padding: 12px 0; 
+    margin: 10px auto;
+    background: #32b482;
+    color: #fff;
+    border-radius: 8px; 
+    width: 100%;
+    max-width: 180px; 
+}
+.descriptionBlock{
+    display: flex; 
+    flex-basis: calc(50% - 40px);
+}
+.descriptionBlock form{
+    width: 250px;
+}
+.formItem{
+    margin-bottom: 20px;
+}
+.formItem p{
+    margin-bottom: 3px;
+}
+.formItem input{ 
+    height: 30px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #32b482;  
+    box-shadow: 0px 2px 8px rgba(50, 180, 130, 0.15);
+}
+.descriptionBlock form button{  
+    display: block;
+    margin: 0 auto;
+    padding: 12px 0;  
+    background: #32b482;
+    color: #fff;
+    border-radius: 8px; 
+    width: 100%;
+    max-width: 150px; 
+}
+.btnBlock{
+    flex-basis: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}

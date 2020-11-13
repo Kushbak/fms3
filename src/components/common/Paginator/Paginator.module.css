@@ -1,0 +1,44 @@
+.forChangingPages{
+    display: flex;
+    align-items: center;  
+}
+.selectPageBlock{ 
+    max-width: 250px;
+    width: 100%;
+}
+.selectPageBtn{
+    font-size: 15px;
+    background: none;
+    border: none; 
+    width: 25px;
+    height: 25px;   
+}
+.selectedPage{
+    font-weight: bold; 
+    background-color: #32b482;
+    border-radius: 100%;  
+    color: #fff;
+}
+.arrows{
+    width: 30px;
+    margin: 0 20px;
+    cursor: pointer;
+    visibility: hidden;
+}
+.leftArrow{
+    transform: rotate(180deg);
+}
+.showedArrow{
+    visibility: visible;
+}
+
+.setPageBlock input{
+    width: 30px;
+}
+.setPageBlock button{
+    margin-left: 5px;
+    background-color: #32b482;
+    color: #fff;
+    padding: 2px 5px;
+    font-size: 14px;
+}

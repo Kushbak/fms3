@@ -1,0 +1,28 @@
+
+.account{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 90%;
+    background: #CECECE;
+    margin: 10px auto;
+    padding: 0 10px;
+}
+.account > *{
+    flex: 1; 
+} 
+.code{
+    margin: 10px auto;
+    padding: 20px;
+    text-align: center;
+}
+.balance{
+    text-align: right;
+    margin: 10px auto;
+    padding: 20px;
+}
+.title {
+    margin: 10px auto;
+    padding: 20px;
+}
+

@@ -1,0 +1,18 @@
+.formControl.error input{
+    border: 1px solid red;
+    border-radius: 5px; 
+}
+.formControl.error select{
+    border-bottom: 1px solid red; 
+}
+.formControl.error datalist{
+    border-bottom: 1px solid red; 
+}
+.formControl.error span{
+    color: red; 
+    font-size: 0.8rem; 
+    width: 90%;
+    display: block;
+    text-align: left;
+}
+ 

@@ -1,0 +1,59 @@
+.authorizationPage{
+    display: flex;
+    justify-content: space-between;
+    background: #32b482;
+}
+.authorization{
+    flex-basis: calc(55% - 40px);
+}
+.form{ 
+    display: flex;
+    flex-direction: column; 
+}
+.form > * {
+    margin-bottom: 20px; 
+}
+
+/* Небольшой говнокодинг, потом исправлю */
+.form > .input,  
+.form > * > * > .input,  
+.btnBlock{  
+    width: 70%;
+    height: 42px;
+    padding: 15px;
+}  
+.form > .input,  
+.form > * > * > .input {
+    border-radius: 8px;
+    border: 2px solid #32b482;
+}
+.btnBlock{
+    text-align: right;
+    padding: 0;
+} 
+.btnBlock > button {
+    padding: 12px 40px;
+}  
+.LogOrReg span {
+    color: #32b482;
+    cursor: pointer;
+}
+
+.decoration{
+    flex-basis: 45%;
+    position: relative; 
+}
+.svgBlock{
+    position: absolute;
+    width: 500px;
+    height: 450px;
+    top: -100px;
+    background: radial-gradient(#333 28%,#f8f8f8  0%);
+}
+svg {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    z-index: 999;
+    overflow: visible; 
+}

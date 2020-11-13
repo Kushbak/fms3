@@ -1,0 +1,22 @@
+.sidebar{ 
+    height: 100%; 
+    min-height: calc(100vh - 60px); 
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    background: #f8f8f8;
+    padding: 20px; 
+}
+
+.sidebar > *{
+    margin-bottom: 15px;
+    background: #32b482;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.activeLink{
+    font-weight: bold;
+}

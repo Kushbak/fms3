@@ -1,0 +1,27 @@
+const initialState = {
+    contragents: []
+}
+
+const contragentsReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'SET_CONTRAGENTS':
+            return {
+                ...state,
+                contragents: [...action.contragents]
+            } 
+        case 'ADD_CONTRAGENT':
+            return {
+                ...state,
+                contragents: [...state.contragents, action.contragent]
+            }
+        case 'REMOVE_CONTRAGENT':
+            return {
+                ...state,
+                contragents: state.contragents.filter(item => item.name !== action.contragent)
+            }
+        default:
+            return state
+    }
+}
+
+export default contragentsReducer

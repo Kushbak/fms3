@@ -1,0 +1,43 @@
+.settings{
+    display: flex; 
+    align-items: flex-end;  
+}
+.settingsSection{
+    margin: 0 20px 40px 0;
+    min-width: 230px;
+} 
+.settingsTitle{
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+.settingsItem{
+    padding: 8px 12px;
+    background: #fff;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnBlock{    
+    text-align: center;
+    padding: 0 10px;
+    margin: 20px 0;
+}
+.addNewItemBtn{ 
+    padding: 8px 0; 
+    background: #32b482;
+    color: #fff;
+    border-radius: 8px; 
+    width: 100%;
+    max-width: 180px; 
+}
+
+.newCategoryForm{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 40px; 
+} 
+.newCategoryForm input{
+    height: 30px;
+}

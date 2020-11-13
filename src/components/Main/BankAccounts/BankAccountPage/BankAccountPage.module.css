@@ -1,0 +1,62 @@
+
+.bankAccountPage{
+    border: 2px solid #32b482;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 20px;
+}
+.bankAccountPageNav{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+   
+}
+.cardName{
+    font-size: 40px;
+    font-weight:100;
+} 
+.bankAccounPageBalance{
+    flex-basis: 40%;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+.bankAccounPageBalance span{
+    display: block;
+    padding: 10px;
+    color: #32b482;
+    font-weight: bold;
+    font-size: 1.1rem;
+    
+}
+/*-------------История операций-----------*/
+.operationsHistory{
+    padding: 10px 20px;
+}
+.operationsHistory h3{
+    margin: 35px;
+}
+.operationsHistoryItem{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    text-align: center;
+}  
+.operationsHistoryTitle{
+    cursor: default;
+    background: none;
+    padding: 5px 20px;
+    font-weight: bold;
+}
+.headerNav{
+    display: flex;
+    justify-content: space-between;
+    flex-basis: 22%;
+    height: 40%;
+}
+
+

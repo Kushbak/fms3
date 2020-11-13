@@ -1,0 +1,88 @@
+.transactionsTabs{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+.tabBtns{ 
+    flex-basis: 40%;
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+}
+.activeTab{
+    border-bottom: 1px solid #32b482;
+}
+
+
+
+/* ----- TRANSACTIONS TAB ------- */
+
+.tabsBlock{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 0 30px;
+}
+
+.tabsBlock select {
+    border: 1px solid #32b482;
+    padding: 6px 10px;
+} 
+
+.tabs{ 
+    display: flex;
+    justify-content: space-between;
+    flex-basis: 40%;
+}
+.tabs button {
+    cursor: pointer;
+    padding: 5px 10px;
+}
+.tabs button:focus { 
+    background: #32b48260;
+}
+.activeTab{
+    border-bottom: 2px solid #32b482;
+}
+
+.setup{ 
+    display: flex;
+    justify-content: space-between;
+    flex-basis: 40%;
+} 
+
+
+.transactionsBlock{ 
+    padding: 10px 20px;
+}
+.transactionItem{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    text-align: center;
+}  
+
+.transactionsTitle{
+    cursor: default;
+    background: none;
+    padding: 5px 20px;
+    font-weight: bold;
+}
+.transactionItem *{
+    flex: 1; 
+} 
+.transactionItem .contragent{
+    flex: 1.5; 
+} 
+.transactionItem .type{
+    flex: 0.5;
+}
+.transactionItem .amount{
+    flex: 0.8;
+}

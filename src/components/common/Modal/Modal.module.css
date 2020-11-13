@@ -1,0 +1,30 @@
+.modalWrapper{
+    max-width: 70vw;
+    width: 100%;
+    max-height: 80vh;
+    height: 100%;
+    margin: 10px auto;
+    background: #f8f8f8;
+    border: 2px solid #32b482;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.btnCloseBlock{
+    text-align: right;
+}
+.btnClose{
+    font-size: 1.6rem; 
+    font-weight: bold;
+    color: #32b482;
+}
+
+.logoBlock{
+    width: 100%;
+    padding: 30px 0 20px 0;
+    text-align: center;
+}
+.logoBlock img{
+    width: 40%;
+    margin: 0 auto;
+}  

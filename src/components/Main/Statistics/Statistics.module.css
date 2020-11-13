@@ -1,0 +1,54 @@
+
+.tabsBlock{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 0 30px;
+}
+
+.tabsBlock select {
+    border: 1px solid #32b482;
+    padding: 6px 10px;
+}  
+
+.activeTab{
+    border-bottom: 2px solid #32b482;
+}
+
+.setup{ 
+    display: flex;
+    justify-content: space-between;
+    flex-basis: 40%;
+} 
+/* ----- STATISTICS TAB ------- */
+.statisticsBlock{
+    display: flex;
+    justify-content: space-between; 
+}
+.statisticsCharts{
+    flex-basis: 70%;
+    padding-top: 20px;
+} 
+.statisticsTabs{ 
+    margin-top: 70px;
+    flex-basis: 20%;
+}
+.statisticsTab{
+    display: block;
+    width: 100%;
+    padding: 15px;  
+    background: #32b482;
+    border: 1px solid #32b482;
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 1px;
+}
+.activeStatisticsTab{ 
+    background: #fff;
+    color: #32b482;
+    border: 1px solid #32b482;
+}
+ 
+.selectsBlock select{
+    margin-right: 10px;
+}

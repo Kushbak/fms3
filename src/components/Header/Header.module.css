@@ -1,0 +1,85 @@
+.header{
+    background: #f8f8f8;
+    /* position: fixed; */
+    z-index: 2;
+    width: 100%;
+    padding: 15px 0;
+}
+
+.headerBlock{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} 
+
+.headerBlock > * {
+    text-align: center; 
+}
+
+.logo img{
+    max-width: 50px;
+    width: 100%;
+} 
+
+.newOperationButton{
+    font-size: 2.5rem;
+    border-radius: 100%;
+    background: #32b482;
+    color: #fff;
+    width: 50px;
+    place-content: center;
+    place-items: center;
+}
+
+/* Modal window styles */
+
+.operationTabs{
+    display: flex;
+}
+.operationTabs > button{
+    flex: 1;
+    height: 100%;
+    padding: 16px 0; 
+}
+.activeTab{
+    border-bottom: 1px solid #32b482; 
+}
+.operationBody{
+    padding: 40px 0 30px 0;
+}
+.operationBody > form{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px 20px;
+    text-align: center;
+    padding: 0 10px 10px;
+}  
+
+.operationBody input, 
+.operationBody select{ 
+    max-width: 240px;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #32b482;  
+    font-size: 0.875rem; 
+}   
+
+.btnBlock .operationBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #32b482;
+    width: 100%;
+    height: 40px;
+    padding: 20px;
+    border-radius: 15px;
+    color: #fff;
+}
+
+.alertMsg{
+    text-align: center;
+}
+.successMsg{
+    color: #32b482;
+}
