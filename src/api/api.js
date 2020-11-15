@@ -1,7 +1,7 @@
 import * as axios from 'axios' 
 
 const instance = axios.create({ 
-    baseURL: 'https://testrepobackend.herokuapp.com/api/',  
+    baseURL: 'https://testrepobackend.herokuapp.com/',  
     headers: { 
         'Content-Type': 'application/json; charset=utf-8',
         'Access-Control-Allow-Origin': '*'
