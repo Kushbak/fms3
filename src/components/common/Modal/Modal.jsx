@@ -2,21 +2,34 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import styles from './Modal.module.css'
 
-const modalRoot = document.getElementById('modal-root')
-
 class Modal extends React.Component { 
+    constructor(props) {
+        super(props)
+        this.modalRoot = document.getElementById('modal-root')
+    }
     componentWillMount() {
         this.root = document.createElement('div')
-        modalRoot.appendChild(this.root) 
-        modalRoot.classList.add("modal-window")  
+        this.modalRoot.appendChild(this.root) 
+        this.modalRoot.classList.add("modal-window")
+        document.addEventListener("keydown", this.escFunction, false)
+        this.modalRoot.addEventListener('click', this.closeModal)
     } 
     componentWillUnmount() {
-        this.removeModal() 
-    }  
-    removeModal() { 
-        modalRoot.removeChild(this.root)
-        modalRoot.classList.remove("modal-window") 
+        this.modalRoot.removeChild(this.root)
+        this.modalRoot.classList.remove("modal-window") 
+        document.removeEventListener("keydown", this.escFunction, false)
+        this.modalRoot.removeEventListener('click', this.closeModal)
+    }   
+    closeModal = (e) => { 
+        if (e.target === this.modalRoot) {
+            this.props.onClose()
+        }
     }
+    escFunction = (e) => {
+        if (e.keyCode === 27) {
+            this.props.onClose()
+        }
+    } 
 
     render() {
         return ReactDOM.createPortal(

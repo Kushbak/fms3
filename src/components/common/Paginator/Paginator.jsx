@@ -6,7 +6,7 @@ import arrow from '../../../assets/img/icons/arrow.svg'
 const Paginator = (props) => {
     let [portionNumber, setPortionNumber] = useState(1)
     let [pageNumber, setPageNumber] = useState()
-    let portionSize = 8
+    let portionSize = 10
     let pagesCount = Math.ceil(props.totalUsersCount / props.pagesSize)
 
     let pages = []
@@ -18,6 +18,7 @@ const Paginator = (props) => {
     let leftPortionNumber = (portionNumber - 1) * portionSize + 1
     let rightPortionNumber = portionNumber * portionSize
 
+    if(!pages.length) return <></>
     return (
         <div className={styles.paginator}>
             <div className={styles.forChangingPages}> 
@@ -33,13 +34,14 @@ const Paginator = (props) => {
                 <div className={ styles.selectPageBlock }>
                     {pages
                         .filter(page => page >= leftPortionNumber && page <= rightPortionNumber)
-                        .map(page => {
-                            return <button 
-                                onClick={() => { props.onChangeCurrentPage(page) }} 
-                                className={ [styles.selectPageBtn, props.currentPage === page && styles.selectedPage].join(' ') }> 
-                                    { page }
-                                </button>
-                        })
+                        .map(page => 
+                            <button 
+                            key={page}
+                            onClick={() => { props.onChangeCurrentPage(page) }} 
+                            className={ [styles.selectPageBtn, props.currentPage === page && styles.selectedPage].join(' ') }> 
+                                { page }
+                            </button>
+                        )
                     } 
                 </div>
                 <img src={arrow} alt='right'

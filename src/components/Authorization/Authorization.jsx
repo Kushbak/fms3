@@ -6,9 +6,7 @@ import { Input } from '../common/FormsControl/FormControls'
 import { connect } from 'react-redux'
 import { login, register } from '../../actions/authorization'
 import { Redirect } from 'react-router-dom'
-import Particles from 'react-particles-js'
-import svg from '../../assets/img/icons/plus.svg'
-import logo from '../../assets/img/logo.svg'
+import Particles from 'react-particles-js' 
 
 const Login = reduxForm({ form: 'login' })((props) => { 
     const goLogin = (formData) => props.login(formData)  

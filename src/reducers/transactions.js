@@ -2,10 +2,12 @@ const initialState = {
     data: [],
     transactionsFetching: false,
     creatingTransaction: false,
-    isPostMsgDisplayed: false,
+    isPostMsgDisplayed: null,
     totalRecords: 0,
     pageNumber: 1,
     pageSize: 10,
+    isModalOpen: false,
+    editedTransaction: {}
 }
 
 const transactionsReducer = (state = initialState, action) => {
@@ -13,7 +15,7 @@ const transactionsReducer = (state = initialState, action) => {
         case 'GET_ALL_TRANSACTIONS': {
             return {
                 ...state,
-                ...action.transactions
+                ...action.transactions, 
             }
         }
         case 'ADD_TRANSACTION': {
@@ -25,7 +27,7 @@ const transactionsReducer = (state = initialState, action) => {
         case 'TRANSACTIONS_FETCHING': {
             return {
                 ...state,
-                transactionsFetching: action.transactionsFetching
+                transactionsFetching: action.transactionsFetching,
             }
         }
         case 'CREATING_TRANSACTION': {
@@ -42,10 +44,15 @@ const transactionsReducer = (state = initialState, action) => {
         }
         case 'SET_CURRENT_PAGE': {
             return { ...state, currentPage: action.currentPage }
-        }
-
+        } 
         case 'SET_TOTAL_USERS_COUNT': {
             return { ...state, totalUsersCount: action.totalUsersCount }
+        }
+        case 'OPEN_EDIT_TRANSACTION_MODAL': {
+            return { ...state, isModalOpen: action.isModalOpen }
+        }
+        case 'SET_EDITED_TRANSACTION': {
+            return { ...state, editedTransaction: action.editedTransaction }
         }
         default:
             return state

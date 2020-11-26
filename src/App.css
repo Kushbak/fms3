@@ -35,7 +35,11 @@ button:focus{
     font-size: 1rem;
     cursor: pointer;
     padding: 5px 10px;
+    transition: 0.3s;
 } 
+.button:hover{
+    transform: scale(0.95);
+}
 .wrapper{
     max-width: 1140px;
     width: 100%;
@@ -74,4 +78,8 @@ button:focus{
 
 .wrongData{
     color: red;
+}
+
+body .tippy-tooltip{
+    border-radius: px;
 }

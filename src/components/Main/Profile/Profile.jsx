@@ -6,13 +6,15 @@ import { Input } from '../../common/FormsControl/FormControls'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../../actions/authorization'
 import { Redirect } from 'react-router-dom'
+import { useState } from 'react'
 
 const Profile = (props) => {
+    const [whichField, setField] = useState('')
+    
     const dispatch = useDispatch()
     const isAuth = useSelector(state => state.profileReducer.isAuth)
-    if (!isAuth){
-        return <Redirect to='/'/>
-    }
+
+    if (!isAuth) return <Redirect to='/'/>
     return (
         <div className={ styles.profile }>
             <div className={ styles.avatarBlock }>
@@ -23,15 +25,24 @@ const Profile = (props) => {
                 <form onSubmit={ props.handleSubmit }>
                     <div className={ styles.formItem }>
                         <p>ФИО</p>
-                        <Field component={ Input } type="text" placeholder='ФИО'/>
+                        {whichField
+                            ? <Field component={ Input } onBlur={() => setField(false)} autoFocus={true} type="text" placeholder='ФИО'/>
+                            : <p onClick={() => setField(true)}>text</p>
+                        }
                     </div>
                     <div className={ styles.formItem }>
                         <p>Логин</p>
-                        <Field component={ Input } type="text" placeholder='Логин'/>
+                        {whichField
+                            ? <Field component={ Input } type="text" placeholder='Логин'/>
+                            : <p>text</p>
+                        }
                     </div>
                     <div className={ styles.formItem }>
                         <p>Пароль</p>
-                        <Field component={ Input } type="text" placeholder='Пароль'/>
+                        {whichField
+                            ? <Field component={ Input } type="text" placeholder='Пароль'/>
+                            : <p>text</p>
+                        }
                     </div>
                     <button>Сохранить</button>
                 </form>

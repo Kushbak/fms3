@@ -1,7 +1,8 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
 
-const StatisticsChart = (props) => {     
+const StatisticsChart = (props) => {
+
     const doughnutData = {
         labels: [],
         datasets: [{
@@ -21,51 +22,34 @@ const StatisticsChart = (props) => {
                 '#7a7801',
             ]
         }]
-    }  
-    let filteredTransactionsToChart = {}
- 
-    // adding length of each operation 
-    
-    props.category.forEach(item => {
-        filteredTransactionsToChart[item.name] = 0
-    }) 
-    
-    if (props.isDigit === 1){
-        props.transactions.forEach((transaction) => {
-            if (props.statisticsTab === 'expenseCategories' || props.statisticsTab === 'incomeCategories') {
-                filteredTransactionsToChart[transaction.operationName] += 1
-            } else if (props.statisticsTab === 'bankAccounts') {
-                filteredTransactionsToChart[transaction.score] += 1
-            } else if (props.statisticsTab === 'projects') {
-                filteredTransactionsToChart[transaction.projectName] += 1
+    }    
+    // TODO Разделить табы на доходы расходы и нормализовать показ селекта по доходам/расходам при операциях
+    if (props.statisticsTab === 1) { 
+        props.projectsStat.forEach(item => {
+            doughnutData.labels.push(item.name)
+            if (props.isDigit === 2) {
+                doughnutData.datasets[0].data.push(item.income)
+            } else if (props.isDigit === 3) {
+                doughnutData.datasets[0].data.push(item.expense)
+            } else {
+                // doughnutData.datasets[0].data.push(item.quantity)
             }
-        })    
-    } else if (props.isDigit === 2){ 
-        props.transactions.filter(item => item.transactionType === 'Доход').forEach((transaction) => {
-            if (props.statisticsTab === 'expenseCategories' || props.statisticsTab === 'incomeCategories') {
-                filteredTransactionsToChart[transaction.operationName] += transaction.sum
-            } else if (props.statisticsTab === 'bankAccounts') {
-                filteredTransactionsToChart[transaction.score] += transaction.sum
-            } else if (props.statisticsTab === 'projects') {
-                filteredTransactionsToChart[transaction.projectName] += transaction.sum
+        });
+    } else if (props.statisticsTab === 2 || props.statisticsTab === 3){ 
+    // TODO made operations charts after getting data from backend
+        props.operationsStat.forEach(item => {
+            doughnutData.labels.push(item.name)
+            if (props.isDigit === 2) {
+                doughnutData.datasets[0].data.push(item.operationSum)
+            } else if (props.isDigit === 3) {
+                doughnutData.datasets[0].data.push(item.operationSum)
+            } else {
+                doughnutData.datasets[0].data.push(item.operationCount)
             }
-        })    
-    } else { 
-        props.transactions.filter(item => item.transactionType === 'Расход').forEach((transaction) => {
-            if (props.statisticsTab === 'expenseCategories' || props.statisticsTab === 'incomeCategories') {
-                filteredTransactionsToChart[transaction.operationName] += transaction.sum
-            } else if (props.statisticsTab === 'bankAccounts') {
-                filteredTransactionsToChart[transaction.score] += transaction.sum
-            } else if (props.statisticsTab === 'projects') {
-                filteredTransactionsToChart[transaction.projectName] += transaction.sum
-            }
-        })   
+        });
     }
 
-    for (let item in filteredTransactionsToChart) {
-        doughnutData.labels.push(item)
-        doughnutData.datasets[0].data.push(filteredTransactionsToChart[item])
-    } 
+     
     return <Doughnut data={doughnutData} />   
 }
 

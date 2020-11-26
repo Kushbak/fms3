@@ -15,8 +15,11 @@
     padding: 8px 12px;
     border-radius: 10px;
     text-align: center;
+    transition: 0.3s;
 }
-
+.sidebar > *:hover{
+    transform: scale(0.97);
+}
 .activeLink{
     font-weight: bold;
 }

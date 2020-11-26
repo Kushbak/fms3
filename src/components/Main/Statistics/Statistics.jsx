@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import styles from './Statistics.module.css'    
-import StatisticsChart from './StatisticsChart'
-import { connect } from 'react-redux'
+import StatisticsChart from './StatisticsChart' 
 import Preloader from '../../common/Preloader/Preloader'
 
 const Statistics = (props) => {
  
     const [chartType, setChartType] = useState(1) 
-    const [statisticsTab, setTab] = useState(0) 
-    const [isDigit, setDigit] = useState(1)
+    const [statisticsTab, setTab] = useState(1) 
+    const [isDigit, setDigit] = useState(2)
 
     let statisticsTabsArr = [] 
     for (let item in props.allReducers) {
@@ -17,7 +16,7 @@ const Statistics = (props) => {
         }
     }  
     
-    if(props.transactionsFetching) return <Preloader />
+    if (props.statisticsFetching) return <Preloader />
     return (
         <div className={styles.statistics} > 
             <div className={styles.tabsBlock}> 
@@ -29,9 +28,9 @@ const Statistics = (props) => {
                         <option value="4">Точечная</option>
                     </select>
                     <select name="selectType" onChange={(e) => setDigit(+e.target.value)} >
-                        <option value='1'>По количеству</option>
                         <option value='2'>По доходам</option>
                         <option value='3'>По расходам</option> 
+                        <option value='1'>По количеству</option>
                     </select>
                 </div>
                 <div className={styles.setup}> 
@@ -41,27 +40,20 @@ const Statistics = (props) => {
                 </div>
             </div>
             <div className={ styles.statisticsBlock }>
-                <div className={ styles.statisticsTabs }> 
-                    {statisticsTabsArr.map((item, index) => ( 
-                        <button key={item.id}
-                            className={[styles.statisticsTab, index === statisticsTab && styles.activeStatisticsTab].join(' ')} 
-                            onClick={() => setTab(index)} >
-                                {
-                                    (item === 'expenseCategories' && 'Расходы') 
-                                    || (item === 'incomeCategories' && 'Доходы')
-                                    || (item === 'projects' && 'Проекты') 
-                                }
-                        </button>
-                    ))}
+                <div className={ styles.statisticsTabs }>  
+                    <button
+                        className={[styles.statisticsTab, statisticsTab === 1 && styles.activeStatisticsTab].join(' ')} 
+                        onClick={() => setTab(1)} > 
+                        Проекты
+                    </button>
+                    <button
+                        className={[styles.statisticsTab, statisticsTab === 2 && styles.activeStatisticsTab].join(' ')}
+                        onClick={() => setTab(2)} >
+                        Операции 
+                    </button> 
                 </div>
                 <div className={styles.statisticsCharts}> 
-                    <StatisticsChart 
-                        category={props.allReducers[statisticsTabsArr[statisticsTab]]} 
-                        transactions={props.transactions}
-                        statisticsTab={statisticsTabsArr[statisticsTab]} 
-                        categories={props.allReducers}
-                        isDigit={isDigit}
-                    />
+                    {+chartType === 1 && <StatisticsChart statisticsTab={statisticsTab} operationsStat={props.operationsStat} projectsStat={props.projectsStat} isDigit={isDigit} />}
                 </div>
             </div>
         </div>

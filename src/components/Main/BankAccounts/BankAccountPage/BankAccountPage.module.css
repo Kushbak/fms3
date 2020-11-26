@@ -1,15 +1,17 @@
 
-.bankAccountPage{
-    border: 2px solid #32b482;
+.bankAccountPage{ 
     border-radius: 10px;
     margin: 20px;
     padding: 20px;
 }
 .bankAccountPageNav{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-content: center;
-   
+    margin-top: 40px;
+}
+.bankAccountPageNav input{
+    margin-right: 10px;
 }
 .cardName{
     font-size: 40px;
@@ -30,13 +32,10 @@
     
 }
 /*-------------История операций-----------*/
-.operationsHistory{
+.transactionsHistory{
     padding: 10px 20px;
-}
-.operationsHistory h3{
-    margin: 35px;
-}
-.operationsHistoryItem{
+} 
+.transactionsHistoryItem{
     cursor: pointer;
     display: flex;
     justify-content: space-around;
@@ -46,7 +45,7 @@
     margin: 15px 0;
     text-align: center;
 }  
-.operationsHistoryTitle{
+.transactionsHistoryTitle{
     cursor: default;
     background: none;
     padding: 5px 20px;

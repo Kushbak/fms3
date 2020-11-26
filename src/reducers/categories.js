@@ -1,7 +1,7 @@
 const initialState = {
     expenseCategories: [],
     incomeCategories: [],  
-    categoriesFetching: false
+    categoriesFetching: false,
 }
 
 const categoriesReducer = (state = initialState, action) => {
@@ -44,12 +44,12 @@ const categoriesReducer = (state = initialState, action) => {
         case 'EDIT_EXPENSE_CATEGORY':
             return {
                 ...state,
-                expenseCategories: [...state.expenseCategories.map(item => item.id === action.expenseCategory.id ? action.expenseCategory : item)]
+                expenseCategories: state.expenseCategories.map(item => item.id === action.expenseCategory.id ? action.expenseCategory : item)
             }
         case 'EDIT_INCOME_CATEGORY':
             return {
                 ...state,
-                incomeCategories: [...state.incomeCategories.map(item => item.id === action.incomeCategory.id ? action.incomeCategory : item)]
+                incomeCategories: state.incomeCategories.map(item => item.id === action.incomeCategory.id ? action.incomeCategory : item)
             } 
         default:
             return state

@@ -1,5 +1,4 @@
 import { bankAccountsApi } from "../api/api"
-import { categoriesFetching } from "./categories"
 
 export const setBankAccounts = (bankAccounts) => ({
     type: 'SET_BANK_ACCOUNTS',
@@ -19,7 +18,7 @@ export const editBankAccountSuccess = (bankAccount) => ({
 export const removeBankAccount = (bankAccount) => ({
     type: 'REMOVE_BANK_ACCOUNT',
     bankAccount
-}) 
+})
 
 export const bankAccountsFetching = (bankAccountsFetching) => ({
     type: 'BANK_ACCOUNTS_FETCHING',
@@ -27,21 +26,50 @@ export const bankAccountsFetching = (bankAccountsFetching) => ({
 })
 
 export const getBankAccounts = () => (dispatch) => {
-    dispatch(bankAccountsFetching(true))
-    bankAccountsApi.getScores().then(res => {  
-        dispatch(setBankAccounts(res.data))
-        dispatch(bankAccountsFetching(false))
-    })
+    try {
+        dispatch(bankAccountsFetching(true))
+        bankAccountsApi.getBankAccountsDetail()
+            .then(res => {
+                dispatch(setBankAccounts(res.data))
+                dispatch(bankAccountsFetching(false))
+            })
+            .catch(e => {
+                getBankAccounts()
+            })
+    } catch (e) {
+        console.log(e)
+        getBankAccounts()
+    }
 }
 
 export const createBankAccount = (formData) => (dispatch) => {
-    bankAccountsApi.createScore(formData).then(res => {
-        dispatch(addBankAccount(res.data))
-    })
+    try {
+        bankAccountsApi.createBankAccount(formData).then(res => {
+            dispatch(addBankAccount(res.data))
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const editBankAccount = (formData) => (dispatch) => {
+    try {
+        // bankAccountsApi.editBankAccount(formData).then(res => {
+        dispatch(editBankAccountSuccess(formData))
+        // }) 
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 export const deleteBankAccount = (formData) => (dispatch) => {
-    bankAccountsApi.deleteScore(formData).then(res => {
-        dispatch(removeBankAccount(res.data))
-    })
+    try {
+                debugger
+        bankAccountsApi.deleteBankAccount(formData.id).then(res => {
+                        debugger
+            dispatch(removeBankAccount(res.data))
+        })
+    } catch (e) {
+        console.log(e);
+    }
 }

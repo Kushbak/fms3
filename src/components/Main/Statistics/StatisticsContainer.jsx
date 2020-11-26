@@ -13,7 +13,10 @@ const mstp = (state) => ({
     categories: state.categoriesReducer,
     contragents: state.contragentsReducer,
     projects: state.projectsReducer,
-    bankAccounts: state.bankAccountsReducer
+    bankAccounts: state.bankAccountsReducer,
+    projectsStat: state.statisticsReducer.projects,
+    operationsStat: state.statisticsReducer.operations,
+    statisticsFetching: state.statisticsReducer.statisticsFetching,
 })
 
 export default connect(mstp)(StatisticsContainer)

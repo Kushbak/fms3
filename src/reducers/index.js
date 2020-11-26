@@ -6,7 +6,10 @@ import contragentsReducer from './contragents'
 import projectsReducer from './projects'
 import profileReducer from './profile'
 import appReducer from './appReducer'
+import statisticsReducer from './statistics'
+import remittanceReducer from './remittance'
 import bankAccountsReducer from './bankAccounts'
+import currentValuesReducer from './currentValues'
 
 
 
@@ -18,5 +21,8 @@ export default combineReducers({
     contragentsReducer,
     bankAccountsReducer,
     profileReducer,
+    remittanceReducer,
+    statisticsReducer,
+    currentValuesReducer,
     appReducer
 })

@@ -32,6 +32,7 @@ export const initializeApp = () => (dispatch) => {
         }
     } catch (e) {
         console.log('Произошла ошибка ' + e);
+        toggleIsFetching(false)
     }
 }
 // REDUX-THUNKS  
@@ -54,7 +55,7 @@ const isTokenExpired = (token) => {
             // Checking if token is expired. N
             return true;
         } else return false;
-    } catch (err) {
+    } catch (err) { 
         return false;
     }
 }
@@ -73,9 +74,9 @@ const getProfile = () => {
 
 export const login = (formData) => (dispatch) => {
     try {
-        dispatch(toggleIsFetching(true))
+        dispatch(toggleIsFetching(true))  
         authApi.login(formData.fullName, formData.password)
-            .then(response => { 
+            .then(response => {  
                 setToken(response.data.token)
                 authApi.setToken(response.data.token)
                 dispatch(setAuthUserData(getProfile(), true))
@@ -87,6 +88,7 @@ export const login = (formData) => (dispatch) => {
                 console.log('Произошла ошибка ' + e)
             })
     } catch (e) {
+        toggleIsFetching(false)
         console.log('Произошла ошибка ' + e)
     }
 }
@@ -115,6 +117,7 @@ export const register = (formData) => (dispatch) => {
                 }
             })
     } catch (e) {
+        toggleIsFetching(false)
         console.log('Произошла ошибка ' + e)
     }
 }

@@ -1,13 +1,12 @@
 import React from 'react' 
 import { connect } from 'react-redux'
-import { addContragent, removeContragent } from '../../../actions/contragents'
+import { addContragent, deleteContragent } from '../../../actions/contragents'
 import { createCategory, deleteCategory } from '../../../actions/categories'
-import { addBankAccount, removeBankAccount } from '../../../actions/bankAccounts'  
-import { editBankAccountSuccess } from '../../../actions/bankAccounts'
-import { editExpenseCategorySuccess, editIncomeCategorySuccess } from '../../../actions/categories'
-import { editContragentSuccess } from '../../../actions/contragents'
-import { editProjectSuccess } from '../../../actions/projects'
-
+import { addBankAccount, deleteBankAccount } from '../../../actions/bankAccounts'  
+import { editBankAccount } from '../../../actions/bankAccounts'
+import { editCategory } from '../../../actions/categories'
+import { editContragent } from '../../../actions/contragents'
+import { editProject } from '../../../actions/projects' 
 import Settings from './Settings'
  
 const SettingsContainer = (props) => {
@@ -27,13 +26,12 @@ export default connect(mstp,
         createCategory,
         deleteCategory,
         addContragent,
-        removeContragent,
+        deleteContragent,
         addBankAccount, 
-        removeBankAccount,
-        editBankAccountSuccess,
-        editExpenseCategorySuccess,
-        editIncomeCategorySuccess,
-        editContragentSuccess,
-        editProjectSuccess
+        deleteBankAccount,
+        editBankAccount,
+        editCategory, 
+        editContragent,
+        editProject
     }
 )(SettingsContainer)
