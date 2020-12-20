@@ -2,7 +2,7 @@ const initialState = {
     data: [],
     transactionsFetching: false,
     creatingTransaction: false,
-    isPostMsgDisplayed: null,
+    displayedMsg: ['', true],
     totalRecords: 0,
     pageNumber: 1,
     pageSize: 10,
@@ -33,7 +33,7 @@ const transactionsReducer = (state = initialState, action) => {
         case 'DISPLAY_POST_MSG': {
             return {
                 ...state,
-                isPostMsgDisplayed: action.postMsg
+                displayedMsg: action.postMsg
             }
         }
         case 'SET_CURRENT_PAGE': {

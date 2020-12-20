@@ -35,7 +35,7 @@ const ProfileContainer = (props) => {
 const mstp = state => ({
     isAuth: state.profileReducer.isAuth,
     userData: state.profileReducer.userData,
-    isPostMsgDisplayed: state.transactionsReducer.isPostMsgDisplayed,
+    displayedMsg: state.transactionsReducer.displayedMsg,
     profile: state.profileReducer.profile
 })
 

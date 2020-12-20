@@ -74,7 +74,6 @@ export const loggedIn = () => {
 
 const decodeTokenData = () => {
     // Using jwt-decode npm package to decode the token 
-    console.log(decode(getToken()));
     return decode(getToken());
 }
 
@@ -90,7 +89,7 @@ export const login = (formData) => (dispatch) => {
         dispatch(startSubmit('login'))
         authApi.login(formData.username, formData.password)
             .then(response => {
-                updateToken(response.data.token)
+                dispatch(updateToken(response.data.token))
                 dispatch(initializedSuccess())
                 dispatch(stopSubmit('login'))
             }).catch(e => {

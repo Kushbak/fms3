@@ -135,7 +135,7 @@ const SettingsResponsive = (props) => {
                     </AccordionDetails>
 
                     <AccordionActions>
-                        <div className={styles.btnBlock}>
+                        <div className={[styles.btnBlock, props.numOfSection === entity.id ? styles.newItemBlock : undefined].join(' ')}>
                             {props.numOfSection === entity.id
                                 ? <NewCategoryForm numOfSection={props.numOfSection} setNum={props.setNum} type={entity.type} addNewCategory={props.addNewCategory} maxLength20={maxLength20} />
                                 : <GreenButton className={styles.addNewItemBtn} onClick={() => props.setNum(entity.id)} >добавить +</GreenButton>
@@ -147,8 +147,8 @@ const SettingsResponsive = (props) => {
 
             <TostifyAlert
                 setMsg={props.DisplayPostMsg}
-                isMsgDisplayed={props.isPostMsgDisplayed}
-                severity='success'
+                displayedMsg={props.displayedMsg[0]}
+                severity={props.displayedMsg[1] ? 'success' : 'error'}
             />
         </div>
     )

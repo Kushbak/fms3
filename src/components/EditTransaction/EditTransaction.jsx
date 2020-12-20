@@ -13,6 +13,7 @@ const EditTransactionModal = props => {
     return (
         <form className={styles.editTransactionForm} onSubmit={props.handleSubmit(props.onSubmit)}>
             <Field
+                className={props.classes.input}
                 component={MaterialDatePicker}
                 name='actionDate'
                 label='Дата'
@@ -24,30 +25,22 @@ const EditTransactionModal = props => {
                 }}
             />
             <Field
+                className={props.classes.input}
                 component={MaterialInput}
                 name='sum'
                 type="text"
+                label='Сумма'
                 placeholder='Сумма'
                 validate={[required]}
-                defaultValue={data.sum}
                 onChange={(e) => setFormData({ ...formData, sum: e.target.value })}
-            />
-
-            <Field
-                component={MaterialInput}
-                name='description'
-                type="text"
-                placeholder='Описание'
-                defaultValue={data.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
             {props.editedTransaction.scoreId
                 && <Field
+                    className={props.classes.input}
                     component={MaterialSelect}
                     name="scoreId"
                     label='Счет'
                     labelId='Score_label_id'
-                    defaultValue={data.scoreId}
                     onClick={props.getBankAccounts}
                     onChange={e => setAcc(+e.target.value)}
                 >
@@ -59,6 +52,7 @@ const EditTransactionModal = props => {
             {/* --------------------------------- */}
             {(props.editedTransaction.operationId && props.editedTransaction.discriminator !== 'Remittance')
                 && <Field
+                    className={props.classes.input}
                     component={MaterialSelect}
                     name='operationId'
                     label='Категория'
@@ -76,6 +70,7 @@ const EditTransactionModal = props => {
             }
             {(props.editedTransaction.projectId && props.editedTransaction.discriminator !== 'Remittance')
                 && <Field
+                    className={props.classes.input}
                     component={MaterialSelect}
                     name="projectId"
                     label='Проект'
@@ -89,6 +84,7 @@ const EditTransactionModal = props => {
             }
             {props.editedTransaction.counterPartyId && props.editedTransaction.discriminator !== 'Remittance'
                 ? <Field
+                    className={props.classes.input}
                     component={MaterialSelect}
                     name="counterPartyId"
                     label='Контрагент'
@@ -103,6 +99,7 @@ const EditTransactionModal = props => {
                     </option>)}
                 </Field>
                 : <Field
+                    className={props.classes.input}
                     component={MaterialSelect}
                     name="score2Id"
                     label='Счет 2'
@@ -120,6 +117,14 @@ const EditTransactionModal = props => {
                     }
                 </Field>
             }
+            <Field
+                className={props.classes.input}
+                component={MaterialInput}
+                name='description'
+                type="text"
+                placeholder='Описание'
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            />
             <div className={styles.btnBlock}>
                 <GreenButton type='submit' className={styles.operationBtn} disabled={props.pristine || props.submitting}>
                     {props.submitting ? 'Сохранение...' : 'Редактировать'}

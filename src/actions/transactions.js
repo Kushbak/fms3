@@ -55,9 +55,11 @@ export const getAllTransactions = (pageNumber, pageSize, filterData) => (dispatc
             })
             .catch(e => {
                 console.log(e)
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении транзакции. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении транзакции. Попробуйте чуть позже', false]))
     }
 }
 
@@ -69,6 +71,7 @@ export const getEditedTransactionData = (id) => (dispatch) => {
             })
     } catch (err) {
         console.log(err)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка. Попробуйте чуть позже', false]))
     }
 }
 
@@ -78,14 +81,16 @@ export const editTransaction = (formData) => (dispatch) => {
         transactionsApi.editTransaction(formData)
             .then(res => {
                 dispatch(getAllTransactions())
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
             })
             .catch(err => {
                 dispatch(stopSubmit('editTransaction'))
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
         dispatch(stopSubmit('editTransaction'))
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
     }
 }
 
@@ -96,7 +101,7 @@ export const createTransaction = (formData) => (dispatch) => {
         dispatch(startSubmit('remittance'))
         transactionsApi.createTransaction(formData)
             .then(res => {
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
                 dispatch(stopSubmit('income'))
                 dispatch(stopSubmit('expense'))
                 dispatch(stopSubmit('remittance'))
@@ -106,11 +111,13 @@ export const createTransaction = (formData) => (dispatch) => {
                 dispatch(stopSubmit('income'))
                 dispatch(stopSubmit('expense'))
                 dispatch(stopSubmit('remittance'))
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании транзакции. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
         dispatch(stopSubmit('income'))
-                dispatch(stopSubmit('expense'))
-                dispatch(stopSubmit('remittance'))
+        dispatch(stopSubmit('expense'))
+        dispatch(stopSubmit('remittance'))
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании транзакции. Попробуйте чуть позже', false]))
     }
 } 

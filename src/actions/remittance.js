@@ -31,11 +31,16 @@ export const createRemittance = (formData) => (dispatch) => {
                 dispatch(getAllTransactions())
                 dispatch(remittanceCreated(true))
                 dispatch(stopSubmit('remittance'))
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
+            })
+            .catch(e => {
+                console.log(e)
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
         dispatch(stopSubmit('remittance'))
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании. Попробуйте чуть позже', false]))
     }
 }
 
@@ -57,14 +62,15 @@ export const editRemittance = (formData) => (dispatch) => {
             .then(res => {
                 dispatch(getAllTransactions())
                 dispatch(stopSubmit('editTransaction'))
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
             })
             .catch(err => {
                 dispatch(stopSubmit('editTransaction'))
-                dispatch(DisplayPostMsg(err))
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
             })
     } catch (err) {
         console.log(err)
         dispatch(stopSubmit('editTransaction'))
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
     }
 }

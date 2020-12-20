@@ -25,6 +25,7 @@ const RemittanceForm = props => {
     return (
         <form className={styles.remittanceForm} onSubmit={props.handleSubmit(props.onSubmit)}>
             <Field
+                className={props.input}
                 component={MaterialDatePicker}
                 name='date'
                 id="date-picker-remittance"
@@ -36,13 +37,16 @@ const RemittanceForm = props => {
                 onChange={handleDateChange}
             />
             <Field 
+                className={props.input}
                 component={MaterialInput} 
                 name='sum' 
-                type="text" 
+                type="text"
+                label='Сумма'
                 placeholder={`Сумма ${props.operationType}а`} 
                 validate={[required]} 
             />
             <Field 
+                className={props.input}
                 component={MaterialSelect} 
                 label='Со счета' 
                 labelId='score1_label_id' 
@@ -56,6 +60,7 @@ const RemittanceForm = props => {
                 }
             </Field>
             <Field 
+                className={props.input}
                 component={MaterialSelect} 
                 label='На счет' 
                 labelId='score2_label_id' 
@@ -69,6 +74,7 @@ const RemittanceForm = props => {
                 }
             </Field>
             <Field 
+                className={props.input}
                 component={MaterialInput} 
                 name='description' 
                 type="text" 

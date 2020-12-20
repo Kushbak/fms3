@@ -19,6 +19,14 @@ const Profile = (props) => {
             display: 'flex',
             flexDirection: 'row',
         },
+        input: {
+            '& .MuiFormLabel-root.Mui-focused': {
+                color: '#32b482'
+            },
+            '& .MuiInput-underline:after': {
+                borderBottom: '2px solid #32b482'
+            }
+        },
     })
     const classes = useStyles()
 
@@ -29,38 +37,35 @@ const Profile = (props) => {
     if (!props.profile) return <Preloader />
     return (
         <div className={styles.profile}>
-            <div className={classes.cardProfile}> 
-                <div className={ styles.avatarBlock }>
-                    <img src={avatar} alt="avatar"/>
-                    <GreenButton>Выбрать фото</GreenButton>
-                </div>
-                <div className={ styles.descriptionBlock }>  
-                    <p className={styles.fullName}>{props.profile.firstName} {props.profile.lastName}</p> 
-                    <p className={styles.username}>{props.profile.username}</p>
-                    <p className={styles.email}>{props.profile.email}</p>
-                </div> 
-            </div>
+            <div className={ styles.descriptionBlock }>  
+                <p className={styles.fullName}>ФИО: {props.profile.name} {props.profile.surname}</p> 
+                <p className={styles.username}>Ник: {props.profile.username}</p>
+                <p className={styles.email}>Email: {props.profile.email}</p>
+            </div> 
                        
             <div className={ styles.btnBlock }>
-                <GreenButton onClick={() => props.logout()}>Выйти с аккаунта</GreenButton>
                 <GreenButton onClick={() => setEditUserDataModalOpen(true)}>Редактировать профиль</GreenButton>
                 <GreenButton onClick={() => setEditPasswordModalOpen(true)}>Изменить пароль</GreenButton>  
+                <GreenButton onClick={() => props.logout()}>Выйти с аккаунта</GreenButton>
             </div>
+            
             <EditUserDataModal
                 handleClose={() => setEditUserDataModalOpen(false)}
                 open={isEditUserModalOpen}
                 onSubmit={props.handleEditUserData}
+                input={classes.input}
             />
             <EditPassword
                 handleClose={() => setEditPasswordModalOpen(false)}
                 open={isEditPasswordModalOpen}
                 onSubmit={props.handleEditPassword}
+                input={classes.input}
             />
 
             <TostifyAlert
                 setMsg={props.DisplayPostMsg}
-                isMsgDisplayed={props.isPostMsgDisplayed}
-                severity='success'
+                displayedMsg={props.displayedMsg[0]}
+                severity={props.displayedMsg[1] ? 'success' : 'error'}
             />
         </div>
     )

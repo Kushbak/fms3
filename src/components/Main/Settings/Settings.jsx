@@ -57,8 +57,10 @@ export const NewCategoryForm =
                             />
                         }
                     </div>
-                    <button type='submit'><img src={saveBtn} onClick={(e) => props.setNum(0)} alt='save' /></button>
-                    <button type='button'><img src={closeBtn} onClick={(e) => props.setNum(0)} alt='close' /></button>
+                    <div className={styles.newItemBtnBlock}>
+                        <button type='submit'><img src={saveBtn} onClick={(e) => props.setNum(0)} alt='save' /></button>
+                        <button type='button'><img src={closeBtn} onClick={(e) => props.setNum(0)} alt='close' /></button>
+                    </div>
                 </form>
             )
         })
@@ -78,7 +80,6 @@ const Settings = (props) => {
     }
     let deleteFunc
     const [delFunc, setDelFunc] = useState({ delFunc: function () { } })
-    console.log(delFunc)
     return (
         <div className={styles.settings}>
             <div className={styles.settingsSection}>
@@ -173,7 +174,7 @@ const Settings = (props) => {
                             }
                         </Paper>
                     ))}
-                    <div className={styles.btnBlock}>
+                    <div className={[styles.btnBlock, props.numOfSection === entity.id ? styles.newItemBlock : undefined].join(' ')}>
                         {props.numOfSection === entity.id
                             ? <NewCategoryForm numOfSection={props.numOfSection} setNum={props.setNum} type={entity.type} addNewCategory={props.addNewCategory} maxLength20={maxLength20} />
                             : <GreenButton className={styles.addNewItemBtn} onClick={() => props.setNum(entity.id)} >добавить +</GreenButton>
@@ -184,8 +185,8 @@ const Settings = (props) => {
 
             <TostifyAlert
                 setMsg={props.DisplayPostMsg}
-                isMsgDisplayed={props.isPostMsgDisplayed}
-                severity='success'
+                displayedMsg={props.displayedMsg[0]}
+                severity={props.displayedMsg[1] ? 'success' : 'error'}
             />
 
             <Dialog onClose={() => setOpenDialog(false)} aria-labelledby="delete_settings_item_dialog" open={openDialog}>

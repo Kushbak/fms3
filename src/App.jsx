@@ -10,7 +10,8 @@ import { useEffect } from 'react'
 import { initializeApp, loggedIn } from './actions/authorization'  
 
 const App = () => {   
-    const isInited = useSelector(state => state.appReducer.initialized) 
+    const isInited = useSelector(state => state.appReducer.initialized)
+    const isAuth = useSelector(state => state.profileReducer.isAuth) 
     const dispatch = useDispatch() 
     useEffect(() => {
         if (localStorage.getItem('id_token')){  
@@ -21,7 +22,7 @@ const App = () => {
     if (loggedIn() && !isInited) return <Preloader /> 
     return (
         <div className="app">
-            <Header />
+            {isAuth && <Header />}
             <main className='main'>
                 <Switch>
                     <Route path='/authorization' render={() => <Authorization />} />

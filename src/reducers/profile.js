@@ -3,7 +3,8 @@ const initialState = {
     isFetching: false,
     isPosting: false,
     isAuth: false,
-    profile: null
+    profile: null,
+    role: null
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -12,7 +13,8 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userData: { ...action.userData },
-                isAuth: action.isAuth
+                isAuth: action.isAuth,
+                role: action.userData ? action.userData['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null,
             }
         } 
         case 'SET_IS_FETCHING': {

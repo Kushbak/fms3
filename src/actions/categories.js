@@ -54,9 +54,11 @@ export const getAllCategories = () => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении категорий. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении категорий. Попробуйте чуть позже', false]))
     }
 }
 
@@ -69,13 +71,15 @@ export const createCategory = (formData) => (dispatch) => {
                 } else {
                     dispatch(addExpenseCategorySuccess(formData))
                 }
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
             })
             .catch(e => {
                 console.log(e)
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании категорий. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании категорий. Попробуйте чуть позже', false]))
     }
 }
 
@@ -88,13 +92,15 @@ export const editCategory = (formData) => (dispatch) => {
                 } else {
                     dispatch(editExpenseCategorySuccess(formData))
                 }
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
             })
             .catch(e => {
                 console.log(e)
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании категорий. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании категорий. Попробуйте чуть позже', false]))
     }
 }
 
@@ -104,12 +110,14 @@ export const deleteCategory = (id) => (dispatch) => {
             .then(res => {
                 dispatch(removeIncomeCategorySuccess(id))
                 dispatch(removeExpenseCategorySuccess(id))
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
             })
             .catch(e => {
                 console.log(e)
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении категорий. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении категорий. Попробуйте чуть позже', false]))
     }
 }

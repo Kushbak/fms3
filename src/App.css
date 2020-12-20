@@ -21,7 +21,7 @@ button{
 button:focus{
     outline: none;
 }
-:root{
+html {
     font-size: 16px;
 }
 .section{
@@ -60,9 +60,12 @@ option{
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
 }
 .main{
     padding-top: 90px;
+    z-index: 2;
 }
  
 
@@ -98,12 +101,35 @@ body .tippy-tooltip{
 } 
 
 @media (max-width: 768px){
-    :root {
+    html {
         font-size: 14px;
     }
 }
 @media (max-width: 578px){
-	:root{
+	html {
 		font-size: 13px;
     }
+}
+
+
+@media (min-width: 576px){
+	.wrapper{
+		max-width: 540px;
+	}
+}
+@media (min-width: 768px){
+	.wrapper{
+		max-width: 720px;
+	}
+}  
+@media (min-width: 992px){ 
+	.wrapper{
+		max-width: 960px;
+	}
+}
+@media (min-width: 1440px){
+	.wrapper{
+		max-width: 1140px;
+		width: 100%;
+	}
 }

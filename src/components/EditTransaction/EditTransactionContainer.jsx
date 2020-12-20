@@ -21,6 +21,14 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    input: {
+        '& .MuiFormLabel-root.Mui-focused': {
+            color: '#32b482'
+        },
+        '& .MuiInput-underline:after': {
+            borderBottom: '2px solid #32b482'
+        }
+    },
 }))
 
 
@@ -72,8 +80,8 @@ const EditTransactionContainer = (props) => {
                     }
                     <TostifyAlert
                         setMsg={props.DisplayPostMsg}
-                        isMsgDisplayed={props.isPostMsgDisplayed}
-                        severity='success'
+                        displayedMsg={props.displayedMsg[0]}
+                        severity={props.displayedMsg[1] ? 'success' : 'error'}
                     />
                 </div>
             </Fade>
@@ -82,14 +90,14 @@ const EditTransactionContainer = (props) => {
 }
 
 const mstp = state => ({
-    bankAccounts: state.bankAccountsReducer.bankAccounts,
+    bankAccountsIndex: state.bankAccountsReducer.bankAccountsIndex,
     expenseCategories: state.categoriesReducer.expenseCategories,
     incomeCategories: state.categoriesReducer.incomeCategories,
     projects: state.projectsReducer.projects,
     contragents: state.contragentsReducer.contragents,
-    isPostMsgDisplayed: state.transactionsReducer.isPostMsgDisplayed,
+    displayedMsg: state.transactionsReducer.displayedMsg,
     editedTransaction: state.transactionsReducer.editedTransaction,
-    currentFormValues: getFormValues('editTransaction')(state),
+    initialValues: state.transactionsReducer.editedTransaction,
 })
 
 export default connect(mstp, {

@@ -12,6 +12,7 @@ const EditUserDataModal = (props) => {
                 <DialogTitle id="edit_profile_data_dialog">Редактировать профиль</DialogTitle>
                 <form className={styles.editModalForm} onSubmit={props.handleSubmit(props.onSubmit)}>
                     <Field 
+                        className={props.input}
                         component={MaterialInput} 
                         name='firstName' 
                         type='text' 
@@ -19,6 +20,7 @@ const EditUserDataModal = (props) => {
                         labelId='edit_firstName_label' 
                     />
                     <Field 
+                        className={props.input}
                         component={MaterialInput} 
                         name='lastName' 
                         type='text' 
@@ -26,6 +28,7 @@ const EditUserDataModal = (props) => {
                         labelId='edit_lastName_label' 
                     />
                     <Field 
+                        className={props.input}
                         component={MaterialInput} 
                         name='username' 
                         type='text' 
@@ -33,6 +36,7 @@ const EditUserDataModal = (props) => {
                         labelId='edit_username_label' 
                     />
                     <Field 
+                        className={props.input}
                         component={MaterialInput} 
                         name='email' type='text' label='Почта' labelId='edit_email_label' 
                     />

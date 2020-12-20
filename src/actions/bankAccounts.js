@@ -41,9 +41,11 @@ export const getBankAccounts = () => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении счетов. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении счетов. Попробуйте чуть позже', false]))
     }
 }
 
@@ -51,15 +53,16 @@ export const createBankAccount = (formData) => (dispatch) => {
     try {
         bankAccountsApi.createBankAccount(formData)
             .then(res => { 
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
                 dispatch(getBankAccounts())
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg('Непредвиденная ошибка. Попробуйте чуть позже'))
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании счета. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании счета. Попробуйте чуть позже', false]))
     }
 }
 
@@ -67,15 +70,16 @@ export const editBankAccount = (formData) => (dispatch) => {
     try { 
         bankAccountsApi.editBankAccount(formData)
             .then(res => { 
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
                 dispatch(editBankAccountSuccess(formData.id))
             }) 
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg('Непредвиденная ошибка. Попробуйте чуть позже'))
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
     }
 }
 
@@ -83,13 +87,15 @@ export const deleteBankAccount = (id) => (dispatch) => {
     try { 
         bankAccountsApi.deleteBankAccount(id)
             .then(res => { 
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
                 dispatch(removeBankAccount(id))
             })
             .catch(e => {
                 console.log(e)
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении. Попробуйте чуть позже', false]))
     }
 }

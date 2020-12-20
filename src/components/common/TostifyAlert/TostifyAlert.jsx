@@ -14,14 +14,14 @@ const TostifyAlert = props => {
         if (reason === 'clickaway') {
             return;
         }
-        props.setMsg(null)
+        props.setMsg(['', true])
         setOpen(false)
     }
 
     return ( 
-        <Snackbar open={!!props.isMsgDisplayed} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar open={!!props.displayedMsg} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity={props.severity}>
-                {props.isMsgDisplayed}
+                {props.displayedMsg}
             </Alert>
         </Snackbar>
     ) 

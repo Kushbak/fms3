@@ -14,6 +14,7 @@ const EditPassword = (props) => {
                 <DialogTitle id="edit_password_dialog">Изменить пароль</DialogTitle>
                 <form className={styles.editModalForm} onSubmit={props.handleSubmit(props.onSubmit)}>
                     <Field
+                        className={props.input}
                         component={MaterialInput}
                         name='oldPassword'
                         type='password'
@@ -22,6 +23,7 @@ const EditPassword = (props) => {
                         validate={[required,]}
                     />
                     <Field
+                        className={props.input}
                         component={MaterialInput}
                         name='password'
                         type='password'
@@ -30,6 +32,7 @@ const EditPassword = (props) => {
                         validate={[required, minLength8, newCannotBeOld]}
                     />
                     <Field
+                        className={props.input}
                         component={MaterialInput}
                         name='matchNewPassword'
                         type='password'

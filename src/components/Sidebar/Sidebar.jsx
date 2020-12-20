@@ -11,6 +11,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 const Sidebar = (props) => {
     const [isModalOpen, toggleModal] = useState(false)
+    const role = useSelector(state => state.profileReducer.role)
     const handleClose = () => {
         toggleModal(false)
     }
@@ -51,14 +52,14 @@ const Sidebar = (props) => {
                         </ListItem>
                     </NavLink>
 
-                    <NavLink to='/settings' onClick={props.toggleDrawer}>
+                    {role === 'admin' && <NavLink to='/settings' onClick={props.toggleDrawer}>
                         <ListItem button>
                             <ListItemIcon>
                                 <SettingsIcon style={{ fill: "#32b482" }} />
                             </ListItemIcon>
                             <ListItemText primary="Настройки" />
                         </ListItem>
-                    </NavLink>
+                    </NavLink>}
 
                 </List>
             </div>

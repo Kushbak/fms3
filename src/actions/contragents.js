@@ -43,14 +43,15 @@ export const createContragent = (formData) => (dispatch) => {
         contragentsApi.createContragent(formData)
             .then(res => {
                 dispatch(getContragents())
-                dispatch(DisplayPostMsg(res.data.message))
+                dispatch(DisplayPostMsg([res.data.message, true]))
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg('Непредвиденная ошибка. Попробуйте чуть позже'))
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании контрагента. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании контрагента. Попробуйте чуть позже', false]))
     }
 }
 export const editContragent = (formData) => (dispatch) => {
@@ -58,14 +59,15 @@ export const editContragent = (formData) => (dispatch) => {
         contragentsApi.editContragent(formData)
             .then(res => {
                 dispatch(editContragentSuccess(res.data))
-                dispatch(DisplayPostMsg('Контрагент успешно создан.'))
+                dispatch(DisplayPostMsg(['Контрагент успешно создан.', true]))
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg('Непредвиденная ошибка. Попробуйте чуть позже'))
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при изменении контрагента. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при изменении контрагента. Попробуйте чуть позже', false]))
     }
 }
 export const deleteContragent = (id) => (dispatch) => {
@@ -73,13 +75,14 @@ export const deleteContragent = (id) => (dispatch) => {
         contragentsApi.deleteContragent(id)
             .then(res => {
                 dispatch(removeContragent(id))
-                dispatch(DisplayPostMsg('Контрагент удален.'))
+                dispatch(DisplayPostMsg(['Контрагент удален.', true]))
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg('Непредвиденная ошибка. Попробуйте чуть позже'))
+                dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении контрагента. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
+        dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении контрагента. Попробуйте чуть позже', false]))
     }
 }

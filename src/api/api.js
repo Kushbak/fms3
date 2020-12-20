@@ -14,8 +14,6 @@ const dateFormatting = (value) => {
         a.getFullYear()
     ].join('.')
 
-    console.log(res)
-
     function addLeadZero(val) {
         if (+val < 10) return '0' + val
         return val

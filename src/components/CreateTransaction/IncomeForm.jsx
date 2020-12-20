@@ -24,6 +24,7 @@ const IncomeForm = props => {
     return (
         <form className={styles.transactionForm} onSubmit={props.handleSubmit(props.submit)}>
             <Field
+                className={props.input}
                 component={MaterialDatePicker}
                 name='date'
                 id="date-picker-income"
@@ -35,12 +36,15 @@ const IncomeForm = props => {
                 onChange={handleDateChange}
             />
             <Field
+                className={props.input}
                 component={MaterialInput}
                 name='sum'
+                label='Сумма'
                 placeholder={`Сумма ${props.operationType}а`}
                 validate={[required]}
             />
             <Field
+                className={props.input}
                 component={MaterialSelect}
                 label='Счет'
                 labelId='BankAccs_label_id'
@@ -50,6 +54,7 @@ const IncomeForm = props => {
                 {props.bankAccountsIndex.map((item) => <option key={item.id} value={item.id} label={item.name}>{item.name}</option>)}
             </Field>
             <Field
+                className={props.input}
                 component={MaterialSelect}
                 label='Категории'
                 labelId='Categories_label_id'
@@ -60,6 +65,7 @@ const IncomeForm = props => {
                 {props.incomeCategories.map(item => <option key={item.id} value={item.id} label={item.name}>{item.name}</option>)}
             </Field>
             <Field
+                className={props.input}
                 component={MaterialSelect}
                 label='Контрагент'
                 labelId='Contragents_label_id'
@@ -72,6 +78,7 @@ const IncomeForm = props => {
                 {props.contragents.map(item => <option key={item.id} value={item.id} label={item.name}>{item.name}</option>)}
             </Field>
             <Field
+                className={props.input}
                 component={MaterialSelect}
                 label='Проект'
                 labelId='Projects_label_id'
@@ -81,6 +88,7 @@ const IncomeForm = props => {
                 {props.projects.map(item => <option key={item.id} value={item.id} >{item.name}</option>)}
             </Field>
             <Field
+                className={props.input}
                 component={MaterialInput}
                 value={props.incomeValues?.description || ''}
                 name='description'

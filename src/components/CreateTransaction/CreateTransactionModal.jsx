@@ -26,6 +26,14 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    input: {
+        '& .MuiFormLabel-root.Mui-focused': {
+            color: '#32b482'
+        },
+        '& .MuiInput-underline:after': {
+            borderBottom: '2px solid #32b482'
+        }
+    },
 }))
 
 const CreateTransactionModal = memo((props) => { 
@@ -78,6 +86,7 @@ const CreateTransactionModal = memo((props) => {
                             incomeFormValues={props.incomeFormValues}
                             operationType='доход' 
                             onSubmit={submit} 
+                            input={classes.input}
                         />
                     }
                     { Tab === 2 
@@ -85,7 +94,8 @@ const CreateTransactionModal = memo((props) => {
                             initialValues={currentExpenseFields}
                             expenseFormValues={props.expenseFormValues} 
                             operationType='расход' 
-                            onSubmit={submit} 
+                            onSubmit={submit}
+                            input={classes.input}
                         />
                     }
                     { Tab === 3 
@@ -93,13 +103,14 @@ const CreateTransactionModal = memo((props) => {
                             initialValues={currentRemittanceFields} 
                             remittanceFormValues={props.remittanceFormValues}
                             operationType='перевод' 
-                            onSubmit={submit} 
+                            onSubmit={submit}
+                            input={classes.input}
                         />
                     } 
                     <TostifyAlert 
-                        setMsg={props.DisplayPostMsg} 
-                        isMsgDisplayed={props.isPostMsgDisplayed} 
-                        severity='success'
+                        setMsg={props.DisplayPostMsg}
+                        displayedMsg={props.displayedMsg[0]}
+                        severity={props.displayedMsg[1] ? 'success' : 'error'}
                     />
                 </div>
             </Fade>
@@ -113,7 +124,7 @@ const mstp = (state) => ({
     incomeCategories: state.categoriesReducer.incomeCategories,
     projects: state.projectsReducer.projects,
     contragents: state.contragentsReducer.contragents,
-    isPostMsgDisplayed: state.transactionsReducer.isPostMsgDisplayed,
+    displayedMsg: state.transactionsReducer.displayedMsg,
     creatingTransaction: state.transactionsReducer.creatingTransaction,
     incomeFormValues: getFormValues('income')(state),
     expenseFormValues: getFormValues('expense')(state),

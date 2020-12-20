@@ -121,7 +121,7 @@ const mstp = (state) => ({
     incomeCategories: state.categoriesReducer.incomeCategories,
     expenseCategories: state.categoriesReducer.expenseCategories,
     categoriesFetching: state.categoriesReducer.categoriesFetching, 
-    isPostMsgDisplayed: state.transactionsReducer.isPostMsgDisplayed,
+    displayedMsg: state.transactionsReducer.displayedMsg,
     contragents: state.contragentsReducer.contragents
 })
 

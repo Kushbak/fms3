@@ -78,7 +78,7 @@ const TransactionsContainer = (props) => {
         {
             field: 'actionDate',
             headerName: 'Дата',
-            width: 120,
+            width: 110,
             sortable: false,
         },
         {
@@ -97,7 +97,7 @@ const TransactionsContainer = (props) => {
             field: 'score',
             headerName: 'Счет',
             type: 'number',
-            width: 150,
+            width: 130,
             sortable: false,
         },
         {
@@ -109,13 +109,13 @@ const TransactionsContainer = (props) => {
         {
             field: 'operationName',
             headerName: 'Категория',
-            width: 200,
+            width: 220,
             sortable: false,
         },
         {
             field: 'projectName',
             headerName: 'Проект',
-            width: 120,
+            width: 140,
             sortable: false,
         },
         // {
@@ -133,6 +133,7 @@ const TransactionsContainer = (props) => {
             pagesSize={props.pageSize}
         />
     } 
+
     const rows = 
         props.transactions.map(item => {
             let now = new Date(item.actionDate)

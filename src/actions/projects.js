@@ -43,7 +43,7 @@ export const createProject = (formData) => (dispatch) => {
         projectsApi.createProject(formData).then(res => {
             dispatch(getProjects())
 
-            dispatch(DisplayPostMsg(res.data.message))
+            dispatch(DisplayPostMsg([res.data.message, true]))
         })
     } catch (e) {
         console.log(e)
@@ -55,7 +55,7 @@ export const editProject = (formData) => (dispatch) => {
         projectsApi.editProject(formData).then(res => {
             dispatch(editProjectSuccess(res.data))
 
-            dispatch(DisplayPostMsg(res.data.message))
+            dispatch(DisplayPostMsg([res.data.message, true]))
         })
     } catch (e) {
         console.log(e)
@@ -67,7 +67,7 @@ export const deleteProject = (formData) => (dispatch) => {
         projectsApi.deleteProject(formData).then(res => {
             dispatch(getProjects())
 
-            dispatch(DisplayPostMsg(res.data.message))
+            dispatch(DisplayPostMsg([res.data.message, true]))
         })
     } catch (e) {
         console.log(e)
