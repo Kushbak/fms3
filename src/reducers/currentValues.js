@@ -2,6 +2,7 @@ const initialState = {
     currentIncomeFields: {},
     currentExpenseFields: {},
     currentRemittanceFields: {},
+    filterTransactionValues: {}
 }
 
 const currentValuesReducer = (state = initialState, action) => {
@@ -21,6 +22,11 @@ const currentValuesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentRemittanceFields: action.remittanceValues
+            }
+        case 'SET_FILTER_TRANSACTION_VALUES':
+            return {
+                ...state,
+                filterTransactionValues: action.filterTransactionValues
             }
         default:
             return state

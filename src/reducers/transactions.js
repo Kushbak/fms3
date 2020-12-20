@@ -7,7 +7,7 @@ const initialState = {
     pageNumber: 1,
     pageSize: 10,
     isModalOpen: false,
-    editedTransaction: {}
+    editedTransaction: null
 }
 
 const transactionsReducer = (state = initialState, action) => {
@@ -16,12 +16,6 @@ const transactionsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.transactions, 
-            }
-        }
-        case 'ADD_TRANSACTION': {
-            return {
-                ...state,
-                data: [ { id: state.transactions.length + 1, ...action.transaction }, ...state.transactions ]
             }
         }
         case 'TRANSACTIONS_FETCHING': {

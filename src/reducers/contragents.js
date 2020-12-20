@@ -22,7 +22,7 @@ const contragentsReducer = (state = initialState, action) => {
         case 'REMOVE_CONTRAGENT':
             return {
                 ...state,
-                contragents: state.contragents.filter(item => item.name !== action.contragent)
+                contragents: state.contragents.filter(item => item.id !== action.contragentId)
             }
         default:
             return state

@@ -14,9 +14,9 @@
     display: flex;
     justify-content: space-between;
     background: #fff;
-    padding: 8px 12px;
+    padding: 10px 12px;
     margin-right: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 .settingsItem input{
     height: 26px;
@@ -35,7 +35,7 @@
     margin-right: 4px;
 }
 .editInput{
-    width: 80%;
+    width: 100%;
 }
 .btnBlock{    
     text-align: center;
@@ -58,8 +58,7 @@
     height: 40px; 
 } 
 .newCategoryForm .formBlock{
-    display: flex;
-    flex-direction: row;
+    display: flex; 
 }
 .newCategoryForm .formBlock input{
     height: 30px;
@@ -68,9 +67,49 @@
     width: 20px;
 }
 
-.inputs{
+.editElementInputs{
+    display: flex;
+    flex-direction: column;
     margin-right: 5px; 
+} 
+.editElementInputs input{
+    margin-bottom: 5px;
 }
-.inputs input{
-    width: 100%;
+.editElementInputs label{
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .settings{
+        flex-direction: column;
+        align-items: center;
+    }
+    .settings > * {
+        flex-basis: 100%;
+        width: 100%;
+    }
+    .settingsItem{
+        height: 70px;
+        align-items: center;
+    }
+    
+    .newElementInputs{
+        flex-direction: row;
+    }
+    .newElementInputs > * {
+        margin-right: 10px;
+    }
+    .newElementBtns > img {
+        margin-right: 20px;
+        width: edit;
+    }
+
+    
+    .newCategoryForm .formBlock{
+        flex-direction: column;
+    }
 }

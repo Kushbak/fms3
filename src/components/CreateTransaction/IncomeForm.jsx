@@ -1,93 +1,102 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { required } from '../../utils/validators/validators'
-import { DateInput, Input, Select, Datalist } from '../common/FormsControl/FormControls'
+import { MaterialSelect, MaterialInput, MaterialDatePicker } from '../common/FormsControl/FormControls'
 import styles from './CreateTransaction.module.css'
+import GreenButton from '../common/GreenButton/GreenButton'
 import { useEffect } from 'react'
 
 const IncomeForm = props => {
-    const now = new Date().toISOString().slice(0, 10)
-    const [datee, setDate] = useState(now)
-    const currentFormValues = useRef();
-    currentFormValues.current = props.incomeValues;
+    const [selectedDate, setSelectedDate] = useState(new Date())
+
     const setIncomeFormValues = () => {
-        if (!!props.incomeFormValues) { 
+        if (!!props.incomeFormValues) {
             props.setIncomeValues(props.incomeFormValues)
-        } 
-    } 
-    // console.log(props.incomeValues);
-    // console.log(props.incomeFormValues);    
-    // console.log(currentFormValues.current);
+        }
+    }
+    const handleDateChange = (date) => {
+        setSelectedDate(date)
+        setIncomeFormValues()
+    }
+    useEffect(() => {
+        setIncomeFormValues()
+    }, [props.incomeFormValues])
     return (
-        <form className={styles.transactionForm} onSubmit={props.handleSubmit(props.submit)} onChange={setIncomeFormValues}>  
-            <Field 
-                component={DateInput} 
-                name='date' 
-                propsvalue={props.incomeValues?.date || datee} 
-                onChange={(e) => setDate(e.target.value)} 
+        <form className={styles.transactionForm} onSubmit={props.handleSubmit(props.submit)}>
+            <Field
+                component={MaterialDatePicker}
+                name='date'
+                id="date-picker-income"
+                label="Date picker income"
+                value={selectedDate}
+                KeyboardButtonProps={{
+                    'aria-label': 'change date income',
+                }}
+                onChange={handleDateChange}
             />
-            <Field 
-                component={Input}  
-                propsvalue={currentFormValues.current?.sum} 
-                name='sum'  
-                placeholder={`Сумма ${props.operationType}а`} 
-                validate={[required]} 
+            <Field
+                component={MaterialInput}
+                name='sum'
+                placeholder={`Сумма ${props.operationType}а`}
+                validate={[required]}
             />
-            <Field 
-                component={Select} 
-                name="score1"  
+            <Field
+                component={MaterialSelect}
+                label='Счет'
+                labelId='BankAccs_label_id'
+                name="score1"
                 onClick={props.getBankAccounts}
-            > 
-                {props.bankAccounts.map((item, i) => {
-                    if (currentFormValues.current?.bankAccount === item.id){ 
-                        return <option key={item.id} value={item.id} selected>{item.name}</option>}
-                    if (currentFormValues.current?.bankAccount && i === 0) {
-                        return <option key={item.id} value={item.id} selected>{item.name}</option>}
-                    return <option key={item.id} value={item.id} >{item.name}</option>
-                })}
+            >
+                {props.bankAccountsIndex.map((item) => <option key={item.id} value={item.id} label={item.name}>{item.name}</option>)}
             </Field>
-            <Field 
-                component={Select} 
-                name="category" 
+            <Field
+                component={MaterialSelect}
+                label='Категории'
+                labelId='Categories_label_id'
+                name="category"
                 validate={[required]}
                 onClick={props.getAllCategories}
-            > 
-                { props.incomeCategories.map(item => {
-                    if (+item.id === 2) return <option key={item.id} value={item.id} selected>{item.name}</option>
-                    return <option key={item.id} value={item.id} >{item.name}</option>
-                })}
+            >
+                {props.incomeCategories.map(item => <option key={item.id} value={item.id} label={item.name}>{item.name}</option>)}
             </Field>
-            <Field 
-                component={Select} 
-                name="contragent" 
-                id='contragentsInput' 
-                list="contragentsInput" 
+            <Field
+                component={MaterialSelect}
+                label='Контрагент'
+                labelId='Contragents_label_id'
+                name="contragent"
+                id='contragentsInput'
+                list="contragentsInput"
                 placeholder='Контрагент'
                 onClick={props.getContragents}
             >
-                <option>Контрагент(Не выбрано)</option>
-                {props.contragents.map(item => <option key={item.id} value={item.id} >{item.name}</option>)}
+                {props.contragents.map(item => <option key={item.id} value={item.id} label={item.name}>{item.name}</option>)}
             </Field>
-            <Field 
-                component={Select} 
+            <Field
+                component={MaterialSelect}
+                label='Проект'
+                labelId='Projects_label_id'
                 name="project"
                 onClick={props.getProjects}
             >
-                <option>Проект(Не выбрано)</option>
                 {props.projects.map(item => <option key={item.id} value={item.id} >{item.name}</option>)}
             </Field>
-            <Field 
-                component={Input} 
-                value={props.incomeValues?.description || ''} 
-                name='description' 
-                type="text" 
-                placeholder='Комментарий' 
+            <Field
+                component={MaterialInput}
+                value={props.incomeValues?.description || ''}
+                name='description'
+                type="text"
+                placeholder='Описание'
             />
             <div className={styles.btnBlock}>
-                <button className={styles.operationBtn} disabled={props.pristine || props.submitting}>{props.submitting ? 'Создание...' : 'Создать'}</button>
+                <GreenButton type='submit' className={styles.operationBtn} disabled={props.submitting}>
+                    {props.submitting ? 'Создание...' : 'Создать'}
+                </GreenButton>
             </div>
         </form>
     )
 }
 
-export default reduxForm({ form: 'income' })(IncomeForm)
+export default reduxForm({
+    form: 'income',
+    enableReinitialize: true
+})(IncomeForm)

@@ -29,7 +29,7 @@ const categoriesReducer = (state = initialState, action) => {
         case 'REMOVE_INCOME_CATEGORY':
             return {
                 ...state,
-                incomeCategories: state.incomeCategories.filter(item => item.name !== action.incomeCategory)
+                incomeCategories: state.incomeCategories.filter(item => item.id !== action.incomeCategoryId)
             }
         case 'ADD_EXPENSE_CATEGORY':
             return {
@@ -39,7 +39,7 @@ const categoriesReducer = (state = initialState, action) => {
         case 'REMOVE_EXPENSE_CATEGORY':
             return {
                 ...state,
-                expenseCategories: state.expenseCategories.filter(item => item.name !== action.expenseCategory)
+                expenseCategories: state.expenseCategories.filter(item => item.id !== action.expenseCategoryId)
             }
         case 'EDIT_EXPENSE_CATEGORY':
             return {

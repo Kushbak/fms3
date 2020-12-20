@@ -1,29 +1,35 @@
 const initialState = { 
-    bankAccounts: [ ], 
+    bankAccountsIndex: [], 
+    bankAccountDetails: [],
     accountsFetching: true
 }
 
 const bankAccountsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'SET_BANK_ACCOUNTS':
+        case 'SET_BANK_ACCOUNTS_INDEX':
             return {
                 ...state,
-                bankAccounts: [...action.bankAccounts]
+                bankAccountsIndex: [...action.bankAccountsIndex]
+            }
+        case 'SET_BANK_ACCOUNTS_DETAILS':
+            return {
+                ...state,
+                bankAccountDetails: [...action.bankAccountDetails]
             }
         case 'ADD_BANK_ACCOUNT':
             return {
                 ...state,
-                bankAccounts: [...state.bankAccounts, action.bankAccount]
+                bankAccountsIndex: [...state.bankAccountsIndex, action.bankAccount]
             }
         case 'EDIT_BANK_ACCOUNT': 
             return {
                 ...state,
-                bankAccounts: state.bankAccounts.map(item => item.id === action.bankAccount.id ? action.bankAccount : item)
+                bankAccountsIndex: state.bankAccountsIndex.map(item => item.id === action.bankAccountId ? action.bankAccountId : item)
             }
         case 'REMOVE_BANK_ACCOUNT':
             return {
                 ...state,
-                bankAccounts: state.bankAccounts.filter(item => item.name !== action.bankAccount)
+                bankAccountsIndex: state.bankAccountsIndex.filter(item => item.id !== action.bankAccountId)
             }
         case 'BANK_ACCOUNTS_FETCHING':
             return { 

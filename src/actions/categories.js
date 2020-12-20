@@ -1,9 +1,10 @@
 import { categoriesApi } from "../api/api"
+import { DisplayPostMsg } from "./transactions"
 
 export const getIncomeCategories = (categories) => ({
     type: 'SET_INCOME_CATEGORIES',
     categories
-}) 
+})
 export const addIncomeCategorySuccess = (incomeCategory) => ({
     type: 'ADD_INCOME_CATEGORY',
     incomeCategory
@@ -12,9 +13,9 @@ export const editIncomeCategorySuccess = (incomeCategory) => ({
     type: 'EDIT_INCOME_CATEGORY',
     incomeCategory
 })
-export const removeIncomeCategorySuccess = (incomeCategory) => ({
+export const removeIncomeCategorySuccess = (incomeCategoryId) => ({
     type: 'REMOVE_INCOME_CATEGORY',
-    incomeCategory
+    incomeCategoryId
 })
 
 
@@ -25,14 +26,14 @@ export const getExpenseCategories = (categories) => ({
 export const addExpenseCategorySuccess = (expenseCategory) => ({
     type: 'ADD_EXPENSE_CATEGORY',
     expenseCategory
-}) 
+})
 export const editExpenseCategorySuccess = (expenseCategory) => ({
     type: 'EDIT_EXPENSE_CATEGORY',
     expenseCategory
 })
-export const removeExpenseCategorySuccess = (expenseCategory) => ({
+export const removeExpenseCategorySuccess = (expenseCategoryId) => ({
     type: 'REMOVE_EXPENSE_CATEGORY',
-    expenseCategory
+    expenseCategoryId
 })
 
 
@@ -51,62 +52,64 @@ export const getAllCategories = () => (dispatch) => {
                 dispatch(getExpenseCategories([...res.data.filter(item => +item.operationTypeId === 2)]))
                 dispatch(categoriesFetching(false))
             })
-            .catch(e => { 
+            .catch(e => {
                 console.log(e)
-                getAllCategories()
             })
     } catch (e) {
         console.log(e)
-        getAllCategories()
     }
 }
 
 export const createCategory = (formData) => (dispatch) => {
     try {
-    categoriesApi.createCategory(formData)
-    .then(() => {
-        if(formData.type === 1){ 
-            dispatch(addIncomeCategorySuccess(formData))
-        } else { 
-            dispatch(addExpenseCategorySuccess(formData))
-        }
-    })
+        categoriesApi.createCategory(formData)
+            .then(res => {
+                if (formData.type === 1) {
+                    dispatch(addIncomeCategorySuccess(formData))
+                } else {
+                    dispatch(addExpenseCategorySuccess(formData))
+                }
+                dispatch(DisplayPostMsg(res.data.message))
+            })
+            .catch(e => {
+                console.log(e)
+            })
     } catch (e) {
-        console.log(e);
+        console.log(e)
     }
 }
 
-export const editCategory = (formData) => (dispatch) => { 
-    try{
-        categoriesApi.editCategory(formData).then(res => { 
-            if (formData.operationTypeId === 1) { 
-                dispatch(editIncomeCategorySuccess(formData))
-            } else { 
-                dispatch(editExpenseCategorySuccess(formData))
-            }
-        })
-    } catch(e) {
-        console.log(e);
+export const editCategory = (formData) => (dispatch) => {
+    try {
+        categoriesApi.editCategory(formData)
+            .then(res => {
+                if (formData.operationTypeId === 1) {
+                    dispatch(editIncomeCategorySuccess(formData))
+                } else {
+                    dispatch(editExpenseCategorySuccess(formData))
+                }
+                dispatch(DisplayPostMsg(res.data.message))
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    } catch (e) {
+        console.log(e)
     }
 }
 
-export const deleteCategory = (formData) => (dispatch) => {  
-    try{ 
-            debugger
-
-        categoriesApi.deleteCategory(formData.id)
-        .then(() => {  
-            if (formData.type === 1) {  
-            debugger
-
-                dispatch(removeIncomeCategorySuccess(formData))
-            } else {  
-            debugger
-
-                dispatch(removeExpenseCategorySuccess(formData))
-            }
-        })
-    } catch(e) {
-        console.log(e);
+export const deleteCategory = (id) => (dispatch) => {
+    try {
+        categoriesApi.deleteCategory(id)
+            .then(res => {
+                dispatch(removeIncomeCategorySuccess(id))
+                dispatch(removeExpenseCategorySuccess(id))
+                dispatch(DisplayPostMsg(res.data.message))
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    } catch (e) {
+        console.log(e)
     }
 }

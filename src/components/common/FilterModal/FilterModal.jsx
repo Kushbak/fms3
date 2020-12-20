@@ -1,65 +1,120 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './FilterModal.module.css'
-import { reduxForm, Field } from 'redux-form'
-import categoriesReducer from '../../../reducers/categories'
-import { useReducer } from 'react'
-import { connect } from 'react-redux'
-import { Checkbox } from '../FormsControl/FormControls'
+import { reduxForm, Field } from 'redux-form' 
+import { MenuItem } from '@material-ui/core'
+import { MaterialSelect, MaterialDatePicker } from '../FormsControl/FormControls'  
+import GreenButton from '../GreenButton/GreenButton'
 
-const FilterModal = props => { 
-    const submit = formData => {
-        console.table(formData)
+const FilterModalComponent = (props) => {   
+    const reset = () => {
+        props.setFilterValues({})
+        props.reset()
     }  
+    const [date1, setDate1] = useState()
+    const [date2, setDate2] = useState()
+    // TODO Зарефакторить код для пользования во всех местах
+    // TODO Добавить условие на показ только нужных полей из всех
+    // TODO Возможность отправлять в пропсы свои функции вместо захардкоженных(к примеру тот же setFilterValues())
+    // TODO Исправить круговорот данных для вставки полей по умолчанию
     return (
         <div className={styles.filterBlock}>
-            <h3>Filter</h3>
-            <form className={styles.form} onSubmit={props.handleSubmit(submit)}> 
-                {props.incomes && <div className="filterItem">
-                    <h4 className="filterTitle">Доходы</h4>
-                    {props.incomes.map(item => (
-                        <div className="">
-                            <label>
-                                <Field component={Checkbox} type='checkbox' name='доходы' value={String(item.id)}/>{item.name}
-                            </label>
-                        </div>
-                    ))}    
-                </div>}
+            <h3>Фильтрация</h3>
+            <form className={styles.form} onSubmit={props.handleSubmit(props.onSubmit)} onChange={() => props.setFilterFormValues()}>
 
-                {props.expenses && <div className="filterItem">
-                    <h4 className="filterTitle">Расходы</h4>
-                    {props.expenses.map(item => (
-                        <div className="">
-                            <label>
-                                <Field component={Checkbox} type='checkbox' name='расходы' value={String(item.id)}/>{item.name}
-                            </label>
-                        </div>
+                <div className={styles.dates}>
+                    От
+                    <Field  
+                        component={MaterialDatePicker}
+                        value={date1}
+                        onChange={(e) => setDate1(e)}
+                        name='StartDate'
+                        id="date-picker-filtering-start"
+                        label="Date picker filtering start"
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date filtering',
+                        }}
+                    />
+                До
+                    <Field      
+                        component={MaterialDatePicker}
+                        value={date2}
+                        onChange={(e) => setDate2(e)}
+                        name='EndDate'
+                        id="date-picker-filtering-end"
+                        label="Date picker filtering end"
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date filtering',
+                        }}
+                    />
+                </div>
+                <Field 
+                    component={MaterialSelect} 
+                    name='OperationsId'  
+                    label='Категория'
+                    labelId='Category_label_id'
+                    onClick={props.getAllCategories}
+                    multiple
+                >  
+                    {props.incomes.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                        </MenuItem>
+                    ))}  
+                </Field>
+                <Field
+                    component={MaterialSelect}
+                    name='CounterPartiesId' 
+                    label='Контрагент'
+                    labelId='Contragent_label_id'
+                    onClick={props.getContragents}
+                    multiple
+                >
+                    {props.contragents.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                        </MenuItem>
                     ))}
-                </div>}
-
-
-                {props.contragents && <div className="filterItem">
-                    <h4 className="filterTitle">Контрагенты</h4>
-                    {props.contragents.map(item => (
-                        <div className="">
-                            <label>
-                                <Field component={Checkbox} type='checkbox' name='контрагенты' value={String(item.id)}/>{item.name}
-                            </label>
-                        </div>
+                </Field>
+                <Field
+                    component={MaterialSelect}
+                    name='ScoresId' 
+                    label='Счет'
+                    labelId='BankAccount_label_id'
+                    onClick={props.getBankAccounts}
+                    multiple
+                >
+                    {props.bankAccountsIndex.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                        </MenuItem>
                     ))}
-                </div>}
+                </Field>
+                <Field
+                    component={MaterialSelect}
+                    name='ProjectsId' 
+                    label='Проект'
+                    labelId='Project_label_id'
+                    onClick={props.getProjects}
+                    multiple
+                >
+                    {props.projects.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                        </MenuItem>
+                    ))}
+                </Field>
                 
-                <div className="btnBlock">
-                    <button className='button'>Log</button>
+                <div className={styles.btnBlock}>
+                    <GreenButton type='submit'>Применить</GreenButton>
+                    <GreenButton onClick={reset}>Очистить</GreenButton>  
                 </div>
             </form>
         </div>
     )
 }
 
-const mstp = state => ({
-    incomes: state.categoriesReducer.incomeCategories,
-    expenses: state.categoriesReducer.expenseCategories,
-    contragents: state.contragentsReducer.contragents
-})
+export default reduxForm({
+    form: 'filter',
+    enableReinitialize: true
+})(FilterModalComponent)
 
-export default connect(mstp)(reduxForm({form: 'filter'})(FilterModal))

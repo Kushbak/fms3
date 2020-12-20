@@ -1,57 +1,68 @@
 import React from 'react'
-import styles from './Profile.module.css'
-import avatar from '../../../assets/img/avatar.jpg'
-import { Field, reduxForm } from 'redux-form'
-import { Input } from '../../common/FormsControl/FormControls'
-import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../../actions/authorization'
-import { Redirect } from 'react-router-dom'
-import { useState } from 'react'
+import styles from './Profile.module.css' 
+import avatar from '../../../assets/img/avatar.jpg' 
+import { useState } from 'react' 
+import EditUserDataModal from './EditUserData/EditUserDataModal'
+import EditPassword from './EditPassword/EditPassword'
+import { makeStyles } from '@material-ui/core/styles';
+import GreenButton from '../../common/GreenButton/GreenButton'
+import TostifyAlert from '../../common/TostifyAlert/TostifyAlert'
+import { useEffect } from 'react'
+import Preloader from '../../common/Preloader/Preloader'
 
-const Profile = (props) => {
-    const [whichField, setField] = useState('')
-    
-    const dispatch = useDispatch()
-    const isAuth = useSelector(state => state.profileReducer.isAuth)
+const Profile = (props) => { 
+    const [isEditUserModalOpen, setEditUserDataModalOpen] = useState(false)
+    const [isEditPasswordModalOpen, setEditPasswordModalOpen] = useState(false)
+    const useStyles = makeStyles({
+        cardProfile: {
+            maxWidth: '475px',
+            display: 'flex',
+            flexDirection: 'row',
+        },
+    })
+    const classes = useStyles()
 
-    if (!isAuth) return <Redirect to='/'/>
+    useEffect(() => {
+        props.getProfileData()
+    }, [])
+
+    if (!props.profile) return <Preloader />
     return (
-        <div className={ styles.profile }>
-            <div className={ styles.avatarBlock }>
-                <img src={avatar} alt="avatar"/>
-                <button>Выбрать фото</button>
+        <div className={styles.profile}>
+            <div className={classes.cardProfile}> 
+                <div className={ styles.avatarBlock }>
+                    <img src={avatar} alt="avatar"/>
+                    <GreenButton>Выбрать фото</GreenButton>
+                </div>
+                <div className={ styles.descriptionBlock }>  
+                    <p className={styles.fullName}>{props.profile.firstName} {props.profile.lastName}</p> 
+                    <p className={styles.username}>{props.profile.username}</p>
+                    <p className={styles.email}>{props.profile.email}</p>
+                </div> 
             </div>
-            <div className={ styles.descriptionBlock }>
-                <form onSubmit={ props.handleSubmit }>
-                    <div className={ styles.formItem }>
-                        <p>ФИО</p>
-                        {whichField
-                            ? <Field component={ Input } onBlur={() => setField(false)} autoFocus={true} type="text" placeholder='ФИО'/>
-                            : <p onClick={() => setField(true)}>text</p>
-                        }
-                    </div>
-                    <div className={ styles.formItem }>
-                        <p>Логин</p>
-                        {whichField
-                            ? <Field component={ Input } type="text" placeholder='Логин'/>
-                            : <p>text</p>
-                        }
-                    </div>
-                    <div className={ styles.formItem }>
-                        <p>Пароль</p>
-                        {whichField
-                            ? <Field component={ Input } type="text" placeholder='Пароль'/>
-                            : <p>text</p>
-                        }
-                    </div>
-                    <button>Сохранить</button>
-                </form>
-            </div>
+                       
             <div className={ styles.btnBlock }>
-                <button className="button" onClick={() => dispatch(logout())}>Выйти с аккаунта</button>
+                <GreenButton onClick={() => props.logout()}>Выйти с аккаунта</GreenButton>
+                <GreenButton onClick={() => setEditUserDataModalOpen(true)}>Редактировать профиль</GreenButton>
+                <GreenButton onClick={() => setEditPasswordModalOpen(true)}>Изменить пароль</GreenButton>  
             </div>
+            <EditUserDataModal
+                handleClose={() => setEditUserDataModalOpen(false)}
+                open={isEditUserModalOpen}
+                onSubmit={props.handleEditUserData}
+            />
+            <EditPassword
+                handleClose={() => setEditPasswordModalOpen(false)}
+                open={isEditPasswordModalOpen}
+                onSubmit={props.handleEditPassword}
+            />
+
+            <TostifyAlert
+                setMsg={props.DisplayPostMsg}
+                isMsgDisplayed={props.isPostMsgDisplayed}
+                severity='success'
+            />
         </div>
     )
-}
-
-export default reduxForm({ form: 'profile' })(Profile)
+} 
+export default Profile 

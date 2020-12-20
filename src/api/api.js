@@ -1,31 +1,56 @@
-import * as axios from 'axios' 
+import * as axios from 'axios'
 
-const instance = axios.create({ 
-    baseURL: 'https://testrepobackend.herokuapp.com/',  
-    headers: { 
+
+const now = new Date()
+const nextMonth = new Date().setMonth(now.getMonth() + 1)
+const endOfMonth = new Date(nextMonth).setDate(now.getDate() - now.getDate())
+
+const dateFormatting = (value) => {
+    let a = new Date(value)
+
+    let res = [
+        addLeadZero(a.getMonth() + 1),
+        addLeadZero(a.getDate()),
+        a.getFullYear()
+    ].join('.')
+
+    console.log(res)
+
+    function addLeadZero(val) {
+        if (+val < 10) return '0' + val
+        return val
+    }
+    return res
+}
+
+const instance = axios.create({
+    baseURL: 'https://testrepobackend.herokuapp.com/',
+    headers: {
         'Content-Type': 'application/json; charset=utf-8'
     }
-}) 
+})
 
-export const authApi = { 
-    setToken(token) { 
-        instance.defaults.headers.common['Authorization'] = 'Bearer ' + token; 
+export const authApi = {
+    setToken(token) {
+        instance.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     },
-    login(username, pass) {  
-        return instance.post(`authenticate/login`, { 
-            "Username": username, 
+    login(username, pass) {
+        return instance.post(`authenticate/login`, {
+            "Username": username,
             "Password": pass
-        }) 
+        })
     },
-    register(formData) { 
-        return instance.post(`authenticate/register`, { 
-            "Username": formData.login,
+    register(formData) {
+        return instance.post(`authenticate/register`, {
+            "Username": formData.username,
+            "Name": formData.firstName,
+            "Surname": formData.lastName,
             "Email": formData.email,
             "Password": formData.password
         })
     }
 }
- 
+
 // ! edit, post
 export const contragentsApi = {
     getContragents() {
@@ -48,6 +73,34 @@ export const statisticsApi = {
     },
     getOperationStatistics() {
         return instance.get(`Finance/Operations`)
+    },
+    getStatistics(filterData) {
+        let paramsObj = '?'
+        if (filterData) {
+            for (let item in filterData) {
+                if (item !== 'StartDate' && item !== 'EndDate' && item !== 'OperationTypesId') {
+                    filterData[item].forEach(value => {
+                        paramsObj += `${item}=${value}&`
+                    })
+                }
+            }
+        }
+        return instance.get(`Finance/Statistics${paramsObj}`, {
+            params: {
+                StartDate: filterData?.StartDate 
+                    ? dateFormatting(filterData?.StartDate) 
+                    : dateFormatting(new Date(new Date().setDate(1))),
+                EndDate: filterData?.EndDate
+                    ? dateFormatting(filterData?.EndDate)
+                    : dateFormatting(new Date(endOfMonth)),
+                OperationTypesId: filterData?.OperationTypesId
+                    ? filterData?.OperationTypesId
+                    : 1
+            }
+        })
+    },
+    getSettings() {
+        return instance.get(`Finance/Settings`)
     }
 }
 
@@ -71,7 +124,7 @@ export const categoriesApi = {
     deleteCategory(id) {
         return instance.delete(`operation/delete?id=${+id}`)
     }
-} 
+}
 
 // ! edit 
 export const projectsApi = {
@@ -90,55 +143,78 @@ export const projectsApi = {
 }
 
 export const remittanceApi = {
-    getRemittance(pageNumber = 1, pageSize = 10) {
-        return instance.get(`remittance/index?PageNumber=${pageNumber}&PageSize=${pageSize}`)
-    },
-    createRemittance(formData) { 
-        debugger
-        return instance.post(`remittance/create`, { 
+    createRemittance(formData) {
+        return instance.post(`remittance/create`, {
             "actionDate": formData.actionDate,
             "sum": formData.sum,
-            "scoreId":formData.scoreId,
+            "scoreId": formData.scoreId,
             "score2Id": formData.score2Id,
             "description": formData.description
         })
     },
+    getEditedRemittanceData(id) {
+        return instance.get(`remittance/edit?id=${id}`)
+    },
     editRemittance(formData) {
         return instance.put(`remittance/edit`, {
             "id": formData.id,
-            "date": formData.date,
+            "actionDate": formData.actionDate,
             "sum": +formData.sum,
-            "scoreId": +formData.score1,
-            "score2Id": +formData.score2,
-            "description": formData.description,  
+            "scoreId": +formData.scoreId,
+            "score2Id": +formData.score2Id,
+            "description": formData.description,
         })
     }
 }
 
 export const bankAccountsApi = {
-    getBankAccounts() { 
-        return instance.get(`score/scores`)
+    getBankAccountsIndex() {
+        return instance.get(`score/index`)
     },
     getBankAccountsDetail() {
-        return instance.get(`score/scoresDetails`) 
+        return instance.get(`score/scoresDetails`)
     },
     createBankAccount(formData) {
-        return instance.post(`score/create`, formData) 
+        return instance.post(`score/create`, formData)
     },
-    editBankAccount(formData) { 
-        return instance.put(`score/edit`, formData)
+    editBankAccount(formData) {
+        return instance.put(`score/edit`, {
+            "id": formData.id,
+            "code": formData.code,
+            "name": formData.name,
+            "paymentTypeId": formData.paymentTypeId
+        })
     },
     deleteBankAccount(id) {
-        return instance.delete(`score/delete?id=${+id}`) 
+        return instance.delete(`score/delete?id=${+id}`)
     }
 }
 
 export const transactionsApi = {
-    getTransactions(pageNumber = 1, pageSize = 10) {
-        return instance.get(`financeactions/index?PageNumber=${pageNumber}&PageSize=${pageSize}`)
+    getTransactions(pageNumber = 1, pageSize = 10, filterData) {
+        let paramsObj = ''
+        if (filterData) {
+            for (let item in filterData) {
+                if (item !== 'StartDate' && item !== 'EndDate') {
+                    filterData[item].forEach(value => {
+                        paramsObj += `&${item}=${value}`
+                    })
+                }
+            }
+        }
+        return instance.get(`financeactions/index?PageNumber=${pageNumber}&PageSize=${pageSize}${paramsObj}`, {
+            params: {
+                StartDate: filterData?.StartDate
+                    ? dateFormatting(filterData.StartDate)
+                    : dateFormatting(new Date(new Date().setDate(1))),
+                EndDate: filterData?.EndDate
+                    ? dateFormatting(filterData.EndDate)
+                    : dateFormatting(new Date(endOfMonth)),
+            }
+        })
     },
-    createTransaction(formData) { 
-        return instance.post(`transaction/create`, { 
+    createTransaction(formData) {
+        return instance.post(`transaction/create`, {
             "actionDate": formData.actionDate,
             "sum": formData.sum,
             "operationId": formData.operationId,
@@ -149,16 +225,30 @@ export const transactionsApi = {
         })
     },
     editTransaction(formData) {
-        debugger
-        return instance.put(`transaction/edit`, { 
+        return instance.put(`transaction/edit`, {
             "id": formData.id,
             "actionDate": formData.actionDate,
-            "sum": formData.sum, 
-            "operationId": formData.operationId, 
-            "projectId": formData.projectId, 
+            "sum": formData.sum,
+            "operationId": formData.operationId,
+            "projectId": formData.projectId,
             "scoreId": formData.scoreId,
-            "counterPartyId": formData.targetEntity, 
-            "description": formData.description        
+            "counterPartyId": formData.counterPartyId,
+            "description": formData.description
         })
-    }
-} 
+    },
+    getEditedTransactionData(id) {
+        return instance.get(`transaction/edit?id=${id}`)
+    },
+}
+
+export const profileApi = {
+    getProfile() {
+        return instance.get(`User/GetUser`)
+    },
+    editProfile(formData) {
+        return instance.put(`User/Edit`, formData)
+    },
+    changePassword(formData) {
+        return instance.put(`User/ChangePassword`, formData)
+    },
+}

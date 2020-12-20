@@ -1,54 +1,65 @@
-
+/* ----- STATISTICS TAB ------- */
 .tabsBlock{
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     padding: 0 30px;
 }
-
 .tabsBlock select {
     border: 1px solid #32b482;
     padding: 6px 10px;
 }  
-
-.activeTab{
-    border-bottom: 2px solid #32b482;
-}
-
 .setup{ 
     display: flex;
     justify-content: space-between;
-    flex-basis: 40%;
+    flex-basis: 30%;
 } 
-/* ----- STATISTICS TAB ------- */
+
+/* --------- Filter ----- */
+.filterBlock{
+    display: flex;
+    place-items: center;
+    padding: 20px;
+}
+.filterBlock > form {
+    display: flex;
+    flex-direction: column;
+}
+.selectsBlock{
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    width: 90%;
+}
+.selectsBlock *{ 
+    margin-right: 10px;
+    width: 90%;
+}
+.dates{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.dates > div{
+    flex-basis: 45%;
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+
+/* ----- STATISTICS CHARTS BLOCK ------- */
 .statisticsBlock{
     display: flex;
-    justify-content: space-between; 
+    flex-direction: column;
 }
-.statisticsCharts{
-    flex-basis: 70%;
-    padding-top: 20px;
-} 
-.statisticsTabs{ 
-    margin-top: 70px;
-    flex-basis: 20%;
-}
-.statisticsTab{
-    display: block;
+.statisticsBlock > .chartItem {
     width: 100%;
-    padding: 15px;  
-    background: #32b482;
-    border: 1px solid #32b482;
-    color: #fff;
-    font-size: 1rem;
-    margin-bottom: 1px;
+    height: 100%;
+    margin-top: 40px;
+} 
+.selectsBlock{
+    display: flex;
+    justify-content: space-around;
+    flex-basis: 50%;
 }
-.activeStatisticsTab{ 
-    background: #fff;
-    color: #32b482;
-    border: 1px solid #32b482;
-}
- 
-.selectsBlock select{
-    margin-right: 10px;
-}
+

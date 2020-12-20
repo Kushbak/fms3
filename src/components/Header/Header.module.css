@@ -1,12 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
 .header{
     background: #f8f8f8;
-    /* position: fixed; */
-    z-index: 2;
+    z-index: 200;
     width: 100%;
     padding: 15px 0;
+    padding-right: 15px;
+    font-family: 'Poppins',sans-serif;
+    position: fixed;
 }
 
 .headerBlock{
+    width: 90%;
+    margin: 0 auto;    
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,6 +23,15 @@
     flex: 1;
 } 
 
+.headerBlock > .burgerBtn{
+    display: none;
+
+}
+.iconHeader {
+    max-width: 80px;
+    width: 50%;
+    max-height: 60px;
+}
 .logo img{
     max-width: 50px;
     width: 100%;
@@ -25,3 +40,33 @@
 .authorization{ 
     text-align: right;  
 }  
+.title{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: large;
+    color: #32b482;
+}
+
+@media (min-width: 1366px) {
+    .headerBlock{
+        width: 80%;
+        margin: 0 auto;  
+    }
+}
+@media (min-width: 1366px) {
+    .headerBlock{
+        width: 80%;
+        margin: 0 auto;  
+    }
+}
+@media (max-width: 1024px) {
+    .headerBlock > * {
+        flex: none;
+    } 
+    .iconHeader, .title {
+        display: none;
+    }
+    .headerBlock > .burgerBtn{
+        display: block;
+    }
+}

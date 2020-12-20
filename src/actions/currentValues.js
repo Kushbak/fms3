@@ -10,3 +10,10 @@ export const setRemittanceValues = remittanceValues => ({
     type: 'SET_REMITTANCE_VALUES',
     remittanceValues
 })
+
+export const setFilterTransactionValues = filterTransactionValues => { 
+    return {
+        type: 'SET_FILTER_TRANSACTION_VALUES',
+        filterTransactionValues
+    } 
+}

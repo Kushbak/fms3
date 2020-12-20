@@ -1,65 +1,60 @@
-import React, { useEffect } from 'react' 
+import React, { useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import styles from './Main.module.css'
 import { Route, Switch } from 'react-router-dom'
-import BankAccounts from './BankAccounts/BankAccounts' 
-import Sidebar from '../Sidebar/Sidebar' 
+import BankAccounts from './BankAccounts/BankAccounts'
+import Sidebar from '../Sidebar/Sidebar'
 import BankAccountPage from './BankAccounts/BankAccountPage/BankAccountPage'
-import { connect, useDispatch } from 'react-redux' 
+import { connect } from 'react-redux'
 import SettingsContainer from './Settings/SettingsContainer'
-import Profile from './Profile/Profile' 
+import ProfileContainer from './Profile/ProfileContainer'
 import { getAllTransactions } from '../../actions/transactions'
 import { getAllCategories } from '../../actions/categories'
-import { getBankAccounts } from '../../actions/bankAccounts'
-import { getProjects } from '../../actions/projects'
-import { getContragents } from '../../actions/contragents'
-import Transactions from './TransactionsPage/Transactions'
+import { getSettingsList } from '../../actions/statistics'
+import TransactionsContainer from './TransactionsPage/TransactionsContainer'
 import StatisticsContainer from './Statistics/StatisticsContainer'
-import { getStatistics } from '../../actions/statistics'
-import EditTransaction from '../EditTransaction/EditTransaction'
-import FilterModal from '../common/FilterModal/FilterModal'
+import NotFound from '../404/NotFound'
+import { useMediaQuery } from '@material-ui/core'
+import { getBankAccounts } from '../../actions/bankAccounts'
 
 const Main = (props) => {
-    const dispatch = useDispatch()
-    useEffect(() => { 
-        dispatch(getAllTransactions())
-        dispatch(getProjects())
-        dispatch(getBankAccounts())
+    const TabletSize = useMediaQuery('(max-width:1024px)')
+    useEffect(() => {
+        props.getAllTransactions()
+        props.getSettingsList()
+        props.getAllCategories()
         setTimeout(() => {
-            dispatch(getAllCategories())
-        }, 200);
-        setTimeout(() => {
-            dispatch(getContragents())
-            dispatch(getStatistics())
-        }, 300);
+            props.getBankAccounts()
+        }, 1000)
     }, [])
-    if (!props.isAuth) {
-        return <Redirect to='/authorization' />
-    }  
+
+    if (!props.isAuth) return <Redirect to='/authorization' />
     return (
-        <section className={ styles.mainPage }> 
-            <Sidebar /> 
-            <div className={ styles.mainContent }> 
+        <section className={styles.mainPage}>
+            {!TabletSize && <Sidebar />}
+            <div className={styles.mainContent}>
                 <Switch>
-                    <Route path='/bankAccounts/:accountId' render={({ match, history }) => <BankAccountPage history={ history } accounts={props.bankAccounts.filter(item => +item.id === +match.params.accountId) }/>} />
-                    <Route path='/bankAccounts' render={() => <BankAccounts accounts={ props.bankAccounts }/>} /> 
-                    <Route path='/statistics' render={() => <StatisticsContainer />} /> 
+                    <Route path='/bankAccounts/:accountId' render={({ match, history }) => <BankAccountPage history={history} accounts={props.bankAccountDetails.filter(item => +item.id === +match.params.accountId)} />} />
+                    <Route path='/bankAccounts' render={() => <BankAccounts />} />
+                    <Route path='/statistics' render={() => <StatisticsContainer />} />
                     <Route path='/settings' render={() => <SettingsContainer />} />
-                    <Route path='/profile' render={() => <Profile />} />  
-                    <Route path='/' render={() => <Transactions />} />
-                    {/* <Route path='/' render={() => <FilterModal />} /> */}
+                    <Route path='/profile' render={() => <ProfileContainer />} />
+                    <Route path='/' render={() => <TransactionsContainer />} />
+                    <Route component={NotFound} />
                 </Switch>
             </div>
-
-            {props.isModalOpen && <EditTransaction />}
         </section>
     )
 }
 
 const mstp = (state) => ({
-    bankAccounts: state.bankAccountsReducer.bankAccounts,
-    isAuth: state.profileReducer.isAuth,
-    isModalOpen: state.transactionsReducer.isModalOpen,
+    bankAccountDetails: state.bankAccountsReducer.bankAccountDetails,
+    isAuth: state.profileReducer.isAuth
 })
 
-export default connect(mstp)(Main)
+export default connect(mstp, {
+    getAllTransactions,
+    getSettingsList,
+    getAllCategories,
+    getBankAccounts,
+})(Main)

@@ -1,5 +1,6 @@
 import { transactionsApi } from "../api/api"
 import { getStatistics } from './statistics'
+import { startSubmit, stopSubmit } from "redux-form"
 
 export const transactionsFetching = (transactionsFetching) => ({
     type: 'TRANSACTIONS_FETCHING',
@@ -9,11 +10,6 @@ export const transactionsFetching = (transactionsFetching) => ({
 export const creatingTransaction = (creatingTransaction) => ({
     type: 'CREATING_TRANSACTION',
     creatingTransaction
-})
-
-export const addTransaction = (transaction) => ({
-    type: 'ADD_TRANSACTION',
-    transaction
 })
 
 export const getAllTransactionsSuccess = (transactions) => ({
@@ -48,66 +44,73 @@ export const setEditedTransaction = (editedTransaction) => ({
 })
 
 
-export const getAllTransactions = (page) => (dispatch) => {
+export const getAllTransactions = (pageNumber, pageSize, filterData) => (dispatch) => {
     try {
         dispatch(transactionsFetching(true))
-        transactionsApi.getTransactions(page)
+        transactionsApi.getTransactions(pageNumber, pageSize, filterData)
             .then(res => {
                 dispatch(getAllTransactionsSuccess(res.data))
-                dispatch(getStatistics())
+                // dispatch(getStatistics())
                 dispatch(transactionsFetching(false))
             })
             .catch(e => {
                 console.log(e)
-                getAllTransactions()
             })
     } catch (e) {
         console.log(e)
     }
 }
 
-export const editTransaction = (formData) => (dispatch) => { 
+export const getEditedTransactionData = (id) => (dispatch) => {
     try {
-        debugger
+        transactionsApi.getEditedTransactionData(id)
+            .then(res => {
+                dispatch(setEditedTransaction(res.data))
+            })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const editTransaction = (formData) => (dispatch) => {
+    try {
+        dispatch(startSubmit('editTransaction'))
         transactionsApi.editTransaction(formData)
-            .then(res => {  
-                debugger
+            .then(res => {
                 dispatch(getAllTransactions())
-            }) 
+                dispatch(DisplayPostMsg(res.data.message))
+            })
+            .catch(err => {
+                dispatch(stopSubmit('editTransaction'))
+            })
     } catch (e) {
-        console.log(e) 
+        console.log(e)
+        dispatch(stopSubmit('editTransaction'))
     }
 }
 
 export const createTransaction = (formData) => (dispatch) => {
-    try { 
-        debugger
-        dispatch(creatingTransaction(true))
+    try {
+        dispatch(startSubmit('income'))
+        dispatch(startSubmit('expense'))
+        dispatch(startSubmit('remittance'))
         transactionsApi.createTransaction(formData)
-            .then(res => {  
+            .then(res => {
                 dispatch(DisplayPostMsg(res.data.message))
-                dispatch(creatingTransaction(false))
+                dispatch(stopSubmit('income'))
+                dispatch(stopSubmit('expense'))
+                dispatch(stopSubmit('remittance'))
                 dispatch(getAllTransactions())
-                setTimeout(() => {
-                    dispatch(DisplayPostMsg(null))
-                }, 8000);
+            })
+            .catch(e => {
+                dispatch(stopSubmit('income'))
+                dispatch(stopSubmit('expense'))
+                dispatch(stopSubmit('remittance'))
             })
     } catch (e) {
-        console.log(e);
+        console.log(e)
+        dispatch(stopSubmit('income'))
+                dispatch(stopSubmit('expense'))
+                dispatch(stopSubmit('remittance'))
     }
-}
-
-export const requestTransactions = (currentPage, pagesSize) => (dispatch) => {
-    try {
-        dispatch(transactionsFetching(true));
-        transactionsApi.getTransactions(currentPage, pagesSize)
-            .then(res => {
-                dispatch(setCurrentPage(currentPage));
-                dispatch(setTotalUsersCount(res.totalCount));
-                dispatch(getAllTransactions(res.items));
-                dispatch(transactionsFetching(false));
-            });
-    } catch (e) {
-        console.log(e);
-    }
-};
+} 

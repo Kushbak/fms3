@@ -1,25 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
 .sidebar{ 
     height: 100%; 
-    min-height: calc(100vh - 60px); 
+    min-height: 100vh; 
+    width: 220px;
     grid-area: sidebar;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;  
+    font-family: 'Poppins', sans-serif;
+    margin-top: 40px;
+    padding: 0 0 20px 20px;
+    position: fixed;
     background: #f8f8f8;
-    padding: 20px; 
 }
-
-.sidebar > *{
-    margin-bottom: 15px;
-    background: #32b482;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-}
-.sidebar > *:hover{
-    transform: scale(0.97);
-}
+ 
 .activeLink{
     font-weight: bold;
+} 
+
+@media (max-width: 1024px){
+    .sidebar{
+        margin-top: 0;
+        padding-top: 40px;
+        width: 350px;
+    }
+}
+@media (max-width: 1024px){
+    .sidebar{
+        width: 300px;
+    }
+}
+@media (max-width: 568px){
+    .sidebar{
+        width: 200px;
+        padding-left: 0;
+    }
 }

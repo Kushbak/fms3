@@ -1,6 +1,5 @@
 let initialState = {
-    projects: [],
-    operations: [],
+    statisticsData: [],
     statisticsFetching: false
 }
 
@@ -9,8 +8,7 @@ const statisticsReducer = (state = initialState, action) => {
         case 'SET_STATISTICS': {
             return {
                 ...state,
-                projects: action.projectStatistics,
-                operations: action.operationStatistics,
+                statisticsData: action.statisticsData,
             }
         }
         case 'STATISTICS_FETCHING': { 

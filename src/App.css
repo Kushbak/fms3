@@ -1,13 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
 *{
     margin: 0;  
     padding: 0;
     box-sizing: border-box;
     color: #000;
-} 
+    font-family: 'Play', sans-serif !important; 
+    font-weight: 700 !important;
+}  
 a{
     color: black;
     font-size: 1rem;
-    text-decoration: none;
+    text-decoration: none; 
 }
 button{
     background: none;
@@ -22,6 +26,9 @@ button:focus{
 }
 .section{
     padding: 40px 0;
+}
+option{
+    cursor: pointer;
 }
 .h3{
     font-size: 1.5rem;
@@ -48,8 +55,14 @@ button:focus{
 .codeInput{
     margin-bottom: 20px;
 }
-.main{
+.app{
     background: #f8f8f8;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+}
+.main{
+    padding-top: 90px;
 }
  
 
@@ -67,7 +80,7 @@ button:focus{
 
 .preloader{
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     display: flex;
     place-content: center;
 }
@@ -81,5 +94,16 @@ button:focus{
 }
 
 body .tippy-tooltip{
-    border-radius: px;
+    border-radius: 10px;
+} 
+
+@media (max-width: 768px){
+    :root {
+        font-size: 14px;
+    }
+}
+@media (max-width: 578px){
+	:root{
+		font-size: 13px;
+    }
 }

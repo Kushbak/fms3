@@ -2,7 +2,8 @@ const initialState = {
     userData: null,
     isFetching: false,
     isPosting: false,
-    isAuth: false
+    isAuth: false,
+    profile: null
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -15,10 +16,22 @@ const profileReducer = (state = initialState, action) => {
             }
         } 
         case 'SET_IS_FETCHING': {
-            return { ...state, isFetching: action.isFetching }
+            return { 
+                ...state, 
+                isFetching: action.isFetching 
+            }
         }
         case 'SET_IS_POSTING': {
-            return { ...state, isPosting: action.isPosting }
+            return { 
+                ...state, 
+                isPosting: action.isPosting 
+            }
+        }
+        case 'SET_PROFILE': {
+            return { 
+                ...state, 
+                profile: action.profile
+            }
         } 
         default:
             return state

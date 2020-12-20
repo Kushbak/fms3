@@ -1,37 +1,142 @@
-import React from 'react' 
+import React, { useState, useEffect } from 'react' 
 import { connect } from 'react-redux'
-import { addContragent, deleteContragent } from '../../../actions/contragents'
-import { createCategory, deleteCategory } from '../../../actions/categories'
-import { addBankAccount, deleteBankAccount } from '../../../actions/bankAccounts'  
-import { editBankAccount } from '../../../actions/bankAccounts'
-import { editCategory } from '../../../actions/categories'
-import { editContragent } from '../../../actions/contragents'
-import { editProject } from '../../../actions/projects' 
+import { createContragent, editContragent, deleteContragent } from '../../../actions/contragents'
+import { createCategory, deleteCategory, editCategory } from '../../../actions/categories'
+import { getBankAccounts, createBankAccount, deleteBankAccount, editBankAccount } from '../../../actions/bankAccounts'
+import { DisplayPostMsg } from '../../../actions/transactions' 
 import Settings from './Settings'
+import { useMediaQuery } from '@material-ui/core'
+import SettingsResponsive from './SettingsResponsive'
+import Preloader from '../../common/Preloader/Preloader'
  
-const SettingsContainer = (props) => {
-    return <Settings {...props} />
+const SettingsContainer = (props) => { 
+    const [numOfSection, setNum] = useState(0)
+
+    const addNewCategory = (formData, type) => {
+        switch (type) {
+            case 'bankAccount': {
+                props.createBankAccount({
+                    name: formData.newCategory,
+                    code: formData.code,
+                    paymentTypeId: formData.paymentTypeId 
+                })
+                break
+            }
+            case 'contragent': {
+                props.createContragent({ name: formData.newCategory })
+                break
+            }
+            case 'income': {
+                props.createCategory({
+                    name: formData.newCategory,
+                    operationTypes: null,
+                    type: 1
+                })
+                break
+            }
+            case 'expense': {
+                props.createCategory({
+                    name: formData.newCategory,
+                    operationTypes: null,
+                    type: 2
+                })
+                break
+            }
+            case 'project': {
+                props.createProject({ name: formData.newCategory })
+                break
+            }
+            default:
+                formData.newCategory = ''
+                setNum(0)
+                break
+        }
+        formData.newCategory = ''
+        setNum(0)
+    }
+    const entities = [
+        {
+            id: 2,
+            title: 'Категория дохода',
+            reducerName: 'incomeCategories',
+            editFunc: function (value) {
+                props.editCategory(value)
+            },
+            deleteFunc: function (id) {
+                props.deleteCategory(id)
+            },
+            type: 'income'
+        },
+        {
+            id: 3,
+            title: 'Категория расхода',
+            reducerName: 'expenseCategories',
+            editFunc: function (value) {
+                props.editCategory(value)
+            },
+            deleteFunc: function (id) {
+                props.deleteCategory(id)
+            },
+            type: 'expense'
+        },
+        {
+            id: 4,
+            title: 'Контрагент',
+            reducerName: 'contragents',
+            editFunc: function (value) {
+                props.editContragent(value)
+            },
+            deleteFunc: function (id) {
+                props.deleteContragent(id)
+            },
+            type: 'contragent'
+        },
+    ]
+    const mdSize = useMediaQuery('(max-width:768px)')
+    
+    
+    if (!props.bankAccountDetails.length 
+        && !props.incomeCategories.length 
+        && !props.expenseCategories.length 
+        && !props.contragents.length
+    ) return <Preloader />
+
+    if (mdSize) return <SettingsResponsive {...props} 
+        addNewCategory={addNewCategory} 
+        entities={entities} 
+        numOfSection={numOfSection} 
+        setNum={setNum}
+    />
+    
+    return <Settings {...props} 
+        addNewCategory={addNewCategory} 
+        entities={entities} 
+        numOfSection={numOfSection} 
+        setNum={setNum}
+    />
 }
 
 const mstp = (state) => ({
-    bankAccounts: state.bankAccountsReducer.bankAccounts,
+    bankAccountDetails: state.bankAccountsReducer.bankAccountDetails,
     incomeCategories: state.categoriesReducer.incomeCategories,
     expenseCategories: state.categoriesReducer.expenseCategories,
-    categoriesFetching: state.categoriesReducer.categoriesFetching,
+    categoriesFetching: state.categoriesReducer.categoriesFetching, 
+    isPostMsgDisplayed: state.transactionsReducer.isPostMsgDisplayed,
     contragents: state.contragentsReducer.contragents
 })
 
 export default connect(mstp, 
     {
+        getBankAccounts,
         createCategory,
         deleteCategory,
-        addContragent,
+        editCategory, 
         deleteContragent,
-        addBankAccount, 
+        createBankAccount,
         deleteBankAccount,
         editBankAccount,
-        editCategory, 
+        createContragent,
         editContragent,
-        editProject
+        DisplayPostMsg,
     }
 )(SettingsContainer)

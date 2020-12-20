@@ -1,5 +1,6 @@
 import { projectsApi } from "../api/api"
 import { categoriesFetching } from "./categories"
+import { DisplayPostMsg } from "./transactions"
 
 export const setProjects = (projects) => ({
     type: 'SET_PROJECTS',
@@ -34,7 +35,6 @@ export const getProjects = () => (dispatch) => {
             })
     } catch (e) {
         console.log(e)
-        getProjects()
     }
 }
 
@@ -42,9 +42,11 @@ export const createProject = (formData) => (dispatch) => {
     try {
         projectsApi.createProject(formData).then(res => {
             dispatch(getProjects())
+
+            dispatch(DisplayPostMsg(res.data.message))
         })
     } catch (e) {
-        console.log(e);
+        console.log(e)
     }
 }
 
@@ -52,9 +54,11 @@ export const editProject = (formData) => (dispatch) => {
     try {
         projectsApi.editProject(formData).then(res => {
             dispatch(editProjectSuccess(res.data))
+
+            dispatch(DisplayPostMsg(res.data.message))
         })
     } catch (e) {
-        console.log(e);
+        console.log(e)
     }
 }
 
@@ -62,8 +66,10 @@ export const deleteProject = (formData) => (dispatch) => {
     try {
         projectsApi.deleteProject(formData).then(res => {
             dispatch(getProjects())
+
+            dispatch(DisplayPostMsg(res.data.message))
         })
     } catch (e) {
-        console.log(e);
+        console.log(e)
     }
 }

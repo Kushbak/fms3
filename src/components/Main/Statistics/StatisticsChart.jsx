@@ -1,56 +1,89 @@
-import React from 'react'
-import { Doughnut } from 'react-chartjs-2'
+import React from 'react' 
+import { Doughnut, Line } from 'react-chartjs-2'
+import styles from './Statistics.module.css'
 
 const StatisticsChart = (props) => {
 
-    const doughnutData = {
+    const random_rgba = () => {
+        let o = Math.round
+        let r = Math.random 
+        let s = 255
+        return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s);
+    }
+
+    const dataDoughnut = {
         labels: [],
         datasets: [{
             data: [],
-            backgroundColor: [
-                '#32b482',
-                '#36A2EB',
-                '#FFCE56',
-                '#3f6355',
-                '#5372da',
-                '#da53d3',
-                '#da5353',
-                '#836d6d',
-                '#5ac4be',
-                '#1c2c2b',
-                '#5e83c7',
-                '#7a7801',
-            ]
+            backgroundColor: []
         }]
+    }
+    const dataLine = {
+        labels: [],
+        datasets: [],
     }    
-    // TODO Разделить табы на доходы расходы и нормализовать показ селекта по доходам/расходам при операциях
-    if (props.statisticsTab === 1) { 
-        props.projectsStat.forEach(item => {
-            doughnutData.labels.push(item.name)
-            if (props.isDigit === 2) {
-                doughnutData.datasets[0].data.push(item.income)
-            } else if (props.isDigit === 3) {
-                doughnutData.datasets[0].data.push(item.expense)
-            } else {
-                // doughnutData.datasets[0].data.push(item.quantity)
-            }
-        });
-    } else if (props.statisticsTab === 2 || props.statisticsTab === 3){ 
-    // TODO made operations charts after getting data from backend
-        props.operationsStat.forEach(item => {
-            doughnutData.labels.push(item.name)
-            if (props.isDigit === 2) {
-                doughnutData.datasets[0].data.push(item.operationSum)
-            } else if (props.isDigit === 3) {
-                doughnutData.datasets[0].data.push(item.operationSum)
-            } else {
-                doughnutData.datasets[0].data.push(item.operationCount)
-            }
-        });
+    const options = {
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                }
+            ],
+        },
     }
 
-     
-    return <Doughnut data={doughnutData} />   
+    
+    const lineDataLabel = {}
+    const doughnutDataLabel = {}
+    const dateLabels = {}
+    props.statisticsData.forEach(item => {
+        if (doughnutDataLabel[item.operationName]){
+            doughnutDataLabel[item.operationName] += item.sum
+            lineDataLabel[item.operationName].push(item.sum)
+        } else {
+            doughnutDataLabel[item.operationName] = item.sum
+            lineDataLabel[item.operationName] = [item.sum]
+        }
+        const formattedDate = new Date(item.actionDate).toLocaleDateString()
+        if (!dateLabels[formattedDate]) {
+            dateLabels[formattedDate] = 1
+        }
+    })
+
+    // For Dougnut
+    for (let item in doughnutDataLabel) {
+        dataDoughnut.datasets[0].data.push(doughnutDataLabel[item])
+        dataDoughnut.labels.push(item)
+        dataDoughnut.datasets[0].backgroundColor.push(random_rgba() + ')')
+    }
+
+    // For Line
+    for (let item in lineDataLabel) {
+        const dataOfLine = {
+            label: item,
+            data: lineDataLabel[item],
+            fill: false,
+            backgroundColor: random_rgba() + ')',
+            borderColor: random_rgba() + ', 0.2)',
+        }
+        dataLine.datasets.push(dataOfLine)
+    }
+
+    for (let item in dateLabels) {
+        dataLine.labels.push(item)
+    }
+    return (
+        <>
+            <div className={styles.chartItem}>
+                <Doughnut data={dataDoughnut} />   
+            </div>
+            <div className={styles.chartItem}>
+                <Line data={dataLine} options={options} />
+            </div> 
+        </>
+    )
 }
 
 export default StatisticsChart

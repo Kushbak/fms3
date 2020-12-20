@@ -1,5 +1,6 @@
 import { remittanceApi } from "../api/api"
-import { getAllTransactions } from "./transactions"
+import { getAllTransactions, setEditedTransaction, DisplayPostMsg } from "./transactions"
+import { startSubmit, stopSubmit } from "redux-form"
 
 export const setRemittance = (remittances) => ({
     type: 'SET_REMITTANCES',
@@ -22,47 +23,48 @@ export const remittanceCreated = (remittanceCreated) => ({
     remittanceCreated
 })
 
-export const getRemittance = (pageNumber, pageSize) => (dispatch) => {
-    try {
-        dispatch(toggleRemittancesFetching(true))
-        remittanceApi.getRemittance(pageNumber, pageSize)
-            .then(res => {
-                dispatch(setRemittance(res.data))
-                dispatch(toggleRemittancesFetching(false))
-            })
-            .catch(e => {
-                console.log(e)
-                getRemittance()
-            })
-    } catch (e) {
-        console.log(e)
-        getRemittance()
-    }
-}
 export const createRemittance = (formData) => (dispatch) => {
     try {
-        dispatch(remittanceCreating(true))
+        dispatch(startSubmit('remittance'))
         remittanceApi.createRemittance(formData)
             .then(res => {
                 dispatch(getAllTransactions())
-                dispatch(remittanceCreating(false))
                 dispatch(remittanceCreated(true))
-                setTimeout(() => dispatch(remittanceCreated(false)), 5000)
+                dispatch(stopSubmit('remittance'))
+                dispatch(DisplayPostMsg(res.data.message))
             })
     } catch (e) {
-        console.log(e);
+        console.log(e)
+        dispatch(stopSubmit('remittance'))
+    }
+}
+
+export const getEditedRemittanceData = (id) => (dispatch) => {
+    try {
+        remittanceApi.getEditedRemittanceData(id)
+            .then(res => {
+                dispatch(setEditedTransaction(res.data))
+            })
+    } catch (err) {
+        console.log(err)
     }
 }
 
 export const editRemittance = (formData) => (dispatch) => {
-    debugger
     try {
+        dispatch(startSubmit('editTransaction'))
         remittanceApi.editRemittance(formData)
-            .then(res => { 
-                debugger
-                dispatch(getRemittance())
+            .then(res => {
+                dispatch(getAllTransactions())
+                dispatch(stopSubmit('editTransaction'))
+                dispatch(DisplayPostMsg(res.data.message))
+            })
+            .catch(err => {
+                dispatch(stopSubmit('editTransaction'))
+                dispatch(DisplayPostMsg(err))
             })
     } catch (err) {
         console.log(err)
+        dispatch(stopSubmit('editTransaction'))
     }
 }

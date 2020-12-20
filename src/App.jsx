@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import './App.css'
 import Authorization from './components/Authorization/Authorization'
 import Header from './components/Header/Header'
@@ -10,8 +10,7 @@ import { useEffect } from 'react'
 import { initializeApp, loggedIn } from './actions/authorization'  
 
 const App = () => {   
-    const isInited = useSelector(state => state.appReducer.initialized)  
-    
+    const isInited = useSelector(state => state.appReducer.initialized) 
     const dispatch = useDispatch() 
     useEffect(() => {
         if (localStorage.getItem('id_token')){  
@@ -19,10 +18,7 @@ const App = () => {
         } 
     }, []) 
 
-    if (loggedIn() && !isInited){  
-        return <Preloader />
-    }
-
+    if (loggedIn() && !isInited) return <Preloader /> 
     return (
         <div className="app">
             <Header />

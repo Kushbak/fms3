@@ -1,5 +1,5 @@
-import { stopSubmit } from "redux-form"
-import { authApi } from "../api/api"
+import { stopSubmit, startSubmit } from "redux-form"
+import { authApi, profileApi } from "../api/api"
 import decode from 'jwt-decode'
 
 export const setAuthUserData = (userData, isAuth) => ({
@@ -8,9 +8,9 @@ export const setAuthUserData = (userData, isAuth) => ({
     isAuth
 })
 
-export const usernamePass = (id, username, password) => ({
-    type: 'USERNAME_PASS',
-    payload: { id, username, password }
+export const setProfile = (profile) => ({
+    type: 'SET_PROFILE',
+    profile
 })
 
 export const toggleIsFetching = (isFetching) => ({
@@ -20,19 +20,25 @@ export const toggleIsFetching = (isFetching) => ({
 
 export const initializedSuccess = () => ({ type: 'INITIALIZED_SUCCESS' });
 
+export const getProfileData = () => dispatch => {
+    profileApi.getProfile().then(res => {
+        dispatch(setProfile(res.data))
+    })
+}
 
 export const initializeApp = () => (dispatch) => {
-    toggleIsFetching(true)
+    dispatch(toggleIsFetching(true))
     try {
         if (loggedIn()) {
             authApi.setToken(getToken())
-            dispatch(setAuthUserData(getProfile(), true))
+            dispatch(setAuthUserData(decodeTokenData(), true))
             dispatch(initializedSuccess())
-            toggleIsFetching(false)
+            dispatch(getProfileData())
+            dispatch(toggleIsFetching(false))
         }
     } catch (e) {
-        console.log('Произошла ошибка ' + e);
-        toggleIsFetching(false)
+        console.log('Произошла ошибка ' + e)
+        dispatch(toggleIsFetching(false))
     }
 }
 // REDUX-THUNKS  
@@ -40,23 +46,23 @@ export const initializeApp = () => (dispatch) => {
 
 const setToken = (idToken) => {
     // Saves user token to localStorage 
-    localStorage.setItem('id_token', idToken);
+    localStorage.setItem('id_token', idToken)
 }
 
 const getToken = () => {
     // Retrieves the user token from localStorage 
-    return localStorage.getItem('id_token');
+    return localStorage.getItem('id_token')
 }
 
 const isTokenExpired = (token) => {
     try {
-        const decoded = decode(token);
+        const decoded = decode(token)
         if (decoded.exp < Date.now() / 1000) {
             // Checking if token is expired. N
-            return true;
-        } else return false;
-    } catch (err) { 
-        return false;
+            return true
+        } else return false
+    } catch (err) {
+        return false
     }
 }
 
@@ -66,29 +72,33 @@ export const loggedIn = () => {
     return !!token && !isTokenExpired(token); // handwaiving here
 }
 
-const getProfile = () => {
+const decodeTokenData = () => {
     // Using jwt-decode npm package to decode the token 
     console.log(decode(getToken()));
     return decode(getToken());
 }
 
+export const updateToken = (token) => (dispatch) => {
+    setToken(token)
+    authApi.setToken(token)
+    dispatch(getProfileData())
+    dispatch(setAuthUserData(decodeTokenData(), true))
+}
+
 export const login = (formData) => (dispatch) => {
     try {
-        dispatch(toggleIsFetching(true))  
-        authApi.login(formData.fullName, formData.password)
-            .then(response => {  
-                setToken(response.data.token)
-                authApi.setToken(response.data.token)
-                dispatch(setAuthUserData(getProfile(), true))
+        dispatch(startSubmit('login'))
+        authApi.login(formData.username, formData.password)
+            .then(response => {
+                updateToken(response.data.token)
                 dispatch(initializedSuccess())
-                dispatch(toggleIsFetching(false)) 
+                dispatch(stopSubmit('login'))
             }).catch(e => {
                 dispatch(stopSubmit('login', { _error: 'Неправильный логин или пароль' }))
-                dispatch(toggleIsFetching(false)) 
                 console.log('Произошла ошибка ' + e)
             })
     } catch (e) {
-        toggleIsFetching(false)
+        dispatch(stopSubmit('login', { _error: 'Непредвиденная ошибка. Попробуйте позже.' }))
         console.log('Произошла ошибка ' + e)
     }
 }
@@ -103,21 +113,20 @@ export const logout = () => (dispatch) => {
 }
 
 export const register = (formData) => (dispatch) => {
+
     try {
-        dispatch(toggleIsFetching(true))
+        dispatch(startSubmit('register'))
         authApi.register(formData)
             .then(r => {
                 if (r.status === 200) {
-                    dispatch(setAuthUserData(r.data, true))
-                    dispatch(initializedSuccess())
-                    dispatch(toggleIsFetching(false))
+                    dispatch(stopSubmit('register'))
+                    dispatch(login(formData))
                 } else {
-                    alert('Что-то пошло не так')
-                    dispatch(toggleIsFetching(false))
+                    dispatch(stopSubmit('register', { _error: 'Непредвиденная ошибка. Попробуйте позже.' }))
                 }
             })
     } catch (e) {
-        toggleIsFetching(false)
+        dispatch(stopSubmit('register'))
         console.log('Произошла ошибка ' + e)
     }
-}
+} 

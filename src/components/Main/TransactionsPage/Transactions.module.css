@@ -1,78 +1,20 @@
 
 /* ----- TRANSACTIONS TAB ------- */
-
 .tabsBlock{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    align-items: baseline;
     margin-bottom: 20px;
     padding: 0 30px;
 }
-
-.tabsBlock select {
-    border: 1px solid #32b482;
-    padding: 6px 10px;
-} 
-
-.tabs{ 
-    display: flex;
-    justify-content: space-between;
-    flex-basis: 40%;
+.tabsBlock > button {
+    margin-right: 10px;
 }
-.tabs button {
-    cursor: pointer;
-    padding: 5px 10px;
-}
-.tabs button:focus { 
-    background: #32b48260;
-}
-.activeTab{
-    border-bottom: 2px solid #32b482;
-}
-
-.setup{ 
-    display: flex;
-    justify-content: space-between;
-    flex-basis: 22%;
-} 
-
 
 .transactionsBlock{ 
     padding: 10px 20px;
+    min-height: 100vh;
 }
-.transactionItem{
-    cursor: pointer;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 15px 0;
-    text-align: center;
-}  
-
-.transactionsTitle{
-    cursor: default;
-    background: none;
-    padding: 5px 20px;
-    font-weight: bold;
-}
-.transactionItem *{
-    flex: 0.8; 
-} 
-.transactionItem .contragent,
-.transactionItem .category{
-    flex: 1.3; 
-}  
-.transactionItem .type,
-.transactionItem .description,
-.transactionItem .tooltipWrap{
-    flex: 0.5; 
-} 
-.transactionItem .infoIcon{
-    width: 28px;
-    transition: 0.3s; 
-} 
 .tooltipWrap:hover .infoIcon{
     transform: scale(0.8);
 }
@@ -83,3 +25,56 @@
     color: #fff;  
     word-wrap: break-word;
 } 
+
+/* --------- Export Dialog ---------- */
+
+.exportBlock{
+    width: 450px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+.btnBlock{
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment{
+    font-size: 0.7rem;
+    color: gray;
+}
+
+
+@media (max-width: 768px) {
+    .exportBlock{
+        width: 400px;
+        height: 120px;
+    }
+    .btnBlock{
+        width: 100%;
+    }
+}
+@media (max-width: 586px) {
+    .tabsBlock{
+        display: flex;
+        justify-content: space-between;
+    }
+    .tabsBlock > button {
+        margin-right: 0;
+    }
+    .exportBlock{
+        width: 100%;
+        height: 100px;
+    }
+    .btnBlock > button{
+        flex-basis: 45%;
+        font-size: 0.7rem;
+        padding: 10px 0;
+    }
+}

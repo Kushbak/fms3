@@ -1,34 +1,18 @@
 .mainPage{
     display: grid; 
     grid-template-areas: 'sidebar content';
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 220px 1fr;
+    background: #f8f8f8;
 }
 
 .mainContent{
     padding: 20px;
     grid-area: content;
 }
-.mainDefaultPage{
-    padding: 20px;
-} 
 
-.projectCard{
-    width: 90%;
-    border-radius: 15px;
-    border: 1px solid #32b482; 
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    margin-bottom: 30px;
-    align-items: center; 
-}
-
-.balance{
-    flex-basis: 40%;
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-}
-.balance span{
-    display: block;
+@media (max-width: 1024px) {
+    .mainPage{
+        grid-template-areas: 'content';
+        grid-template-columns: 1fr;
+    }
 }
