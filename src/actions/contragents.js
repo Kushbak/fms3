@@ -47,7 +47,7 @@ export const createContragent = (formData) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании контрагента. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при создании контрагента. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -63,7 +63,7 @@ export const editContragent = (formData) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при изменении контрагента. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при изменении контрагента. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -79,7 +79,7 @@ export const deleteContragent = (id) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении контрагента. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при удалении контрагента. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)

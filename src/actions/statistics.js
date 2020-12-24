@@ -25,7 +25,7 @@ export const getStatistics = (filterValue) => (dispatch) => {
             .catch(e => {
                 console.log(e)
                 dispatch(statisticsFetching(false))
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении данных. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при получении данных. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -43,6 +43,7 @@ export const getSettingsList = () => (dispatch) => {
                 dispatch(setBankAccountsIndex(res.data.scores))
             })
             .catch(e => {
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при получении данных. Попробуйте чуть позже', false]))
                 console.log(e)
             })
     } catch (e) {

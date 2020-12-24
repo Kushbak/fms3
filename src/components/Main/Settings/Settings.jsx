@@ -95,13 +95,17 @@ const Settings = (props) => {
                                     <input className={styles.editInput} type="text" value={inputValue} autoFocus={true} onChange={(e) => setInputValue(e.target.value)} />
                                     <input className={styles.editInput} type="text" value={bankNumberValue} onChange={(e) => setBankNumberValue(e.target.value)} />
                                 </div>
-                                <img src={saveBtn} alt="save" onClick={() => {
-                                    (inputValue !== item.name || bankNumberValue !== item.code)
-                                        && props.editBankAccount({ ...item, name: inputValue, code: bankNumberValue, paymentTypeId: paymentType })
-                                    setInputValue()
-                                    setBankNumberValue()
-                                    setIdofElement(0)
-                                }} />
+                                <img 
+                                    src={saveBtn} 
+                                    alt="save" 
+                                    onClick={() => {
+                                        (inputValue !== item.name || bankNumberValue !== item.code)
+                                            && props.editBankAccount({ ...item, name: inputValue, code: bankNumberValue, paymentTypeId: paymentType })
+                                        setInputValue()
+                                        setBankNumberValue()
+                                        setIdofElement(0)
+                                    }} 
+                                />
                                 <img src={closeBtn} alt="cancel" onClick={() => setIdofElement(0)} />
                             </>
                             : <span>
@@ -145,12 +149,20 @@ const Settings = (props) => {
                             {idOfElement === item.id + item.name
                                 ? <>
                                     <input className={styles.editInput} type="text" value={inputValue} autoFocus={true} onChange={(e) => setInputValue(e.target.value)} />
-                                    <img src={saveBtn} alt="save" onClick={() => {
-                                        inputValue !== item.name && entity.editFunc({ ...item, name: inputValue })
-                                        setInputValue()
-                                        setIdofElement(0)
-                                    }} />
-                                    <img src={closeBtn} alt="cancel" onClick={() => setIdofElement(0)} />
+                                    <img 
+                                        src={saveBtn} 
+                                        alt="save" 
+                                        onClick={() => {
+                                            inputValue !== item.name && entity.editFunc({ ...item, name: inputValue })
+                                            setInputValue()
+                                            setIdofElement(0)
+                                        }} 
+                                    />
+                                    <img 
+                                        src={closeBtn} 
+                                        alt="cancel" 
+                                        onClick={() => setIdofElement(0)} 
+                                    />
                                 </>
                                 : <span>
                                     <img 

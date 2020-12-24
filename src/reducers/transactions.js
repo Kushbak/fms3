@@ -5,7 +5,7 @@ const initialState = {
     displayedMsg: ['', true],
     totalRecords: 0,
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 15,
     isModalOpen: false,
     editedTransaction: null
 }

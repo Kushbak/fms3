@@ -27,11 +27,12 @@ const useStyles = makeStyles((theme) => ({
 const BankAccounts = () => {
     const classes = useStyles()
     const bankAccounts = useSelector(state => state.bankAccountsReducer.bankAccountsIndex)
+    const transactions = useSelector(state => state.transactionsReducer.data)
     const dispatch = useDispatch() 
 
     useEffect(() => {
         dispatch(getBankAccounts())
-    }, [])
+    }, [transactions])
     
     if (!bankAccounts.length) return <Preloader />
     return (

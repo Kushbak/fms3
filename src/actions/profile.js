@@ -18,13 +18,13 @@ export const editUserData = (userData) => (dispatch) => {
         dispatch(startSubmit('editProfile'))
         profileApi.editProfile(userData)
             .then(res => {
-                // dispatch(updateToken(res.data.token))
-                dispatch(DisplayPostMsg([res.data.message, true]))
+                dispatch(updateToken(res.data.token))
+                dispatch(DisplayPostMsg(['Редактирование прошло успешно!', true]))
                 dispatch(stopSubmit('editProfile'))
             })
             .catch(e => {
                 dispatch(stopSubmit('editProfile'))
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка. Попробуйте чуть позже', false]))
             })
     } catch(e) {
         dispatch(DisplayPostMsg(['Непредвиденная ошибка. Попробуйте чуть позже', false]))
@@ -42,10 +42,9 @@ export const editPassword = (passwords) => (dispatch) => {
             })
             .catch(e => {
                 dispatch(stopSubmit('editPassword'))
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message, false]))
             })
     } catch(e) {
         dispatch(DisplayPostMsg(['Непредвиденная ошибка. Попробуйте чуть позже', false]))
-
     }
 }

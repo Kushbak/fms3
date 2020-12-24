@@ -39,7 +39,7 @@ const Profile = (props) => {
         <div className={styles.profile}>
             <div className={ styles.descriptionBlock }>  
                 <p className={styles.fullName}>ФИО: {props.profile.name} {props.profile.surname}</p> 
-                <p className={styles.username}>Ник: {props.profile.username}</p>
+                <p className={styles.username}>Логин: {props.profile.username}</p>
                 <p className={styles.email}>Email: {props.profile.email}</p>
             </div> 
                        

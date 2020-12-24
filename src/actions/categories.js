@@ -54,7 +54,7 @@ export const getAllCategories = () => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении категорий. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при получении категорий. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -75,7 +75,7 @@ export const createCategory = (formData) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании категорий. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg(e?.response?.message || ['Непредвиденная ошибка при создании категорий. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -96,7 +96,7 @@ export const editCategory = (formData) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании категорий. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при редактировании категорий. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -114,7 +114,7 @@ export const deleteCategory = (id) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении категорий. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при удалении категорий. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)

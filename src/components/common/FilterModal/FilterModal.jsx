@@ -7,7 +7,7 @@ import GreenButton from '../GreenButton/GreenButton'
 
 const FilterModalComponent = (props) => {   
     const reset = () => {
-        props.setFilterValues({})
+        props.setFilterTransactionValues(null)
         props.reset()
     }  
     const [date1, setDate1] = useState()

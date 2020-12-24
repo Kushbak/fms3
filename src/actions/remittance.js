@@ -35,7 +35,8 @@ export const createRemittance = (formData) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании. Попробуйте чуть позже', false]))
+                dispatch(stopSubmit('remittance'))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при создании. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -49,6 +50,9 @@ export const getEditedRemittanceData = (id) => (dispatch) => {
         remittanceApi.getEditedRemittanceData(id)
             .then(res => {
                 dispatch(setEditedTransaction(res.data))
+            })
+            .catch(e => {
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка. Попробуйте чуть позже', false]))
             })
     } catch (err) {
         console.log(err)
@@ -64,9 +68,9 @@ export const editRemittance = (formData) => (dispatch) => {
                 dispatch(stopSubmit('editTransaction'))
                 dispatch(DisplayPostMsg([res.data.message, true]))
             })
-            .catch(err => {
+            .catch(e => {
                 dispatch(stopSubmit('editTransaction'))
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
             })
     } catch (err) {
         console.log(err)

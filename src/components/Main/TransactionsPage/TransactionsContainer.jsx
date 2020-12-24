@@ -188,6 +188,7 @@ const mstp = (state) => ({
     pageNumber: state.transactionsReducer.pageNumber,
     totalRecords: state.transactionsReducer.totalRecords,
     filterValues: state.currentValuesReducer.filterTransactionValues,
+    role: state.profileReducer.role
 })
 
 export default connect(mstp, {

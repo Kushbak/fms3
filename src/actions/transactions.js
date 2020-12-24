@@ -55,7 +55,7 @@ export const getAllTransactions = (pageNumber, pageSize, filterData) => (dispatc
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении транзакции. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при получении транзакции. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -81,11 +81,12 @@ export const editTransaction = (formData) => (dispatch) => {
         transactionsApi.editTransaction(formData)
             .then(res => {
                 dispatch(getAllTransactions())
+                dispatch(stopSubmit('editTransaction'))
                 dispatch(DisplayPostMsg([res.data.message, true]))
             })
-            .catch(err => {
+            .catch(e => {
                 dispatch(stopSubmit('editTransaction'))
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -111,7 +112,7 @@ export const createTransaction = (formData) => (dispatch) => {
                 dispatch(stopSubmit('income'))
                 dispatch(stopSubmit('expense'))
                 dispatch(stopSubmit('remittance'))
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании транзакции. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при создании транзакции. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)

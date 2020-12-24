@@ -19,6 +19,7 @@ import {
     setExpenseValues,
     setRemittanceValues
 } from '../../actions/currentValues'
+import { getStatistics } from '../../actions/statistics'
 
 const useStyles = makeStyles(() => ({
     modal: {
@@ -142,5 +143,6 @@ export default connect(mstp, {
     setIncomeValues,
     setExpenseValues,
     setRemittanceValues,
-    DisplayPostMsg
+    DisplayPostMsg,
+    getStatistics,
 })(CreateTransactionModal)

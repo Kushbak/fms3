@@ -133,8 +133,8 @@ export const Input = ({ input, meta, ...props }) => {
 export const MaterialRadioGroup = ({ label, children, input, ...custom }) => {
     return (
         <FormControl component="fieldset" className={custom.className}>
-            <FormLabel component="legend">{custom.label}</FormLabel>
-            <RadioGroup aria-label={custom.ariaLabel} name={custom.name} {...custom}>
+            <FormLabel component="legend">{label}</FormLabel>
+            <RadioGroup aria-label={custom.ariaLabel} name={input.name} {...custom} {...input}>
                 {children}
             </RadioGroup>
         </FormControl>

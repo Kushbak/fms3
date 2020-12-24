@@ -41,7 +41,7 @@ export const getBankAccounts = () => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при получении счетов. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при получении счетов. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -58,7 +58,7 @@ export const createBankAccount = (formData) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при создании счета. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при создании счета. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -75,7 +75,7 @@ export const editBankAccount = (formData) => (dispatch) => {
             }) 
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при редактировании. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
@@ -92,7 +92,7 @@ export const deleteBankAccount = (id) => (dispatch) => {
             })
             .catch(e => {
                 console.log(e)
-                dispatch(DisplayPostMsg(['Непредвиденная ошибка при удалении. Попробуйте чуть позже', false]))
+                dispatch(DisplayPostMsg([e?.response?.message || 'Непредвиденная ошибка при удалении. Попробуйте чуть позже', false]))
             })
     } catch (e) {
         console.log(e)
