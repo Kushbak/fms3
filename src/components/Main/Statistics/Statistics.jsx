@@ -144,7 +144,7 @@ const Statistics = (props) => {
                 
             </div>
             <div className={styles.statisticsBlock}>
-                {!props.statisticsFetching
+                {props.statisticsFetching
                     ? <Preloader />     
                     : <>
                         <div className={styles.statisticsLabel}>
