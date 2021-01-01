@@ -38,9 +38,10 @@ export const openEditModal = (isModalOpen) => ({
     isModalOpen
 })
 
-export const setEditedTransaction = (editedTransaction) => ({
+export const setEditedTransaction = (editedTransaction, typeOfEditedTransaction) => ({
     type: 'SET_EDITED_TRANSACTION',
-    editedTransaction
+    editedTransaction,
+    typeOfEditedTransaction
 })
 
 
@@ -63,11 +64,11 @@ export const getAllTransactions = (pageNumber, pageSize, filterData) => (dispatc
     }
 }
 
-export const getEditedTransactionData = (id) => (dispatch) => {
+export const getEditedTransactionData = (id, type) => (dispatch) => {
     try {
         transactionsApi.getEditedTransactionData(id)
             .then(res => {
-                dispatch(setEditedTransaction(res.data))
+                dispatch(setEditedTransaction(res.data, type))
             })
     } catch (err) {
         console.log(err)

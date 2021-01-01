@@ -11,49 +11,92 @@ import Preloader from '../../common/Preloader/Preloader'
  
 const SettingsContainer = (props) => { 
     const [numOfSection, setNum] = useState(0)
-
-    const addNewCategory = (formData, type) => {
-        switch (type) {
-            case 'bankAccount': {
-                props.createBankAccount({
-                    name: formData.newCategory,
-                    code: formData.code,
-                    paymentTypeId: formData.paymentTypeId 
-                })
-                break
+    const addNewCategoryHandler = (type) => {
+        return (formData) => {
+            switch (type) {
+                case 'bankAccount': {
+                    props.createBankAccount({
+                        name: formData.newCategory,
+                        code: formData.code,
+                        paymentTypeId: formData.paymentTypeId ? 2 : 1
+                    })
+                    break
+                }
+                case 'contragent': {
+                    props.createContragent({ name: formData.newCategory })
+                    break
+                }
+                case 'income': {
+                    props.createCategory({
+                        name: formData.newCategory,
+                        operationTypes: null,
+                        type: 1
+                    })
+                    break
+                }
+                case 'expense': {
+                    props.createCategory({
+                        name: formData.newCategory,
+                        operationTypes: null,
+                        type: 2
+                    })
+                    break
+                }
+                case 'project': {
+                    props.createProject({ name: formData.newCategory })
+                    break
+                }
+                default:
+                    formData.newCategory = ''
+                    setNum(0)
+                    break
             }
-            case 'contragent': {
-                props.createContragent({ name: formData.newCategory })
-                break
-            }
-            case 'income': {
-                props.createCategory({
-                    name: formData.newCategory,
-                    operationTypes: null,
-                    type: 1
-                })
-                break
-            }
-            case 'expense': {
-                props.createCategory({
-                    name: formData.newCategory,
-                    operationTypes: null,
-                    type: 2
-                })
-                break
-            }
-            case 'project': {
-                props.createProject({ name: formData.newCategory })
-                break
-            }
-            default:
-                formData.newCategory = ''
-                setNum(0)
-                break
+            formData.newCategory = ''
+            setNum(0)
         }
-        formData.newCategory = ''
-        setNum(0)
     }
+    // const addNewCategory = (formData, type) => {
+    //     switch (type) {
+    //         case 'bankAccount': {
+    //             props.createBankAccount({
+    //                 name: formData.newCategory,
+    //                 code: formData.code,
+    //                 paymentTypeId: formData.paymentTypeId 
+    //             })
+    //             break
+    //         }
+    //         case 'contragent': {
+    //             props.createContragent({ name: formData.newCategory })
+    //             break
+    //         }
+    //         case 'income': {
+    //             props.createCategory({
+    //                 name: formData.newCategory,
+    //                 operationTypes: null,
+    //                 type: 1
+    //             })
+    //             break
+    //         }
+    //         case 'expense': {
+    //             props.createCategory({
+    //                 name: formData.newCategory,
+    //                 operationTypes: null,
+    //                 type: 2
+    //             })
+    //             break
+    //         }
+    //         case 'project': {
+    //             props.createProject({ name: formData.newCategory })
+    //             break
+    //         }
+    //         default:
+    //             formData.newCategory = ''
+    //             setNum(0)
+    //             break
+    //     }
+    //     formData.newCategory = ''
+    //     setNum(0)
+    // }
     const entities = [
         {
             id: 2,
@@ -94,22 +137,21 @@ const SettingsContainer = (props) => {
     ]
     const mdSize = useMediaQuery('(max-width:768px)')
     
-    
+    useEffect(() => {}, [props.bankAccountDetails, props.incomeCategories, props.expenseCategories, props.contragents])
+
     if (!props.bankAccountDetails.length 
         && !props.incomeCategories.length 
         && !props.expenseCategories.length 
         && !props.contragents.length
     ) return <Preloader />
-
     if (mdSize) return <SettingsResponsive {...props} 
-        addNewCategory={addNewCategory} 
+        addNewCategory={addNewCategoryHandler} 
         entities={entities} 
         numOfSection={numOfSection} 
         setNum={setNum}
     />
-    
     return <Settings {...props} 
-        addNewCategory={addNewCategory} 
+        addNewCategory={addNewCategoryHandler} 
         entities={entities} 
         numOfSection={numOfSection} 
         setNum={setNum}

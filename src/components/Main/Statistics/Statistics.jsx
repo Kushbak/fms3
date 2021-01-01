@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styles from './Statistics.module.css'
 import StatisticsChart from './StatisticsChart'
 import Preloader from '../../common/Preloader/Preloader'
-import { FormControlLabel, Radio, MenuItem, withStyles } from '@material-ui/core'
+import { FormControlLabel, Radio, MenuItem } from '@material-ui/core'
 import { Popover } from '@material-ui/core'
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state"
 import GreenButton from '../../common/GreenButton/GreenButton'
@@ -13,11 +13,12 @@ const FilterStatisticsForm = reduxForm({ form: 'filterStatistics' })((props) => 
     const [date1, setDate1] = useState()
     const [date2, setDate2] = useState()
     return (
-        <form className={styles.form} onSubmit={props.handleSubmit(props.onSubmit)}>
+        <form className={[styles.form, props.classes.form].join(' ')} onSubmit={props.handleSubmit(props.onSubmit)}>
             <div className={styles.dates}>
                 От
                 <Field
                     component={MaterialDatePicker}
+                    className={props.classes.greenSelectLabel}
                     value={date1}
                     onChange={(e) => setDate1(e)}
                     name='StartDate'
@@ -30,6 +31,7 @@ const FilterStatisticsForm = reduxForm({ form: 'filterStatistics' })((props) => 
                 До
                 <Field
                     component={MaterialDatePicker}
+                    className={props.classes.greenSelectLabel}
                     value={date2}
                     onChange={(e) => setDate2(e)}
                     name='EndDate'
@@ -44,6 +46,7 @@ const FilterStatisticsForm = reduxForm({ form: 'filterStatistics' })((props) => 
             <Field row
                 label='Тип'
                 component={MaterialRadioGroup}
+                className={props.classes.greenSelectLabel}
                 defaultValue='1'
                 aria-label='type'
                 name='OperationTypesId'
@@ -53,10 +56,10 @@ const FilterStatisticsForm = reduxForm({ form: 'filterStatistics' })((props) => 
                 <FormControlLabel value='2' control={<Radio />} label="Расходы" />
             </Field>
 
-
             <div className={styles.selectsBlock}>
                 <Field
                     component={MaterialSelect}
+                    className={props.classes.greenSelectLabel}
                     label='Категории'
                     labelId='Categories_label_id'
                     name="OperationsId"
@@ -68,8 +71,10 @@ const FilterStatisticsForm = reduxForm({ form: 'filterStatistics' })((props) => 
                         </MenuItem>
                     ))}
                 </Field>
+
                 <Field
                     component={MaterialSelect}
+                    className={props.classes.greenSelectLabel}
                     label='Контрагент'
                     labelId='Contragents_label_id'
                     name="CounterPartiesId"
@@ -80,8 +85,10 @@ const FilterStatisticsForm = reduxForm({ form: 'filterStatistics' })((props) => 
                 >
                     {props.contragents.map(item => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
                 </Field>
+
                 <Field
                     component={MaterialSelect}
+                    className={props.classes.greenSelectLabel}
                     label='Проект'
                     labelId='Projects_label_id'
                     name="ProjectsId"
@@ -89,6 +96,7 @@ const FilterStatisticsForm = reduxForm({ form: 'filterStatistics' })((props) => 
                 >
                     {props.projects.map(item => <MenuItem key={item.id} value={item.id} >{item.name}</MenuItem>)}
                 </Field>
+                
                 <div className="btnBlock">
                     <GreenButton type='submit'>Применить</GreenButton>
                 </div>
@@ -102,9 +110,6 @@ const Statistics = (props) => {
     useEffect(() => {
         props.getStatistics()
     }, [])
-
-    const now = new Date()
-    const nextMonth = new Date().setMonth(new Date().getMonth() + 1)
 
     return (
         <div className={styles.statistics} >
@@ -135,14 +140,15 @@ const Statistics = (props) => {
                                         onSubmit={props.submit}
                                         filterType={props.filterType}
                                         setFilterType={props.setFilterType}
+                                        classes={props.classes}
                                     />
                                 </div>
                             </Popover>
                         </div>
                     )}
                 </PopupState>
-                
             </div>
+
             <div className={styles.statisticsBlock}>
                 {props.statisticsFetching
                     ? <Preloader />     
@@ -156,11 +162,11 @@ const Statistics = (props) => {
                         </div>
                         <div className={styles.statisticsLabel}>
                             <h3 className='h3'>Счета</h3>
-                            <StatisticsChart statisticsData={props.statisticsData} filterStat='score' />
+                            <StatisticsChart statisticsData={props.statisticsData} filterStat='score'/>
                         </div>
                         <div className={styles.statisticsLabel}>
                             <h3 className='h3'>Контрагенты</h3>
-                            <StatisticsChart statisticsData={props.statisticsData} filterStat='targetEntity' />
+                            <StatisticsChart statisticsData={props.statisticsData} filterStat='targetEntity'/>
                         </div>
                     </>
                 }

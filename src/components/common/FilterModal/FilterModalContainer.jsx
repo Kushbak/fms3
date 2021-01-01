@@ -9,6 +9,24 @@ import { getProjects } from '../../../actions/projects'
 import FilterModalComponent from './FilterModal'
 import { connect } from 'react-redux'
 import { useEffect } from 'react'
+import { makeStyles } from '@material-ui/core'
+
+
+const useStyles = makeStyles(() => ({
+    input: {
+        '& .MuiFormLabel-root.Mui-focused': {
+            color: '#32b482'
+        },
+        '& .MuiInput-underline:after': {
+            borderBottom: '2px solid #32b482'
+        }
+    },
+    greenSelectedOption: {
+        '.MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover': {
+            backgroundColor: 'rgba(50, 180, 130, 0.3)'
+        }
+    },
+}))
 
 const FilterModal = (props) => {
 
@@ -30,6 +48,8 @@ const FilterModal = (props) => {
         props.getAllTransactions(1, props.pageSize, data)
     }
 
+    const classes = useStyles()
+
     useEffect(() => {
         setFilterFormValues(props.formValues)
     }, [props.formValues])
@@ -37,6 +57,7 @@ const FilterModal = (props) => {
     return <FilterModalComponent {...props} 
         setFilterFormValues={setFilterFormValues} 
         onSubmit={submit} 
+        classes={classes}
     />
 }
 

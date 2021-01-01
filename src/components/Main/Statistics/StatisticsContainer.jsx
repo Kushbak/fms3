@@ -2,6 +2,23 @@ import React, { useEffect, useState } from 'react'
 import Statistics from './Statistics'
 import { connect } from 'react-redux'
 import { getStatistics } from '../../../actions/statistics'
+import { makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles(() => ({
+    form: {
+        '& > fieldset, & > div > *': {
+            marginBottom: '15px'
+        }
+    },
+    greenSelectLabel: {
+        '& .MuiFormLabel-root.Mui-focused': {
+            color: '#32b482'
+        },
+        '.MuiListItem-root.Mui-selected, .MuiListItem-root.Mui-selected:hover': {
+            backgroundColor: 'rgba(50, 180, 130, 0.3)'
+        }
+    },
+}))
 
 const StatisticsContainer = (props) => {
     const [filterType, setFilterType] = useState(1)
@@ -17,10 +34,18 @@ const StatisticsContainer = (props) => {
         }
         props.getStatistics(data)
     }
+
+    const classes = useStyles()
+
     useEffect(() => {
         props.getStatistics()
     }, [props.finactions])
-    return <Statistics {...props} submit={submit} setFilterType={setFilterType} filterType={filterType} />
+    return <Statistics {...props} 
+        submit={submit} 
+        setFilterType={setFilterType} 
+        filterType={filterType} 
+        classes={classes}
+    />
 }
  
 const mstp = (state) => ({

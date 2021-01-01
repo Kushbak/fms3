@@ -66,11 +66,7 @@ export const createCategory = (formData) => (dispatch) => {
     try {
         categoriesApi.createCategory(formData)
             .then(res => {
-                if (formData.type === 1) {
-                    dispatch(addIncomeCategorySuccess(formData))
-                } else {
-                    dispatch(addExpenseCategorySuccess(formData))
-                }
+                dispatch(getAllCategories())
                 dispatch(DisplayPostMsg([res.data.message, true]))
             })
             .catch(e => {
@@ -108,8 +104,7 @@ export const deleteCategory = (id) => (dispatch) => {
     try {
         categoriesApi.deleteCategory(id)
             .then(res => {
-                dispatch(removeIncomeCategorySuccess(id))
-                dispatch(removeExpenseCategorySuccess(id))
+                dispatch(getAllCategories())
                 dispatch(DisplayPostMsg([res.data.message, true]))
             })
             .catch(e => {

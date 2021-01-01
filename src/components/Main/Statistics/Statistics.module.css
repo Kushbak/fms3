@@ -22,6 +22,7 @@
     padding: 20px;
 }
 .filterBlock > form {
+    max-width: 300px;
     display: flex;
     flex-direction: column;
 }
@@ -29,11 +30,10 @@
     display: flex;
     flex-direction: column; 
     align-items: center;
-    width: 90%;
+    width: 100%;
 }
 .selectsBlock *{ 
-    margin-right: 10px;
-    width: 90%;
+    width: 100%;
 }
 .dates{
     display: flex;
@@ -92,4 +92,22 @@
     .chartsBlock > * {
         width: 100%;
     } 
+}
+
+@media screen and (max-height: 600px) and (min-width: 768px) {
+    .filterBlock > form {
+        max-width: 100%;
+        width: 600px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .filterBlock > form > * {
+        flex-basis: 33.33%;
+    }
+    .dates{
+        max-width: 200px;
+    }
+    .selectsBlock{
+        max-width: 250px;
+    }
 }

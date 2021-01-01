@@ -74,7 +74,7 @@ export const deleteContragent = (id) => (dispatch) => {
     try {
         contragentsApi.deleteContragent(id)
             .then(res => {
-                dispatch(removeContragent(id))
+                dispatch(getContragents())
                 dispatch(DisplayPostMsg(['Контрагент удален.', true]))
             })
             .catch(e => {

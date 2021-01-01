@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         '& .MuiButton-label': {
             color: '#32b482',
         }
-    }
+    },
 }))
 
 const Header = () => {
@@ -78,15 +78,14 @@ const Header = () => {
                     : <NavLink className={styles.authorization} to='/authorization'>Авторизация</NavLink>
                 }
 
-                <SwipeableDrawer
-                    anchor='left'
-                    open={isSidebarOpen}
-                    onClose={(e) => toggleDrawer(e, false)}
-                    onOpen={(e) => toggleDrawer(e, true)}
-                >
-                    <Sidebar toggleDrawer={toggleDrawer}/>
-                </SwipeableDrawer>
-
+            {mdSize && <SwipeableDrawer
+                anchor='left'
+                open={isSidebarOpen}
+                onClose={(e) => toggleDrawer(e, false)}
+                onOpen={(e) => toggleDrawer(e, true)}
+            >
+                <Sidebar toggleDrawer={toggleDrawer}/>
+            </SwipeableDrawer>}
             </div>
         </header>
     )

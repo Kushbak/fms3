@@ -25,6 +25,7 @@ const FilterModalComponent = (props) => {
                     От
                     <Field  
                         component={MaterialDatePicker}
+                        className={props.classes.input}
                         value={date1}
                         onChange={(e) => setDate1(e)}
                         name='StartDate'
@@ -37,6 +38,7 @@ const FilterModalComponent = (props) => {
                 До
                     <Field      
                         component={MaterialDatePicker}
+                        className={props.classes.input}
                         value={date2}
                         onChange={(e) => setDate2(e)}
                         name='EndDate'
@@ -49,6 +51,7 @@ const FilterModalComponent = (props) => {
                 </div>
                 <Field 
                     component={MaterialSelect} 
+                    className={props.classes.greenSelectedOption}
                     name='OperationsId'  
                     label='Категория'
                     labelId='Category_label_id'
@@ -63,6 +66,7 @@ const FilterModalComponent = (props) => {
                 </Field>
                 <Field
                     component={MaterialSelect}
+                    className={props.classes.greenSelectedOption}
                     name='CounterPartiesId' 
                     label='Контрагент'
                     labelId='Contragent_label_id'
@@ -77,6 +81,7 @@ const FilterModalComponent = (props) => {
                 </Field>
                 <Field
                     component={MaterialSelect}
+                    className={props.classes.greenSelectedOption}
                     name='ScoresId' 
                     label='Счет'
                     labelId='BankAccount_label_id'
@@ -91,6 +96,7 @@ const FilterModalComponent = (props) => {
                 </Field>
                 <Field
                     component={MaterialSelect}
+                    className={props.classes.greenSelectedOption}
                     name='ProjectsId' 
                     label='Проект'
                     labelId='Project_label_id'

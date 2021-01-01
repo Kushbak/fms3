@@ -1,6 +1,6 @@
 import React, { useState } from 'react' 
 import MuiAlert from '@material-ui/lab/Alert'
-import { Snackbar } from '@material-ui/core'
+import { Snackbar, makeStyles } from '@material-ui/core'
 
 const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />
@@ -12,7 +12,7 @@ const TostifyAlert = props => {
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-            return;
+            return
         }
         props.setMsg(['', true])
         setOpen(false)
@@ -20,7 +20,7 @@ const TostifyAlert = props => {
 
     return ( 
         <Snackbar open={!!props.displayedMsg} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={props.severity}>
+            <Alert onClose={handleClose} severity={props.severity} >
                 {props.displayedMsg}
             </Alert>
         </Snackbar>

@@ -88,7 +88,7 @@ export const deleteBankAccount = (id) => (dispatch) => {
         bankAccountsApi.deleteBankAccount(id)
             .then(res => { 
                 dispatch(DisplayPostMsg([res.data.message, true]))
-                dispatch(removeBankAccount(id))
+                dispatch(getBankAccounts())
             })
             .catch(e => {
                 console.log(e)

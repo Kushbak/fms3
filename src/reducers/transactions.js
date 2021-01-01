@@ -7,7 +7,8 @@ const initialState = {
     pageNumber: 1,
     pageSize: 15,
     isModalOpen: false,
-    editedTransaction: null
+    editedTransaction: null,
+    typeOfEditedTransaction: null
 }
 
 const transactionsReducer = (state = initialState, action) => {
@@ -46,7 +47,11 @@ const transactionsReducer = (state = initialState, action) => {
             return { ...state, isModalOpen: action.isModalOpen }
         }
         case 'SET_EDITED_TRANSACTION': {
-            return { ...state, editedTransaction: action.editedTransaction }
+            return { 
+                ...state, 
+                editedTransaction: action.editedTransaction,
+                typeOfEditedTransaction: action.typeOfEditedTransaction
+            }
         }
         default:
             return state

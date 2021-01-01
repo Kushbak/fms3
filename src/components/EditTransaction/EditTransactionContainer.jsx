@@ -65,7 +65,7 @@ const EditTransactionContainer = (props) => {
             }}
             onClose={() => {
                 props.setEditModal(false)
-                props.setEditedTransaction(null)
+                props.setEditedTransaction(null, null)
             }}
         >
             <Fade in={props.isModalOpen}>
@@ -98,6 +98,8 @@ const mstp = state => ({
     displayedMsg: state.transactionsReducer.displayedMsg,
     editedTransaction: state.transactionsReducer.editedTransaction,
     initialValues: state.transactionsReducer.editedTransaction,
+    typeOfEditedTransaction: state.transactionsReducer.typeOfEditedTransaction,
+    
 })
 
 export default connect(mstp, {

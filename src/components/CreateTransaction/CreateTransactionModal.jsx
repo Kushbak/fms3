@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    input: {
+    greenInputLabel: {
         '& .MuiFormLabel-root.Mui-focused': {
             color: '#32b482'
         },
@@ -35,6 +35,11 @@ const useStyles = makeStyles(() => ({
             borderBottom: '2px solid #32b482'
         }
     },
+    greenSelectLabel: {
+        '& .MuiFormLabel-root.Mui-focused': {
+            color: '#32b482'
+        },
+    }
 }))
 
 const CreateTransactionModal = memo((props) => { 
@@ -87,7 +92,7 @@ const CreateTransactionModal = memo((props) => {
                             incomeFormValues={props.incomeFormValues}
                             operationType='доход' 
                             onSubmit={submit} 
-                            input={classes.input}
+                            classes={classes}
                         />
                     }
                     { Tab === 2 
@@ -96,7 +101,7 @@ const CreateTransactionModal = memo((props) => {
                             expenseFormValues={props.expenseFormValues} 
                             operationType='расход' 
                             onSubmit={submit}
-                            input={classes.input}
+                            classes={classes}
                         />
                     }
                     { Tab === 3 
@@ -105,7 +110,7 @@ const CreateTransactionModal = memo((props) => {
                             remittanceFormValues={props.remittanceFormValues}
                             operationType='перевод' 
                             onSubmit={submit}
-                            input={classes.input}
+                            classes={classes}
                         />
                     } 
                     <TostifyAlert 

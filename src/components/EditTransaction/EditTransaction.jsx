@@ -50,7 +50,7 @@ const EditTransactionModal = props => {
                 </Field>
             }
             {/* --------------------------------- */}
-            {(props.editedTransaction.operationId && props.editedTransaction.discriminator !== 'Remittance')
+            {(props.editedTransaction.operationId && props.typeOfEditedTransaction !== 'Перевод')
                 && <Field
                     className={props.classes.input}
                     component={MaterialSelect}
@@ -61,14 +61,14 @@ const EditTransactionModal = props => {
                     onChange={(e) => setFormData({ ...formData, operationId: e.target.value })}
                     onClick={props.getAllCategories}
                 >
-                    {props[props.editedTransaction.transactionType !== 'Доход' ? 'incomeCategories' : 'expenseCategories']
+                    {props[props.typeOfEditedTransaction === 'Доход' ? 'incomeCategories' : 'expenseCategories']
                         .map(item => <option key={item.id} value={item.id} label={item.name}>
                             {item.name}
                         </option>)
                     }
                 </Field>
             }
-            {(props.editedTransaction.projectId && props.editedTransaction.discriminator !== 'Remittance')
+            {(props.editedTransaction.projectId && props.typeOfEditedTransaction !== 'Перевод')
                 && <Field
                     className={props.classes.input}
                     component={MaterialSelect}
@@ -82,7 +82,7 @@ const EditTransactionModal = props => {
                     </option>)}
                 </Field>
             }
-            {props.editedTransaction.counterPartyId && props.editedTransaction.discriminator !== 'Remittance'
+            {props.editedTransaction.counterPartyId && props.typeOfEditedTransaction !== 'Перевод'
                 ? <Field
                     className={props.classes.input}
                     component={MaterialSelect}

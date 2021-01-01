@@ -57,9 +57,9 @@ const Transactions = (props) => {
                     onCellClick={(e) => {
                         if(props.role === 'admin'){
                             if (e.rowModel.data.discriminator === 'Transaction'){
-                                props.getEditedTransactionData(e.rowModel.data.id)
+                                props.getEditedTransactionData(e.rowModel.data.id, e.rowModel.data.transactionType)
                             } else {
-                                props.getEditedRemittanceData(e.rowModel.data.id)
+                                props.getEditedRemittanceData(e.rowModel.data.id, e.rowModel.data.transactionType)
                             }
                             setEditModal(true)
                         }
