@@ -11,6 +11,7 @@ import Preloader from '../../common/Preloader/Preloader'
  
 const SettingsContainer = (props) => { 
     const [numOfSection, setNum] = useState(0)
+
     const addNewCategoryHandler = (type) => {
         return (formData) => {
             switch (type) {
@@ -55,48 +56,7 @@ const SettingsContainer = (props) => {
             setNum(0)
         }
     }
-    // const addNewCategory = (formData, type) => {
-    //     switch (type) {
-    //         case 'bankAccount': {
-    //             props.createBankAccount({
-    //                 name: formData.newCategory,
-    //                 code: formData.code,
-    //                 paymentTypeId: formData.paymentTypeId 
-    //             })
-    //             break
-    //         }
-    //         case 'contragent': {
-    //             props.createContragent({ name: formData.newCategory })
-    //             break
-    //         }
-    //         case 'income': {
-    //             props.createCategory({
-    //                 name: formData.newCategory,
-    //                 operationTypes: null,
-    //                 type: 1
-    //             })
-    //             break
-    //         }
-    //         case 'expense': {
-    //             props.createCategory({
-    //                 name: formData.newCategory,
-    //                 operationTypes: null,
-    //                 type: 2
-    //             })
-    //             break
-    //         }
-    //         case 'project': {
-    //             props.createProject({ name: formData.newCategory })
-    //             break
-    //         }
-    //         default:
-    //             formData.newCategory = ''
-    //             setNum(0)
-    //             break
-    //     }
-    //     formData.newCategory = ''
-    //     setNum(0)
-    // }
+    
     const entities = [
         {
             id: 2,

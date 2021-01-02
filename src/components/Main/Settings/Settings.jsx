@@ -60,7 +60,7 @@ export const NewCategoryForm =
                     }
                 </div>
                 <div className={styles.newItemBtnBlock}>
-                    <button type='submit'><img src={saveBtn} onClick={() => props.setNum(0)} alt='save' /></button>
+                    <button type='submit'><img src={saveBtn} alt='save' /></button>
                     <button type='button'><img src={closeBtn} onClick={() => props.setNum(0)} alt='close' /></button>
                 </div>
             </form>
