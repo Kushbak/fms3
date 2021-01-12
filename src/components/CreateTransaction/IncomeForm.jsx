@@ -40,6 +40,7 @@ const IncomeForm = props => {
                 component={MaterialInput}
                 name='sum'
                 label='Сумма'
+                type='number'
                 placeholder={`Сумма ${props.operationType}а`}
                 validate={[required]}
             />

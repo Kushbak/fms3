@@ -6,16 +6,20 @@ import { MaterialSelect, MaterialDatePicker } from '../FormsControl/FormControls
 import GreenButton from '../GreenButton/GreenButton'
 
 const FilterModalComponent = (props) => {   
-    const reset = () => {
-        props.setFilterTransactionValues(null)
-        props.reset()
+    const reset = (isCllicked) => {
+        if (isCllicked >= 1) {
+            props.setFilterTransactionValues(null)
+            props.reset()
+            if (isCllicked != 3) {
+                reset(3)
+            }
+        }        
     }  
     const [date1, setDate1] = useState()
     const [date2, setDate2] = useState()
     // TODO Зарефакторить код для пользования во всех местах
     // TODO Добавить условие на показ только нужных полей из всех
     // TODO Возможность отправлять в пропсы свои функции вместо захардкоженных(к примеру тот же setFilterValues())
-    // TODO Исправить круговорот данных для вставки полей по умолчанию
     return (
         <div className={styles.filterBlock}>
             <h3>Фильтрация</h3>
@@ -112,7 +116,7 @@ const FilterModalComponent = (props) => {
                 
                 <div className={styles.btnBlock}>
                     <GreenButton type='submit'>Применить</GreenButton>
-                    <GreenButton onClick={reset}>Очистить</GreenButton>  
+                    <GreenButton onClick={() => reset(1)}>Очистить</GreenButton>  
                 </div>
             </form>
         </div>

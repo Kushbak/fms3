@@ -42,6 +42,7 @@ const RemittanceForm = props => {
                 name='sum' 
                 type="text"
                 label='Сумма'
+                type='number'
                 placeholder={`Сумма ${props.operationType}а`} 
                 validate={[required]} 
             />

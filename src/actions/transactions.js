@@ -44,6 +44,22 @@ export const setEditedTransaction = (editedTransaction, typeOfEditedTransaction)
     typeOfEditedTransaction
 })
 
+// export const clearInputFields = form => {
+//     debugger
+//     for (const key in form) {
+//         if (form.hasOwnProperty(key)) {
+//             if (typeof form[key] === 'string') {
+//                 debugger
+//                 form[key] = ''
+//             } else if (typeof form[key] === 'object') {
+//                 debugger
+//                 form[key] = {}
+//             }
+//         }
+//     }
+// }
+
+
 
 export const getAllTransactions = (pageNumber, pageSize, filterData) => (dispatch) => {
     try {
@@ -108,6 +124,7 @@ export const createTransaction = (formData) => (dispatch) => {
                 dispatch(stopSubmit('expense'))
                 dispatch(stopSubmit('remittance'))
                 dispatch(getAllTransactions())
+                // clearInputFields(formData)
             })
             .catch(e => {
                 dispatch(stopSubmit('income'))

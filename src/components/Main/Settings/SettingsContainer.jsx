@@ -96,7 +96,7 @@ const SettingsContainer = (props) => {
         },
     ]
     const mdSize = useMediaQuery('(max-width:768px)')
-    
+
     useEffect(() => {}, [props.bankAccountDetails, props.incomeCategories, props.expenseCategories, props.contragents])
 
     if (!props.bankAccountDetails.length 

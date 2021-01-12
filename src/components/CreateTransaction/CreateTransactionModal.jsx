@@ -45,6 +45,7 @@ const useStyles = makeStyles(() => ({
 const CreateTransactionModal = memo((props) => { 
     const [Tab, setTab] = useState(1)
     const classes = useStyles()
+    let { currentIncomeFields, currentExpenseFields, currentRemittanceFields } = props.currentValuesReducer
     const submit = (formData) => {
         const now = new Date()
         let data = {
@@ -64,9 +65,15 @@ const CreateTransactionModal = memo((props) => {
         } else {
             props.createTransaction(data)
         }
+        formData.sum = ''
+        formData.score1 = ''
+        formData.score2 = ''
+        formData.contragent = ''
+        formData.category = ''
+        formData.project = ''
+        formData.description = ''
     }
     
-    const { currentIncomeFields, currentExpenseFields, currentRemittanceFields } = props.currentValuesReducer
 
     return (
         <Modal 
